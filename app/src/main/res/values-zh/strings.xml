@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android for Dummies</string>
+    <string name="audio">Yinpin</string>
+    <string name="call_tictactoe_help">Da kai bang zhu</string>
+    <string name="clear">Qing chu</string>
+    <string name="confirm_password">Que ren mi ma</string>
+    <string name="contacts">Lian xi ren</string>
+    <string name="create">Chuang jian</string>
+    <string name="email_score">Dian zi you jian fen shu</string>
+    <string name="end_game">Jie shu you xi</string>
+    <string name="enter_password">Shu ru mi ma</string>
+    <string name="enter_username">Shu ru yong hu ming</string>
+    <string name="exit">Tui chu</string>
+    <string name="help">Bang zhu</string>
+    <string name="help_text">Bang zhu wen ben</string>
+    <string name="human_plays_first">Wan jia you xian</string>
+    <string name="image">Tu pian</string>
+    <string name="images">Tu pian</string>
+    <string name="loading">Jia zai</string>
+    <string name="login">Deng lu</string>
+    <string name="login_title">Tic-Tac-Toe Deng dai</string>
+    <string name="main_title"></string>
+    <string name="new_account">Xin zhang hao</string>
+    <string name="new_game">Xin You xi</string>
+    <string name="new_user">Xin yong hu</string>
+    <string name="options">Xuan xiang</string>
+    <string name="password">Mi ma</string>
+    <string name="permission_launch_activity"></string>
+    <string name="player_default_name">Wan jia 1</string>
+    <string name="player_info">Wan jia xin xi</string>
+    <string name="sensors">Chuan gan qi</string>
+    <string name="settings">She zhi</string>
+    <string name="show_image">Xian shi tu pian</string>
+</resources>

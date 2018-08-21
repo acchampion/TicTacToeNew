@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="16sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/new_account"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            />
+        <TextView
+            android:text="@string/username"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="start"
+            android:labelFor="@+id/username"
+            android:textColor="@android:color/black" />
+        <EditText
+            android:id="@+id/username"
+            android:hint="@string/enter_username"
+            android:inputType="textPassword"
+            android:textColorHint="@android:color/darker_gray"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:labelFor="@+id/password"
+            android:text="@string/password"
+            android:textColor="@android:color/black"/>
+        <EditText
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:textColorHint="@android:color/darker_gray"
+            android:hint="@string/enter_password"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/black"/>
+        <TextView
+            android:text="@string/confirm_password"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="start"
+            android:labelFor="@+id/password_confirm"
+            android:textColor="@android:color/black" />
+        <EditText
+            android:id="@+id/password_confirm"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:maxLines="1"
+            android:hint="@string/confirm_password"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray" />
+        <Button
+            android:id="@+id/cancel_button"
+            android:text="@string/clear"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/done_button"
+            android:text="@string/create"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/exit_button"
+            android:text="@string/exit"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

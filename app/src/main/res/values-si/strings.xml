@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ඩමි සඳහා ඇන්ඩ්රොයිඩ් උදව්</string>
+    <string name="audio">උපකරණ</string>
+    <string name="call_tictactoe_help">අමතන්න උදවු</string>
+    <string name="clear">පැහැදිලි</string>
+    <string name="confirm_password">මුරපදය තහවුරු කරන්න</string>
+    <string name="contacts">අප අමතන්න</string>
+    <string name="create">නිර්මාණය</string>
+    <string name="email_score">විද්යුත් ලකුණු</string>
+    <string name="end_game">අවසන් ගේම්</string>
+    <string name="enter_password">රහස් පදය ඇතුලත් කරන්න</string>
+    <string name="enter_username">පරිශීලක නාමයක් ඇතුලත්</string>
+    <string name="exit">පිටවීම</string>
+    <string name="help">උදව්</string>
+    <string name="human_plays_first">" මානව පළමු ඉටු කරයි"</string>
+    <string name="image">රූප</string>
+    <string name="images">රූප</string>
+    <string name="loading">පැටවීම</string>
+    <string name="login">ඇතුල් වන්න</string>
+    <string name="main_title">ඩමි සඳහා ඇන්ඩ්රොයිඩ් උදව්</string>
+    <string name="new_account">නව ගිණුමක්</string>
+    <string name="new_game">නව ක්රීඩාව</string>
+    <string name="new_user">නව පරිශීලකයා</string>
+    <string name="options">විකල්ප</string>
+    <string name="password">මුරපදය</string>
+    <string name="player_default_name">ක්රීඩකයා</string>
+    <string name="player_info">ක්රීඩකයා තොරතුරු</string>
+    <string name="record_audio">ශබ්ද පටිගත</string>
+    <string name="record_video">වාර්තා වීඩියෝ</string>
+    <string name="send_sms">කෙටි පණිවිඩ යැවීමට</string>
+    <string name="sensors">සංවේදක</string>
+    <string name="settings">සැකසුම්</string>
+    <string name="show_image">ප්රදර්ශන රූපය</string>
+    <string name="splash_screen">ආරම්භක තිරයේ</string>
+    <string name="start_audio">ශ්රව්ය ආරම්භ</string>
+    <string name="start_video">වීඩියෝ ආරම්භ</string>
+    <string name="stop_audio">ශ්රව්ය නතර</string>
+    <string name="stop_video">වීඩියෝ නතර</string>
+    <string name="take_picture">ඡායාරූප ගත</string>
+    <string name="username">පරිශීලක නාමය</string>
+    <string name="video">වීඩියෝ</string>
+</resources>

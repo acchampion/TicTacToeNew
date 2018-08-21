@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item 
+		android:title="@string/help"
+		android:id="@+id/menu_help"
+		android:icon="@android:drawable/ic_menu_info_details"
+		 />	
+	<item
+		 android:title="@string/email_score"
+		 android:id="@+id/menu_email"
+		 android:icon="@android:drawable/ic_menu_send"
+		 />	 
+	<item
+		 android:title="@string/send_sms"
+		 android:id="@+id/menu_sms"
+		 android:icon="@android:drawable/ic_menu_send"
+		 />	 
+	<item 
+		android:title="@string/call_tictactoe_help"
+		android:id="@+id/menu_call"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel" 
+		/>
+	<item 
+		android:title="@string/end_game"
+		android:id="@+id/menu_exit"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel" 
+		/>
+</menu>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android pour Idiots</string>
+    <string name="audio">Audio</string>
+    <string name="call_tictactoe_help">Téléphonez Assistance</string>
+    <string name="confirm_password">Confirmez Password</string>
+    <string name="contacts">Contacts</string>
+    <string name="create">Créez</string>
+    <string name="email_score">Email Score</string>
+    <string name="end_game">Finissez Jeu</string>
+    <string name="enter_password">Entrez Mot de Passe</string>
+    <string name="enter_username">Entrez Nom de User</string>
+    <string name="exit">Sortez</string>
+    <string name="help">Assistance</string>
+    <string name="human_plays_first">Human Joue Premiere</string>
+    <string name="image">Image</string>
+    <string name="images">Images</string>
+    <string name="loading">Chargement...</string>
+    <string name="login">M\'identifiez</string>
+    <string name="new_account">Nouveau Accompte</string>
+    <string name="new_game">Nouveau Jeu</string>
+    <string name="new_user">Nouveau User</string>
+    <string name="options">Options</string>
+    <string name="password">Mot de Passe</string>
+    <string name="player_default_name">Joueur Un</string>
+    <string name="player_info">Information de Joueur</string>
+    <string name="record_audio">Enregistrez Audio</string>
+    <string name="record_video">Enregistrez Video</string>
+    <string name="send_sms">Envoyez SMS</string>
+    <string name="sensors">Capteurs</string>
+    <string name="settings">Parametres</string>
+    <string name="show_image">Voyez Image</string>
+    <string name="start_audio">Demarez Audio</string>
+    <string name="start_video">Demarez Video</string>
+    <string name="stop_audio">Arrêtez Audio</string>
+    <string name="stop_video">Arrêtez Video</string>
+    <string name="take_picture">Mise a Photo</string>
+    <string name="username">Nom de User</string>
+    <string name="video">Video</string>
+    <string name="clear">Nettoyez</string>
+    <string name="main_title">Android pour Idiots</string>
+</resources>

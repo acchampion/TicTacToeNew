@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:baselineAligned="false">
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/login"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+            <TextView
+                android:text="@string/enter_username"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="start"
+                android:labelFor="@+id/username_text"
+                android:textColor="@android:color/black" />
+            <EditText
+                android:id="@+id/username_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColorHint="@android:color/darker_gray"
+                android:hint="@string/enter_username"
+                android:maxLines="1" />
+            <TextView
+                android:text="@string/enter_password"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="start"
+                android:labelFor="@+id/password_text"
+                android:textColor="@android:color/black" />
+            <EditText
+                android:id="@+id/password_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="@string/enter_password"
+                android:textColorHint="@android:color/darker_gray"
+                android:maxLines="1" />
+            <Button
+                android:id="@+id/login_button"
+                android:text="@string/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/cancel_button"
+                android:text="@string/exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <fragment class="com.wiley.fordummies.androidsdk.tictactoe.AccountFragment"
+                  android:id="@+id/titles"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="8dp"
+                  tools:layout="@layout/fragment_account"/>
+    </ScrollView>
+</LinearLayout>

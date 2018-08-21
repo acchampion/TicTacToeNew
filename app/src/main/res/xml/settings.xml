@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings">
+    <EditTextPreference
+        android:key="name"
+        android:title="Player Info"
+        android:summary="Select your name"
+        android:defaultValue="Player"
+        />
+    <CheckBoxPreference
+        android:key="cross"
+        android:title="Choose Cross (X)"
+        android:summary="Select cross to play first"
+        android:defaultValue="true"
+        />
+</PreferenceScreen>

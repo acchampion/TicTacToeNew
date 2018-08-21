@@ -1,0 +1,86 @@
+<resources>
+    <string name="about_tictactoe">About Tic-Tac-Toe</string>
+    <string name="about_tictactoe_wikipedia">About Tic-Tac-Toe (Wikipedia)</string>
+    <string name="help_text">
+		Tic-Tac-Toe is a two-player game. Each player claims one of two symbols – “O” or “X” – and attempts to alternately place their symbol in empty locations in a 3×3 grid, so as to get three of the same symbol adjacent to each other in a straight line – either in a row or column, or across a diagonal.\n
+	</string>
+    <string name="permission_launch_activity">"This permission allows launching an activity in this application "</string>
+
+    <!-- UI Text -->
+    <string name="sources_title">Sources</string>
+    <string name="sources_text">Audio: John Philip Sousa, “The Stars and Stripes Forever,” Edison Recordings, public domain\n
+        Video: Blender Foundation, “<a href="http://www.sintel.org">Sintel Trailer</a>”, 2011, © Blender Foundation (CC-BY-3.0) </string>
+    <string name="exit">Exit</string>
+    <string name="account">Account</string>
+    <string name="new_account">New Account</string>
+    <string name="username">Username</string>
+    <string name="login_title">Tic-Tac-Toe Awaits!</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="main_title">Android for Dummies</string>
+    <string name="app_name">Android for Dummies</string>
+    <string name="title">Tic-Tac-Toe</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="clear">Clear</string>
+    <string name="create">Create</string>
+    <string name="start_audio">Start Audio</string>
+    <string name="stop_audio">Stop Audio</string>
+    <string name="record_audio">Record Audio</string>
+    <string name="options">Options</string>
+    <string name="new_game">New Game</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="image">Image</string>
+    <string name="images">Images</string>
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
+    <string name="help_webview">Help — Webview</string>
+    <string name="sensors">Sensors</string>
+    <string name="loading">Loading…</string>
+    <string name="tictactoe_wikipedia">Tic-Tac-Toe on Wikipedia via Browser</string>
+    <string name="tictactoe_wikipedia_webview">Tic-Tac-Toe on Wikipedia in WebView</string>
+    <string name="show_image">Show Image</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login">Login</string>
+    <string name="new_user">New User</string>
+    <string name="player_info">Player Info</string>
+    <string name="human_plays_first">Human Plays First</string>
+    <string name="player_default_name">Player 1</string>
+    <string name="splash_screen">Splash Screen</string>
+    <string name="start_video">Start Video</string>
+    <string name="stop_video">Stop Video</string>
+    <string name="record_video">Record Video</string>
+    <string name="contacts">Contacts</string>
+    <string name="email_score">Email Score</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="call_tictactoe_help">Call Tic-Tac-Toe Help</string>
+    <string name="end_game">End Game</string>
+    <string name="game">Game</string>
+
+    <!-- Dialog Text -->
+    <string name="error">Error</string>
+    <string name="warning">Warning</string>
+    <string name="login_error_text">Login failed.</string>
+    <string name="passwords_match_error_text">Passwords do not match.</string>
+    <string name="no_net_text">Cannot complete action: No network connectivity.</string>
+    <string name="ok_text">OK</string>
+    <string name="try_again_text">Try Again</string>
+    <string name="where_am_i">Where Am I? (Maps)</string>
+    <string name="should_quit">Quit Tic-Tac-Toe?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="permission_notice">This app asks permission to access contacts and to get location. Please grant these permissions.</string>
+    <string name="read_contacts_permission_denied">User denied permission to read contacts.</string>
+    <string name="abandon_game">Abandon this game?</string>
+    <string name="play_another_game">Play another game?</string>
+
+    <!-- Maps -->
+    <string name="maps">Maps</string>
+    <string name="location_permission_denied">User denied permission to get location.</string>
+    <string name="access_token">pk.eyJ1IjoiYWNjaGFtcGlvbiIsImEiOiJjajZneDMwZDgwMGxjMnd0ZXFpeG1iZDVxIn0.yCuFPMo0P6hS8U9_OS5etQ</string>
+    <string name="find">Locate</string>
+    <string name="findme">Find Me</string>
+    <string name="enter_address">Enter address …</string>
+
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android Aise Hi</string>
+    <string name="audio">Awaz</string>
+    <string name="call_tictactoe_help">Tic-Tac-Toe Madat</string>
+    <string name="clear">Saaf</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="contacts">Log</string>
+    <string name="create">Banao</string>
+    <string name="email_score">Ginti Bhejo</string>
+    <string name="end_game">Khel Khatam</string>
+    <string name="enter_password">Password Dalo</string>
+    <string name="enter_username">Username Dalo</string>
+    <string name="exit">Niklo</string>
+    <string name="help">Madat</string>
+    <string name="human_plays_first">Insaan Pahle Khelega</string>
+    <string name="image">tasveer</string>
+    <string name="images">tasveere</string>
+    <string name="loading">ho raha hain</string>
+    <string name="login">andar jao</string>
+    <string name="login_title">tiv=c-tac-toe intezaar kar raha hain</string>
+    <string name="main_title"></string>
+    <string name="new_account">naya account</string>
+    <string name="new_game">naya khel</string>
+    <string name="new_user">naya aadmi</string>
+    <string name="options"></string>
+    <string name="password"></string>
+    <string name="permission_launch_activity">Yeh sahmati activity launch karne k liye</string>
+    <string name="player_default_name">pahla khiladi</string>
+    <string name="player_info">khiladi ki jankari</string>
+    <string name="record_audio">awaz record karo</string>
+    <string name="record_video">chalchitra record karo</string>
+    <string name="send_sms">sms bhejo</string>
+    <string name="sensors"></string>
+    <string name="settings"></string>
+    <string name="show_image">chitra dikhao</string>
+    <string name="splash_screen"></string>
+    <string name="start_audio">awaz suru karo</string>
+    <string name="start_video">chalchitra suru karo</string>
+    <string name="stop_audio">awaz bandh</string>
+    <string name="stop_video">chalchitra bandh</string>
+    <string name="take_picture">tasveer khicho</string>
+    <string name="tictactoe_wikipedia"></string>
+    <string name="title"></string>
+    <string name="username"></string>
+    <string name="video">chalchitra</string>
+</resources>

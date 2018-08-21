@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android for Dummies</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="call_tictactoe_help">"Chiama Tris Help "</string>
+    <string name="clear">Cancella</string>
+    <string name="confirm_password">Confirma Password</string>
+    <string name="contacts">Personaggi</string>
+    <string name="create">Crea</string>
+    <string name="email_score">Email Punti</string>
+    <string name="end_game">Termina Gioco</string>
+    <string name="enter_password">Scrive Password</string>
+    <string name="enter_username">Scrive Username</string>
+    <string name="exit">Chiude</string>
+    <string name="help">Aiuta</string>
+    <string name="human_plays_first">Persona Gioca Prima</string>
+    <string name="image">Foto</string>
+    <string name="images">Le Foto</string>
+    <string name="loading">Aspetta</string>
+    <string name="login">Login</string>
+    <string name="main_title">Android for Dummies</string>
+    <string name="login_title">Tris é Pronto</string>
+</resources>
