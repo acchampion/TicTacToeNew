@@ -1,15 +1,12 @@
 <resources>
     <string name="about_tictactoe">About Tic-Tac-Toe</string>
     <string name="about_tictactoe_wikipedia">About Tic-Tac-Toe (Wikipedia)</string>
-    <string name="help_text">
-		Tic-Tac-Toe is a two-player game. Each player claims one of two symbols – “O” or “X” – and attempts to alternately place their symbol in empty locations in a 3×3 grid, so as to get three of the same symbol adjacent to each other in a straight line – either in a row or column, or across a diagonal.\n
-	</string>
+    <string name="help_text">"Tic-Tac-Toe is a two-player game. Each player claims one of two symbols – “O” or “X” – and attempts to alternately place their symbol in empty locations in a 3×3 grid, so as to get three of the same symbol adjacent to each other in a straight line – either in a row or column, or across a diagonal. "</string>
     <string name="permission_launch_activity">"This permission allows launching an activity in this application "</string>
 
     <!-- UI Text -->
     <string name="sources_title">Sources</string>
-    <string name="sources_text">Audio: John Philip Sousa, “The Stars and Stripes Forever,” Edison Recordings, public domain\n
-        Video: Blender Foundation, “<a href="http://www.sintel.org">Sintel Trailer</a>”, 2011, © Blender Foundation (CC-BY-3.0) </string>
+    <string name="sources_text">"Audio: John Philip Sousa, “The Stars and Stripes Forever,” Edison Recordings, public domain          Video: Blender Foundation, “<a href="http://www.sintel.org">Sintel Trailer</a>”, 2011, © Blender Foundation (CC-BY-3.0) "</string>
     <string name="exit">Exit</string>
     <string name="account">Account</string>
     <string name="new_account">New Account</string>
@@ -34,7 +31,7 @@
     <string name="images">Images</string>
     <string name="settings">Settings</string>
     <string name="help">Help</string>
-    <string name="help_webview">Help — Webview</string>
+    <string name="help_webview">Help — WebView</string>
     <string name="sensors">Sensors</string>
     <string name="loading">Loading…</string>
     <string name="tictactoe_wikipedia">Tic-Tac-Toe on Wikipedia via Browser</string>
@@ -78,7 +75,7 @@
     <!-- Maps -->
     <string name="maps">Maps</string>
     <string name="location_permission_denied">User denied permission to get location.</string>
-    <string name="access_token">pk.eyJ1IjoiYWNjaGFtcGlvbiIsImEiOiJjajZneDMwZDgwMGxjMnd0ZXFpeG1iZDVxIn0.yCuFPMo0P6hS8U9_OS5etQ</string>
+    <string name="access_token" translatable="false">pk.eyJ1IjoiYWNjaGFtcGlvbiIsImEiOiJjajZneDMwZDgwMGxjMnd0ZXFpeG1iZDVxIn0.yCuFPMo0P6hS8U9_OS5etQ</string>
     <string name="find">Locate</string>
     <string name="findme">Find Me</string>
     <string name="enter_address">Enter address …</string>

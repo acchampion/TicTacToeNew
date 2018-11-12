@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '28.0.1'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.wiley.fordummies.androidsdk.tictactoe"
         minSdkVersion 21
@@ -29,12 +29,12 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:preference-v7:27.1.1'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:5.5.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.5.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.7.1'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-building:0.3.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-java-geojson:2.2.10'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-services:2.2.9'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-telemetry:3.1.4'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-telemetry:3.1.5'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-ui:2.2.9'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

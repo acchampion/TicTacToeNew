@@ -26,7 +26,6 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_gravity="start"
-            android:labelFor="@+id/username"
             android:textColor="@android:color/black" />
         <EditText
             android:id="@+id/username"
@@ -47,7 +46,6 @@
             android:layout_gravity="start"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:labelFor="@+id/password"
             android:text="@string/password"
             android:textColor="@android:color/black"/>
         <EditText

@@ -62,6 +62,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume()");
         try {
             AppCompatActivity activity = (AppCompatActivity) getActivity();
 
@@ -192,7 +193,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
             mSensorInfoTextView = itemView.findViewById(R.id.sensor_data);
         }
 
-        public void bind(Sensor sensor) {
+        void bind(Sensor sensor) {
             mDescriptionStr = getSensorDescription(sensor);
             mSensorInfoTextView.setText(mDescriptionStr);
         }

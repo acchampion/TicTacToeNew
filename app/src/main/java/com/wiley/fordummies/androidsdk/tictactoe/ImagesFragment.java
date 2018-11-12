@@ -2,6 +2,7 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -44,6 +45,16 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
         buttonCapture.setOnClickListener(this);
         Button buttonExit = v.findViewById(R.id.buttonImageExit);
         buttonExit.setOnClickListener(this);
+
+        // Guard against no camera app (disable the "record" button).
+        Activity activity = getActivity();
+        if (activity != null) {
+            PackageManager packageManager = activity.getPackageManager();
+            if (packageManager.resolveActivity(mCaptureImageIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+                buttonCapture.setEnabled(false);
+            }
+        }
+
 
         return v;
     }

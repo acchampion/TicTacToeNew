@@ -36,6 +36,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Activity activity = getActivity();
         View v = inflater.inflate(R.layout.fragment_video, container, false);
 
         mVideoView = v.findViewById(R.id.videoView);
@@ -54,22 +55,21 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
         File videoFile = new File(path);
         if (videoFile.exists()) {
             mVideoFileUri = Uri.fromFile(videoFile);
-        }
-        else {
+        } else {
             // Video file doesn't exist, so load sample video from resources.
-            Activity activity = getActivity();
-
             if (activity != null) {
-                String videoResourceName = "android.resource://" + getActivity().getPackageName() +
+                String videoResourceName = "android.resource://" + activity.getPackageName() +
                         File.separator + R.raw.sample_video;
                 mVideoFileUri = Uri.parse(videoResourceName);
             }
         }
 
         // Guard against no audio recorder app (disable the "record" button).
-        PackageManager packageManager = getActivity().getPackageManager();
-        if (packageManager.resolveActivity(mRecordVideoIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
-            buttonRecord.setEnabled(false);
+        if (activity != null) {
+            PackageManager packageManager = activity.getPackageManager();
+            if (packageManager.resolveActivity(mRecordVideoIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+                buttonRecord.setEnabled(false);
+            }
         }
 
         return v;
@@ -88,8 +88,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
                     actionBar.setSubtitle(getResources().getString(R.string.video));
                 }
             }
-        }
-        catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             Log.e(TAG, "Could not set subtitle");
         }
     }

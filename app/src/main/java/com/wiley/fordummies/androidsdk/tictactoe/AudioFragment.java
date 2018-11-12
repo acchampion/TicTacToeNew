@@ -68,9 +68,12 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
         }
 
         // Guard against no audio recorder app (disable the "record" button).
-        PackageManager packageManager = getActivity().getPackageManager();
-        if (packageManager.resolveActivity(mRecordAudioIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
-            buttonRecord.setEnabled(false);
+        Activity activity = getActivity();
+        if (activity != null) {
+            PackageManager packageManager = activity.getPackageManager();
+            if (packageManager.resolveActivity(mRecordAudioIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+                buttonRecord.setEnabled(false);
+            }
         }
 
         return v;
