@@ -6,7 +6,7 @@
 
     <!-- UI Text -->
     <string name="sources_title">Sources</string>
-    <string name="sources_text">"Audio: John Philip Sousa, “The Stars and Stripes Forever,” Edison Recordings, public domain          Video: Blender Foundation, “<a href="http://www.sintel.org">Sintel Trailer</a>”, 2011, © Blender Foundation (CC-BY-3.0) "</string>
+    <string name="sources_text">"Audio: John Philip Sousa, “The Stars and Stripes Forever,” Edison Recordings, public domain. Video: Blender Foundation, “<a href="http://www.sintel.org">Sintel Trailer</a>”, 2011, © Blender Foundation (CC-BY-3.0) "</string>
     <string name="exit">Exit</string>
     <string name="account">Account</string>
     <string name="new_account">New Account</string>
