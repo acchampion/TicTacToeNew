@@ -11,13 +11,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.io.File;
+
+import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -26,7 +27,6 @@ import static android.app.Activity.RESULT_OK;
  *
  * Created by adamcchampion on 2017/08/12.
  */
-@SuppressWarnings("LogNotTimber")
 public class AudioFragment extends Fragment implements View.OnClickListener {
     private boolean mStarted = false;
     private String mAudioFilePath =
@@ -93,7 +93,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
     }
 
@@ -108,7 +108,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
                     if (!mStarted) {
                         Intent musicIntent = new Intent(activity.getApplicationContext(), MediaPlaybackService.class);
                         musicIntent.putExtra("URIString", mAudioFileUri.toString());
-                        Log.d(TAG, "URI: " + mAudioFileUri.toString());
+                        Timber.d(TAG, "URI: %s", mAudioFileUri.toString());
                         getActivity().startService(musicIntent);
                         mStarted = true;
                     }
@@ -130,7 +130,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == AUDIO_CAPTURED) {
             mAudioFileUri = data.getData();
-            Log.v(TAG, "Audio File URI: " + mAudioFileUri);
+            Timber.v(TAG, "Audio File URI: %s", mAudioFileUri);
         }
     }
 }

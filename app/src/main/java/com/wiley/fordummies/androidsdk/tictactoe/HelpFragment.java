@@ -12,11 +12,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import timber.log.Timber;
 
 /**
  * Created by adamcchampion on 2017/08/14.
@@ -40,7 +41,6 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    @SuppressWarnings({"LogNotTimber"})
     public void onResume() {
         super.onResume();
         try {
@@ -55,11 +55,10 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
     }
 
-    @SuppressWarnings({"deprecation"})
     private boolean hasNetworkConnection() {
         Activity activity = getActivity();
 
@@ -84,14 +83,12 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    @SuppressWarnings("All")
     private void launchBrowser(String url) {
         Uri theUri = Uri.parse(url);
-        Intent LaunchBrowserIntent = new Intent(Intent.ACTION_VIEW, theUri);
-        startActivity(LaunchBrowserIntent);
+        Intent launchBrowserIntent = new Intent(Intent.ACTION_VIEW, theUri);
+        startActivity(launchBrowserIntent);
     }
 
-    @SuppressWarnings("All")
     private void launchWebView(String url) {
         Activity activity = getActivity();
 

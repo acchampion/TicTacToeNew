@@ -2,18 +2,17 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.app.KeyguardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+import timber.log.Timber;
+
 import static android.content.Context.KEYGUARD_SERVICE;
 
 /**
@@ -34,7 +35,6 @@ import static android.content.Context.KEYGUARD_SERVICE;
  * <p>
  * Created by adamcchampion on 2017/08/19.
  */
-@SuppressWarnings("LogNotTimber")
 public class GameSessionFragment extends Fragment {
     private static final int ANDROID_TIMEOUT_BASE = 500;
     private static final int ANDROID_TIMEOUT_SEED = 2000;
@@ -61,7 +61,7 @@ public class GameSessionFragment extends Fragment {
     @SuppressWarnings("deprecation")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView()");
+        Timber.d("onCreateView()");
         View v;
         Activity activity = getActivity();
 
@@ -116,7 +116,7 @@ public class GameSessionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume()");
+        Timber.d(TAG, "onResume()");
         try {
             Activity activity = getActivity();
 
@@ -127,7 +127,7 @@ public class GameSessionFragment extends Fragment {
                 }
             }
         } catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
 
         playNewGame();
@@ -136,19 +136,19 @@ public class GameSessionFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop()");
+        Timber.d(TAG, "onStop()");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView()");
+        Timber.d(TAG, "onDestroyView()");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy()");
+        Timber.d(TAG, "onDestroy()");
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -173,7 +173,7 @@ public class GameSessionFragment extends Fragment {
     }
 
     public void scheduleAndroidsTurn() {
-        Log.d(TAG, "Thread ID in scheduleAndroidsTurn:" + Thread.currentThread().getId());
+        Timber.d(TAG, "Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
         mBoard.disableInput();
         if (!mTestMode) {
             Random randomNumber = new Random();
@@ -193,7 +193,7 @@ public class GameSessionFragment extends Fragment {
 
     private void androidTakesATurn() {
         int pickedX, pickedY;
-        Log.d(TAG, "Thread ID in androidTakesATurn:" + Thread.currentThread().getId());
+        Timber.d(TAG, "Thread ID in androidTakesATurn: %s", Thread.currentThread().getId());
 
         GameGrid gameGrid = mActiveGame.getGameGrid();
         ArrayList<Square> emptyBlocks = gameGrid.getEmptySquares();
@@ -212,7 +212,7 @@ public class GameSessionFragment extends Fragment {
     }
 
     public void humanTakesATurn(int x, int y) {/* human's turn */
-        Log.d(TAG, "Thread ID in humanTakesATurn:" + Thread.currentThread().getId());
+        Timber.d(TAG, "Thread ID in humanTakesATurn: %s", Thread.currentThread().getId());
         boolean successfulPlay = mActiveGame.play(x, y);
         if (successfulPlay) {
             mGameView.placeSymbol(x, y); /* Update the display */
@@ -261,7 +261,7 @@ public class GameSessionFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         LayoutInflater inflater = LayoutInflater.from(getActivity());
                         if (mContainer != null) {
-                            Log.d(TAG, "Calling setupBoard() again");
+                            Timber.d("Calling setupBoard() again");
                             onSaveInstanceState(mSavedInstanceState);
 
                             Activity activity = getActivity();
@@ -280,7 +280,7 @@ public class GameSessionFragment extends Fragment {
                                 }
                             }
                         } else {
-                            Log.d(TAG, "Could not restart game. mContainer or mSavedInstanceState were null");
+                            Timber.d("Could not restart game. mContainer or mSavedInstanceState were null");
                         }
                         playNewGame();
                     }

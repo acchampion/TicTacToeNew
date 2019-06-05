@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.util.Log;
+
+import timber.log.Timber;
 
 /**
  * Created by adamcchampion on 2017/08/13.
@@ -20,7 +21,6 @@ public class SettingsFragment extends PreferenceFragmentCompat  {
     }
 
     @Override
-    @SuppressWarnings({"LogNotTimber"})
     public void onResume() {
         super.onResume();
         try {
@@ -34,7 +34,7 @@ public class SettingsFragment extends PreferenceFragmentCompat  {
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
     }
 

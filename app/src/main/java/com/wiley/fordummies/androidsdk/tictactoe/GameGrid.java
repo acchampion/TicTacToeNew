@@ -59,7 +59,7 @@ public class GameGrid {
         return isFilled;
     }
 
-    @SuppressWarnings("LogNotTimber")
+
     public boolean isRightToLeftDiagonalFilled() { // Right diagonal has the same symbol
         int foundIndex = -1;
         boolean isFilled;

@@ -6,7 +6,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
+
+import timber.log.Timber;
 
 public class MediaPlaybackService extends Service {
     MediaPlayer player;
@@ -25,14 +26,13 @@ public class MediaPlaybackService extends Service {
     }
 
     @Override
-    @SuppressWarnings({"LogNotTimber"})
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         Bundle extras = intent.getExtras();
         if (extras != null) {
             String audioFileURIString = extras.getString("URIString");
             Uri audioFileURI = Uri.parse(audioFileURIString);
-            Log.d(TAG, "URI = " + audioFileURI.toString());
+            Timber.d(TAG, "URI = %s", audioFileURI.toString());
             try {
                 player.reset();
                 player.setDataSource(this.getApplicationContext(), audioFileURI);

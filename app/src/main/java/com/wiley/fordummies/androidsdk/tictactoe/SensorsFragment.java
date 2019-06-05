@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +21,13 @@ import android.widget.TextView;
 import java.util.Hashtable;
 import java.util.List;
 
+import timber.log.Timber;
+
 import static android.content.Context.SENSOR_SERVICE;
 
 /**
  * Created by adamcchampion on 2017/08/14.
  */
-@SuppressWarnings({"LogNotTimber"})
 public class SensorsFragment extends Fragment implements SensorEventListener {
     private SensorManager mSensorManager;
     private List<Sensor> mSensorList;
@@ -62,7 +62,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume()");
+        Timber.d(TAG, "onResume()");
         try {
             AppCompatActivity activity = (AppCompatActivity) getActivity();
 
@@ -75,7 +75,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
 
         // Start listening to sensor updates
@@ -86,11 +86,11 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onPause() {
-        Log.d(TAG, "Entering onPause");
+        Timber.d(TAG, "Entering onPause()");
         super.onPause();
         // Stop updates when paused
         mSensorManager.unregisterListener(this);
-        Log.d(TAG, "Leaving onPause");
+        Timber.d(TAG, "Leaving onPause()");
     }
 
 
@@ -142,7 +142,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
             }
 
         }
-        Log.d(TAG, "--- EVENT Raw Values ---\n" + sensorName + "\n" +
+        Timber.d(TAG, "--- EVENT Raw Values ---\n" + sensorName + "\n" +
                 "Distance  Last= >" + distanceOfLastValue + "<\n" +
                 "Distance  This= >" + distanceOfThisValue + "<\n" +
                 "Change = >" + change + "<\n" +
@@ -151,7 +151,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
                 sensorEventString);
         if (lastValue == null ||
                 percentageChange > TOLERANCE) {
-            Log.d(TAG + sensorName,
+            Timber.d(TAG + sensorName,
                     "--- Event Changed --- \n" +
                             "Change = >" + change + "<\n" +
                             "Percent = >" + percentageChange + "%\n" +

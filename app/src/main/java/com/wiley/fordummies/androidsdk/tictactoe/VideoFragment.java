@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,8 @@ import android.widget.Button;
 import android.widget.VideoView;
 
 import java.io.File;
+
+import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -76,7 +77,6 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    @SuppressWarnings({"LogNotTimber"})
     public void onResume() {
         super.onResume();
         try {
@@ -89,7 +89,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
                 }
             }
         } catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
     }
 

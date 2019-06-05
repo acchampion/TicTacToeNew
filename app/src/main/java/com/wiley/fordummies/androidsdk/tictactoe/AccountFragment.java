@@ -18,12 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import timber.log.Timber;
+
 /**
  * Fragment for user account creation.
  *
  * Created by adamcchampion on 2017/08/05.
  */
-@SuppressWarnings("LogNotTimber")
 public class AccountFragment extends Fragment implements View.OnClickListener {
     private EditText mEtUsername;
     private EditText mEtPassword;
@@ -76,7 +77,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
     }
 
@@ -126,7 +127,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                     fragment.show(manager, "account_error");
                 }
             } else {
-                Log.e(TAG, "An unknown account creation error occurred.");
+                Timber.e("An unknown account creation error occurred.");
             }
         }
     }

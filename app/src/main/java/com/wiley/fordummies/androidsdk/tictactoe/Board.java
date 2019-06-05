@@ -8,12 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Rect;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-@SuppressWarnings("LogNotTimber")
+
 public class Board extends View {
 
     private final GameSessionActivity mGameSessionActivity;    // game context (parent)
@@ -41,17 +42,17 @@ public class Board extends View {
 
         // Allocate Paint objects to save memory.
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBackgroundPaint.setColor(getResources().getColor(R.color.white));
+        mBackgroundPaint.setColor(ContextCompat.getColor(context, R.color.white));
         mDarkPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mDarkPaint.setColor(getResources().getColor(R.color.dark));
+        mDarkPaint.setColor(ContextCompat.getColor(context, R.color.dark));
 
         float strokeWidth = 2;
         mDarkPaint.setStrokeWidth(strokeWidth);
         mLightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mLightPaint.setColor(getResources().getColor(R.color.light));
+        mLightPaint.setColor(ContextCompat.getColor(context, R.color.light));
         mLightPaint.setStrokeWidth(strokeWidth);
         Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        linePaint.setColor(getResources().getColor(R.color.dark));
+        linePaint.setColor(ContextCompat.getColor(context, R.color.dark));
 
         float lineWidth = 10;
         linePaint.setStrokeWidth(lineWidth);
@@ -69,9 +70,9 @@ public class Board extends View {
         mBlockHeight = height / 3f;
 
         if (width < height) {
-            mBlockHeight = mBlockWidth;
+            mBlockHeight = Math.min(mBlockWidth, mBlockHeight);
         } else {
-            mBlockWidth = mBlockHeight;
+            mBlockWidth = Math.min(mBlockHeight, mBlockWidth);
         }
 
         super.onSizeChanged(width, height, oldWidth, oldHeight);
@@ -85,10 +86,10 @@ public class Board extends View {
         float canvasHeight = getHeight();
 
         if (canvasWidth < canvasHeight) {
-            canvasHeight = canvasWidth;
+            canvasHeight = Math.min(canvasHeight, canvasWidth);
         }
         else {
-            canvasWidth = canvasHeight;
+            canvasWidth = Math.min(canvasHeight, canvasWidth);
         }
 
         canvas.drawRect(0, 0, canvasWidth, canvasHeight, mBackgroundPaint);
@@ -129,20 +130,18 @@ public class Board extends View {
         int posY = 0;
         int action = event.getAction();
 
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
-                Log.d(TAG,"Coordinates: " + x + "," + y);
-                if (x > mBlockWidth && x < mBlockWidth * 2) posX = 1;
-                if (x > mBlockWidth * 2 && x < mBlockWidth * 3) posX = 2;
+        if (action == MotionEvent.ACTION_DOWN) {
+            float x = event.getX();
+            float y = event.getY();
+            Log.d(TAG, "Coordinates: " + x + "," + y);
+            if (x > mBlockWidth && x < mBlockWidth * 2) posX = 1;
+            if (x > mBlockWidth * 2 && x < mBlockWidth * 3) posX = 2;
 
-                if (y > mBlockHeight && y < mBlockHeight * 2) posY = 1;
-                if (y > mBlockHeight * 2 && y < mBlockHeight * 3) posY = 2;
+            if (y > mBlockHeight && y < mBlockHeight * 2) posY = 1;
+            if (y > mBlockHeight * 2 && y < mBlockHeight * 3) posY = 2;
 
-                performClick();
-                mGameSessionActivity.humanTakesATurn(posX, posY);
-                break;
+            performClick();
+            mGameSessionActivity.humanTakesATurn(posX, posY);
         }
         return super.onTouchEvent(event);
     }
@@ -152,7 +151,6 @@ public class Board extends View {
         invalidateBlock(x, y);
     }
 
-    @SuppressWarnings("deprecation")
     public void invalidateBlock(int x, int y) {
         Rect selBlock = new Rect((int) (x * mBlockWidth), (int) (y * mBlockHeight), (int) ((x + 1) * mBlockWidth), (int) ((y + 1) * mBlockHeight));
         invalidate(selBlock);

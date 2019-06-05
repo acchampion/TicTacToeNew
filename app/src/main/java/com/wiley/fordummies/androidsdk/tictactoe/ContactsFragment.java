@@ -18,7 +18,6 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.Objects;
+
+import timber.log.Timber;
 
 /**
  * Fragment for displaying contacts.
@@ -35,7 +36,7 @@ import java.util.Objects;
  *
  * Created by adamcchampion on 2017/08/16.
  */
-@SuppressWarnings("LogNotTimber")
+
 public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private ListView mContactsListView;
 
@@ -115,23 +116,26 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!hasReadContactPermission()) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                ContactPermissionDeniedDialogFragment dialogFragment = new ContactPermissionDeniedDialogFragment();
-                dialogFragment.show(fm, "contact_perm_denied");
+            if (lacksReadContactPermission()) {
+                AppCompatActivity activity = (AppCompatActivity) getActivity();
+                if (activity != null) {
+                    FragmentManager fm = activity.getSupportFragmentManager();
+                    ContactPermissionDeniedDialogFragment dialogFragment = new ContactPermissionDeniedDialogFragment();
+                    dialogFragment.show(fm, "contact_perm_denied");
+                }
             }
         }
     }
 
 
     private void requestContacts() {
-        Log.d(TAG, "requestContacts()");
+        Timber.d("requestContacts()");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!hasReadContactPermission()) {
+            if (lacksReadContactPermission()) {
                 requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
                         PERMISSION_REQUEST_READ_CONTACTS);
             }
@@ -144,13 +148,11 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         }
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private boolean hasReadContactPermission() {
+    private boolean lacksReadContactPermission() {
         Activity activity = getActivity();
-        return activity != null &&
-                activity.checkSelfPermission(Manifest.permission.READ_CONTACTS) ==
-                        PackageManager.PERMISSION_GRANTED;
+        return activity == null ||
+                activity.checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -160,15 +162,14 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                 showContacts();
             }
             else {
-                Log.e(TAG, "Error: Permission denied to read contacts");
+                Timber.e(TAG, "Error: Permission denied to read contacts");
                 Toast.makeText(getActivity(), getResources().getString(R.string.read_contacts_permission_denied), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void showContacts() {
-        Log.d(TAG, "showContacts()");
+        Timber.d(TAG, "showContacts()");
         Activity activity = getActivity();
 
         if (activity != null) {

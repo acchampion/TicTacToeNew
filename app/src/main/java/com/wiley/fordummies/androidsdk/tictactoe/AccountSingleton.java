@@ -1,6 +1,5 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -81,14 +80,12 @@ public class AccountSingleton {
         }
     }
 
-    @SuppressLint("Recycle")
-    @SuppressWarnings("SameParameterValue")
-    private AccountCursorWrapper queryAccounts(String whereClause, String[] whereArgs) {
+    private AccountCursorWrapper queryAccounts() {
         Cursor cursor = mDatabase.query(
                 AccountsTable.NAME,
                 null, // columns; null selects all columns
-                whereClause,
-                whereArgs,
+                null,
+                null,
                 null, // GROUP BY
                 null, // HAVING
                 null // ORDER BY
@@ -100,7 +97,7 @@ public class AccountSingleton {
     public List<Account> getAccounts() {
         List<Account> accountList = new ArrayList<>();
 
-        try (AccountCursorWrapper cursor = queryAccounts(null, null)) {
+        try (AccountCursorWrapper cursor = queryAccounts()) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 accountList.add(cursor.getAccount());

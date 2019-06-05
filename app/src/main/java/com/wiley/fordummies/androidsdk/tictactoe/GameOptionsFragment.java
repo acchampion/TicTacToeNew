@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import timber.log.Timber;
 
 /**
  * Fragment that handles main user navigation in the app.
@@ -55,7 +56,6 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    @SuppressWarnings("LogNotTimber")
     public void onResume() {
         super.onResume();
         try {
@@ -69,7 +69,7 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
     }
 

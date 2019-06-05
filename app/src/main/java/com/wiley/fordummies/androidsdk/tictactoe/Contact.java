@@ -3,7 +3,6 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 /**
  * Created by adamcchampion on 2017/08/16.
  */
-@SuppressWarnings("All")
 public class Contact {
     private String mName;
 
