@@ -53,8 +53,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
                     actionBar.setSubtitle(getResources().getString(R.string.help));
                 }
             }
-        }
-        catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             Timber.e(TAG, "Could not set subtitle");
         }
     }
@@ -66,19 +65,11 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
             ConnectivityManager connectivityManager =
                     (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             if (connectivityManager != null) {
-                NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-                boolean isConnected;
-                boolean isWifiAvailable = networkInfo.isAvailable();
-                boolean isWifiConnected = networkInfo.isConnected();
-                networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-                boolean isMobileAvailable = networkInfo.isAvailable();
-                boolean isMobileConnected = networkInfo.isConnected();
-                isConnected = (isMobileAvailable && isMobileConnected) || (isWifiAvailable && isWifiConnected);
-                return (isConnected);
+                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+                return (activeNetwork != null && activeNetwork.isConnectedOrConnecting());
             }
             return false;
-        }
-        else {
+        } else {
             return false;
         }
     }
