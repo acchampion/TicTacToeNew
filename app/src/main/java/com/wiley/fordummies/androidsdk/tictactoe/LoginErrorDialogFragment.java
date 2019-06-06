@@ -2,8 +2,8 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
@@ -21,9 +21,7 @@ public class LoginErrorDialogFragment extends DialogFragment {
                 .setTitle(getResources().getString(R.string.error))
                 .setMessage(getResources().getString(R.string.login_error_text))
                 .setPositiveButton(getResources().getString(R.string.ok_text),
-                        new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).create();
+                        (dialog, which) -> {
+                        }).create();
     }
 }

@@ -28,7 +28,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ImagesFragment extends Fragment implements View.OnClickListener {
     private ImageView imageView = null;
-    public final static int IMAGE_CAPTURED = 1;
+    private final static int IMAGE_CAPTURED = 1;
     private String imageFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath() +
             File.separator + "other_image.png";
     private Bitmap imageBitmap = null;

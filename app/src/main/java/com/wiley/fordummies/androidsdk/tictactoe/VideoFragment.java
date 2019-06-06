@@ -31,7 +31,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
     private Uri mVideoFileUri = null;
     private Intent mRecordVideoIntent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
 
-    public static final int VIDEO_CAPTURED = 1;
+    private static final int VIDEO_CAPTURED = 1;
 
     private final String TAG = getClass().getSimpleName();
 

@@ -1,6 +1,5 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +31,6 @@ public class HelpWebViewFragment extends Fragment  {
     private final String TAG = getClass().getSimpleName();
 
     @Override
-    @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings({"LogNotTimber"})
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_help_webview, container, false);
@@ -52,7 +50,7 @@ public class HelpWebViewFragment extends Fragment  {
         }
 
         WebView.setWebContentsDebuggingEnabled(true);
-        helpInWebView.getSettings().setJavaScriptEnabled(true);
+        // helpInWebView.getSettings().setJavaScriptEnabled(true);
         helpInWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return false;

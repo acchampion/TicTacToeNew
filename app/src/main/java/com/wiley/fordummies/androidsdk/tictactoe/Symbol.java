@@ -10,7 +10,7 @@ public class Symbol {
 
     private Symbol() {/* Empty PRIVATE constructor to enforce Singleton */}
 
-    public static Symbol SymbolXCreate() {
+    static Symbol SymbolXCreate() {
         if (sSymbolX == null) {
             sSymbolX = new Symbol();
             sSymbolX.value = MARK.X;
@@ -18,7 +18,7 @@ public class Symbol {
         return sSymbolX;
     }
 
-    public static Symbol SymbolOCreate() {
+    static Symbol SymbolOCreate() {
         if (sSymbolO == null) {
             sSymbolO = new Symbol();
             sSymbolO.value = MARK.O;
@@ -26,7 +26,7 @@ public class Symbol {
         return sSymbolO;
     }
 
-    public static Symbol SymbolBlankCreate() {
+    static Symbol SymbolBlankCreate() {
         if (sSymbolBlank == null) {
             sSymbolBlank = new Symbol();
             sSymbolBlank.value = MARK.Blank;
@@ -34,6 +34,7 @@ public class Symbol {
         return sSymbolBlank;
     }
 
+    @SuppressWarnings("NullableProblems")
     public String toString() {
         if (value == MARK.X)
             return "X";

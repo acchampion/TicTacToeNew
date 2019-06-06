@@ -1,6 +1,6 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-public class Game {
+class Game {
     private enum STATE {Inactive, Active, Won, Draw}
     private STATE gameState;
 
@@ -50,7 +50,7 @@ public class Game {
         else return PlayerTwoName;
     }
 
-    public boolean play(int x, int y) {
+    boolean play(int x, int y) {
         boolean successfulPlay = false;
         if ((gameGrid.getValueAtLocation(x, y) == Symbol.SymbolBlankCreate())) {
             successfulPlay = true;
@@ -98,7 +98,7 @@ public class Game {
         return gameState == STATE.Draw;
     }
 
-    public int getPlayCount() {
+    int getPlayCount() {
         return playCount;
     }
 

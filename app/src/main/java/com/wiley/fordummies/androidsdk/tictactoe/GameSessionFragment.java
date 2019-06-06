@@ -3,16 +3,10 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +20,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import timber.log.Timber;
 
 import static android.content.Context.KEYGUARD_SERVICE;
@@ -42,16 +41,13 @@ public class GameSessionFragment extends Fragment {
     private Board mBoard;
     Game mActiveGame;
     private GameView mGameView;
-    int mScorePlayerOne = 0;
-    int mScorePlayerTwo = 0;
-    String mFirstPlayerName;
-    String mSecondPlayerName;
-
-    @SuppressWarnings({"FieldCanBeLocal"})
-    private boolean mTestMode = false;
+    private int mScorePlayerOne = 0;
+    private int mScorePlayerTwo = 0;
+    private String mFirstPlayerName;
+    private String mSecondPlayerName;
 
     private ViewGroup mContainer;
-    Bundle mSavedInstanceState;
+    private Bundle mSavedInstanceState;
 
     private static final String SCOREPLAYERONEKEY = "ScorePlayerOne";
     private static final String SCOREPLAYERTWOKEY = "ScorePlayerTwo";
@@ -98,7 +94,7 @@ public class GameSessionFragment extends Fragment {
         return v;
     }
 
-    public void setupBoard(View v) {
+    private void setupBoard(View v) {
         mBoard = v.findViewById(R.id.board);
         TextView turnStatusView = v.findViewById(R.id.gameInfo);
         TextView scoreView = v.findViewById(R.id.scoreboard);
@@ -151,11 +147,6 @@ public class GameSessionFragment extends Fragment {
         Timber.d(TAG, "onDestroy()");
     }
 
-    @SuppressWarnings({"UnusedDeclaration"})
-    public int getPlayCount() {
-        return mActiveGame.getPlayCount();
-    }
-
     private void playNewGame() {
         // If Android is the first player, give it its turn
         if (mActiveGame.getCurrentPlayerName().equals("Android")) scheduleAndroidsTurn();
@@ -172,18 +163,16 @@ public class GameSessionFragment extends Fragment {
         theGame.setPlayerNames(mFirstPlayerName, mSecondPlayerName);
     }
 
-    public void scheduleAndroidsTurn() {
+    @SuppressWarnings("ConstantConditions")
+    void scheduleAndroidsTurn() {
         Timber.d(TAG, "Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
         mBoard.disableInput();
-        if (!mTestMode) {
+        boolean testMode = false;
+        if (!testMode) {
             Random randomNumber = new Random();
             Handler handler = new Handler();
             handler.postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            androidTakesATurn();
-                        }
-                    },
+                    this::androidTakesATurn,
                     ANDROID_TIMEOUT_BASE + randomNumber.nextInt(ANDROID_TIMEOUT_SEED)
             );
         } else {
@@ -211,7 +200,7 @@ public class GameSessionFragment extends Fragment {
         }
     }
 
-    public void humanTakesATurn(int x, int y) {/* human's turn */
+    void humanTakesATurn(int x, int y) {/* human's turn */
         Timber.d(TAG, "Thread ID in humanTakesATurn: %s", Thread.currentThread().getId());
         boolean successfulPlay = mActiveGame.play(x, y);
         if (successfulPlay) {
@@ -257,41 +246,37 @@ public class GameSessionFragment extends Fragment {
                 .setTitle(alertMessage)
                 .setMessage("Play another game?")
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        LayoutInflater inflater = LayoutInflater.from(getActivity());
-                        if (mContainer != null) {
-                            Timber.d("Calling setupBoard() again");
-                            onSaveInstanceState(mSavedInstanceState);
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    LayoutInflater inflater = LayoutInflater.from(getActivity());
+                    if (mContainer != null) {
+                        Timber.d("Calling setupBoard() again");
+                        onSaveInstanceState(mSavedInstanceState);
 
-                            Activity activity = getActivity();
-
-                            if (activity != null) {
-                                activity.recreate();
-                                onCreateView(inflater, mContainer, mSavedInstanceState);
-                            }
-
-                            if (mBoard != null) {
-                                Symbol blankSymbol = Symbol.SymbolBlankCreate();
-                                for (int x = 0; x < GameGrid.SIZE; x++) {
-                                    for (int y = 0; y < GameGrid.SIZE; y++) {
-                                        mActiveGame.getGameGrid().setValueAtLocation(x, y, blankSymbol);
-                                    }
-                                }
-                            }
-                        } else {
-                            Timber.d("Could not restart game. mContainer or mSavedInstanceState were null");
-                        }
-                        playNewGame();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
                         Activity activity = getActivity();
 
                         if (activity != null) {
-                            activity.finish();
+                            activity.recreate();
+                            onCreateView(inflater, mContainer, mSavedInstanceState);
                         }
+
+                        if (mBoard != null) {
+                            Symbol blankSymbol = Symbol.SymbolBlankCreate();
+                            for (int x = 0; x < GameGrid.SIZE; x++) {
+                                for (int y = 0; y < GameGrid.SIZE; y++) {
+                                    mActiveGame.getGameGrid().setValueAtLocation(x, y, blankSymbol);
+                                }
+                            }
+                        }
+                    } else {
+                        Timber.d("Could not restart game. mContainer or mSavedInstanceState were null");
+                    }
+                    playNewGame();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    Activity activity = getActivity();
+
+                    if (activity != null) {
+                        activity.finish();
                     }
                 })
                 .show();
@@ -305,7 +290,7 @@ public class GameSessionFragment extends Fragment {
             mScorePlayerTwo++;
     }
 
-    public void sendScoresViaEmail() {
+    private void sendScoresViaEmail() {
         Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
                 "Look at my AWESOME TicTacToe Score!");
@@ -317,7 +302,7 @@ public class GameSessionFragment extends Fragment {
         startActivity(emailIntent);
     }
 
-    public void sendScoresViaSMS() {
+    private void sendScoresViaSMS() {
         Intent SMSIntent = new Intent(Intent.ACTION_VIEW);
         SMSIntent.putExtra("sms_body",
                 "Look at my AWESOME TicTacToe Score!" +
@@ -328,7 +313,7 @@ public class GameSessionFragment extends Fragment {
         startActivity(SMSIntent);
     }
 
-    public void callTicTacToeHelp() {
+    private void callTicTacToeHelp() {
         Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
         String phoneNumber = "842-822-4357"; // TIC TAC HELP
         String uri = "tel:" + phoneNumber.trim();

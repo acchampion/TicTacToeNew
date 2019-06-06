@@ -3,12 +3,13 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 /**
  * Fragment for splash screen.
@@ -17,10 +18,10 @@ import android.view.ViewGroup;
  */
 
 public class SplashScreenFragment extends Fragment implements View.OnTouchListener{
-    protected boolean mIsActive = true;
-    protected int mSplashTime = 500;
-    protected int mTimeIncrement = 100;
-    protected int mSleepTime = 100;
+    private boolean mIsActive = true;
+    private int mSplashTime = 500;
+    private int mTimeIncrement = 100;
+    private int mSleepTime = 100;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

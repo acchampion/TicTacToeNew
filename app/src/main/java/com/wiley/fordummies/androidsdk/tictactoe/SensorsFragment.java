@@ -6,13 +6,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +14,13 @@ import android.widget.TextView;
 import java.util.Hashtable;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -94,7 +94,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     }
 
 
-    public String getSensorDescription(Sensor sensor) {
+    private String getSensorDescription(Sensor sensor) {
         return "Sensor: " + sensor.getName() + "; Ver :" + sensor.getVersion() + "; Range: " +
                 sensor.getMaximumRange() + "; Power: " + sensor.getPower() +
                 "; Res: " + sensor.getResolution();

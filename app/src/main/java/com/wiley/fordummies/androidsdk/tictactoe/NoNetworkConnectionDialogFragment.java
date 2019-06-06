@@ -2,8 +2,8 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
@@ -20,9 +20,7 @@ public class NoNetworkConnectionDialogFragment extends DialogFragment {
                 .setMessage(getResources().getString(R.string.no_net_text))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(getResources().getString(R.string.ok_text),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
+                        (dialog, which) -> {
                         }).create();
     }
 }

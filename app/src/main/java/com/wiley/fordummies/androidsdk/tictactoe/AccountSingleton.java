@@ -50,7 +50,7 @@ public class AccountSingleton {
      *
      * @param account Account object
      */
-    public void addAccount(Account account) {
+    void addAccount(Account account) {
         ContentValues contentValues = getContentValues(account);
 
         mDatabase.beginTransaction();
@@ -94,7 +94,7 @@ public class AccountSingleton {
         return new AccountCursorWrapper(cursor);
     }
 
-    public List<Account> getAccounts() {
+    List<Account> getAccounts() {
         List<Account> accountList = new ArrayList<>();
 
         try (AccountCursorWrapper cursor = queryAccounts()) {

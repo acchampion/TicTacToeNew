@@ -24,6 +24,8 @@ import timber.log.Timber;
  */
 
 public class HelpFragment extends Fragment implements View.OnClickListener {
+
+    private final String mUrlStr = "https://en.wikipedia.org/wiki/Tic-tac-toe";
     private final String TAG = getClass().getSimpleName();
 
     @Override
@@ -72,18 +74,18 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void launchBrowser(String url) {
-        Uri theUri = Uri.parse(url);
+    private void launchBrowser() {
+        Uri theUri = Uri.parse(mUrlStr);
         Intent launchBrowserIntent = new Intent(Intent.ACTION_VIEW, theUri);
         startActivity(launchBrowserIntent);
     }
 
-    private void launchWebView(String url) {
+    private void launchWebView() {
         Activity activity = getActivity();
 
         if (activity != null) {
             Intent launchWebViewIntent = new Intent(getActivity().getApplicationContext(), HelpWebViewActivity.class);
-            launchWebViewIntent.putExtra("url", url);
+            launchWebViewIntent.putExtra("url", mUrlStr);
             startActivity(launchWebViewIntent);
         }
     }
@@ -103,14 +105,14 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.button_lookup_wikipedia:
                 if (hasNetworkConnection()) {
-                    launchBrowser("https://en.wikipedia.org/wiki/Tic-tac-toe");
+                    launchBrowser();
                 } else {
                     noNetworkConnectionNotify();
                 }
                 break;
             case R.id.button_lookup_wikipedia_in_web_view:
                 if (hasNetworkConnection()) {
-                    launchWebView("https://en.wikipedia.org/wiki/Tic-tac-toe");
+                    launchWebView();
                 } else {
                     noNetworkConnectionNotify();
                 }

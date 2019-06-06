@@ -4,8 +4,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class GameGrid {
-    public static final int SIZE = 3;
+class GameGrid {
+    static final int SIZE = 3;
     private Symbol[][] mGrid;
 
     private final String TAG = getClass().getSimpleName();
@@ -17,18 +17,18 @@ public class GameGrid {
                 mGrid[i][j] = Symbol.SymbolBlankCreate();
     }
 
-    public void setValueAtLocation(int x, int y, Symbol value) {
+    void setValueAtLocation(int x, int y, Symbol value) {
         if (((x >= 0) && (x < SIZE)) && ((y >= 0) && (y < SIZE)))
             mGrid[x][y] = value;
     }
 
-    public Symbol getValueAtLocation(int x, int y) {
+    Symbol getValueAtLocation(int x, int y) {
         Symbol returnValue = null;
         if (((x >= 0) && (x < SIZE)) && ((y >= 0) && (y < SIZE))) returnValue = mGrid[x][y];
         return returnValue;
     }
 
-    public boolean isRowFilled(int row) { // Entire row has the same symbol
+    boolean isRowFilled(int row) { // Entire row has the same symbol
         boolean isFilled;
         boolean foundMismatch = false;
         for (int col = 0; (col < SIZE) && (!foundMismatch); col++) {
@@ -39,7 +39,7 @@ public class GameGrid {
         return isFilled;
     }
 
-    public boolean isColumnFilled(int column) { // Entire column has the same symbol
+    boolean isColumnFilled(int column) { // Entire column has the same symbol
         boolean isFilled;
         boolean foundMismatch = false;
         for (int row = 0; (row < SIZE) && (!foundMismatch); row++) {
@@ -49,7 +49,7 @@ public class GameGrid {
         return isFilled;
     }
 
-    public boolean isLeftToRightDiagonalFilled() { // Left diagonal has the same symbol
+    boolean isLeftToRightDiagonalFilled() { // Left diagonal has the same symbol
         boolean isFilled;
         boolean foundMismatch = false;
         for (int index = 0; (index < SIZE) && (!foundMismatch); index++) {
@@ -60,7 +60,7 @@ public class GameGrid {
     }
 
 
-    public boolean isRightToLeftDiagonalFilled() { // Right diagonal has the same symbol
+    boolean isRightToLeftDiagonalFilled() { // Right diagonal has the same symbol
         int foundIndex = -1;
         boolean isFilled;
         boolean foundMismatch = false;
@@ -77,7 +77,7 @@ public class GameGrid {
         return isFilled;
     }
 
-    public ArrayList<Square> getEmptySquares() { // Get the unfilled squares
+    ArrayList<Square> getEmptySquares() { // Get the unfilled squares
         ArrayList<Square> list = new ArrayList<>();
         for (int i = 0; i < GameGrid.SIZE; i++) {
             for (int j = 0; j < GameGrid.SIZE; j++) {

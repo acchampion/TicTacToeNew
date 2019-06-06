@@ -3,8 +3,8 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
@@ -20,13 +20,11 @@ public class LocationDeniedDialogFragment extends DialogFragment {
                 .setTitle(getResources().getString(R.string.error))
                 .setMessage(getResources().getString(R.string.location_permission_denied))
                 .setPositiveButton(getResources().getString(R.string.ok_text),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Activity activity = getActivity();
+                        (dialog, which) -> {
+                            Activity activity = getActivity();
 
-                                if (activity != null) {
-                                    activity.finish();
-                                }
+                            if (activity != null) {
+                                activity.finish();
                             }
                         }).create();
     }
