@@ -6,10 +6,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +14,10 @@ import android.widget.VideoView;
 
 import java.io.File;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -49,8 +49,6 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
         Button buttonRecord = v.findViewById(R.id.buttonVideoRecord);
         buttonRecord.setOnClickListener(this);
 
-        Button btnExit = v.findViewById(R.id.buttonVideoExit);
-        btnExit.setOnClickListener(this);
         String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getPath() +
                 File.separator + "sample_video.mp4";
         File videoFile = new File(path);
@@ -106,14 +104,6 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.buttonVideoStop:
                 mVideoView.stopPlayback();
-                break;
-            case R.id.buttonVideoExit:
-                Activity activity = getActivity();
-
-                if (activity != null) {
-                    activity.finish();
-                }
-
                 break;
         }
     }

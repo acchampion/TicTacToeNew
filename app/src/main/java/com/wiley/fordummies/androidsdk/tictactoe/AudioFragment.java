@@ -7,10 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +14,10 @@ import android.widget.Button;
 
 import java.io.File;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -48,9 +48,6 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
         buttonStop.setOnClickListener(this);
         Button buttonRecord = v.findViewById(R.id.buttonAudioRecord);
         buttonRecord.setOnClickListener(this);
-
-        Button btnExit = v.findViewById(R.id.buttonAudioExit);
-        btnExit.setOnClickListener(this);
 
         File audioFile = new File(mAudioFilePath);
         if (audioFile.exists()) {
@@ -119,9 +116,6 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
                     break;
                 case R.id.buttonAudioRecord:
                     startActivityForResult(mRecordAudioIntent, AUDIO_CAPTURED);
-                    break;
-                case R.id.buttonAudioExit:
-                    activity.finish();
                     break;
             }
         }

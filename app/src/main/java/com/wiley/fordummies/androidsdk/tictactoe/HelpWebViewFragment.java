@@ -3,10 +3,6 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +13,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 /**
  * Fragment that shows WebView for Tic-Tac-Toe on Wikipedia.
  *
  * Created by adamcchampion on 2017/08/14.
  */
 
-public class HelpWebViewFragment extends Fragment implements View.OnClickListener {
+public class HelpWebViewFragment extends Fragment  {
     private String mUrl;
     private ProgressBar mProgressBar;
 
@@ -40,8 +41,6 @@ public class HelpWebViewFragment extends Fragment implements View.OnClickListene
         mProgressBar = v.findViewById(R.id.webviewprogress);
         mProgressBar.setMax(100);
 
-        View buttonExit = v.findViewById(R.id.button_exit);
-        buttonExit.setOnClickListener(this);
         Activity activity = getActivity();
 
         if (activity != null) {
@@ -93,20 +92,6 @@ public class HelpWebViewFragment extends Fragment implements View.OnClickListene
         }
         catch (NullPointerException npe) {
             Log.e(TAG, "Could not set subtitle");
-        }
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        Activity activity = getActivity();
-
-        if (activity != null) {
-            switch (view.getId()) {
-                case R.id.button_exit:
-                    activity.finishFromChild(getActivity());
-                    break;
-            }
         }
     }
 }

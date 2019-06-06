@@ -6,10 +6,10 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -351,7 +351,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
                     mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
-                            if (response != null) {
+                            //if (response != null) {
                                 GeocodingResponse responseBody = response.body();
                                 if (responseBody != null) {
                                     List<CarmenFeature> results = responseBody.getFeatures();
@@ -376,7 +376,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
                                         Toast.makeText(MapsActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                            }
+                            //}
                         }
 
                         @Override

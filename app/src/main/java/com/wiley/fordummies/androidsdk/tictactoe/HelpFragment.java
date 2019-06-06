@@ -7,16 +7,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import timber.log.Timber;
 
 /**
@@ -30,8 +30,6 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_help, container, false);
 
-        Button btOK = v.findViewById(R.id.button_help_ok);
-        btOK.setOnClickListener(this);
         Button wikipedia = v.findViewById(R.id.button_lookup_wikipedia);
         wikipedia.setOnClickListener(this);
         Button wikipediaWebView = v.findViewById(R.id.button_lookup_wikipedia_in_web_view);
@@ -66,7 +64,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
                     (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             if (connectivityManager != null) {
                 NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-                return (activeNetwork != null && activeNetwork.isConnectedOrConnecting());
+                return (activeNetwork != null && activeNetwork.isConnected());
             }
             return false;
         } else {
@@ -103,14 +101,6 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_help_ok:
-                Activity activity = getActivity();
-
-                if (activity != null) {
-                    activity.finishFromChild(getActivity());
-                }
-
-                break;
             case R.id.button_lookup_wikipedia:
                 if (hasNetworkConnection()) {
                     launchBrowser("https://en.wikipedia.org/wiki/Tic-tac-toe");

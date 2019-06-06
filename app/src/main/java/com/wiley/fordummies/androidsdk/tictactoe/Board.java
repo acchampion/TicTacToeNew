@@ -8,11 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Rect;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import timber.log.Timber;
 
 
 public class Board extends View {
@@ -122,7 +124,7 @@ public class Board extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!this.mIsEnabled) {
-            Log.d(TAG, "Board.onTouchEvent(): Board not mIsEnabled");
+            Timber.d(TAG, "Board.onTouchEvent(): Board not mIsEnabled");
             return false;
         }
 
@@ -133,7 +135,7 @@ public class Board extends View {
         if (action == MotionEvent.ACTION_DOWN) {
             float x = event.getX();
             float y = event.getY();
-            Log.d(TAG, "Coordinates: " + x + "," + y);
+            Timber.d(TAG, "Coordinates: " + x + ", " + y);
             if (x > mBlockWidth && x < mBlockWidth * 2) posX = 1;
             if (x > mBlockWidth * 2 && x < mBlockWidth * 3) posX = 2;
 
@@ -147,23 +149,23 @@ public class Board extends View {
     }
 
     protected void placeSymbol(int x, int y) {
-        Log.d(TAG,"Thread ID in Board.placeSymbol:" + Thread.currentThread().getId());
+        Timber.d(TAG,"Thread ID in Board.placeSymbol: %s", Thread.currentThread().getId());
         invalidateBlock(x, y);
     }
 
     public void invalidateBlock(int x, int y) {
         Rect selBlock = new Rect((int) (x * mBlockWidth), (int) (y * mBlockHeight), (int) ((x + 1) * mBlockWidth), (int) ((y + 1) * mBlockHeight));
-        invalidate(selBlock);
+        invalidate();
     }
 
     protected void disableInput() {
         this.mIsEnabled = false;
-        Log.d(TAG,"Board.disableInput(): Board not mIsEnabled");
+        Timber.d(TAG,"Board.disableInput(): Board not mIsEnabled");
     }
 
     protected void enableInput() {
         this.mIsEnabled = true;
-        Log.d(TAG,"Board.enableInput(): Board mIsEnabled");
+        Timber.d(TAG,"Board.enableInput(): Board mIsEnabled");
     }
 
     public Bitmap getBitmapForSymbol(Symbol aSymbol) {

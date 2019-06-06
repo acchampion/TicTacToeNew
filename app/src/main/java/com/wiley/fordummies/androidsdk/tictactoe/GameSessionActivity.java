@@ -1,7 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * Created by adamcchampion on 2017/08/19.

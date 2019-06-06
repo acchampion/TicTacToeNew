@@ -7,8 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.File;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -43,8 +44,6 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
         buttonShow.setOnClickListener(this);
         Button buttonCapture = v.findViewById(R.id.buttonImageCapture);
         buttonCapture.setOnClickListener(this);
-        Button buttonExit = v.findViewById(R.id.buttonImageExit);
-        buttonExit.setOnClickListener(this);
 
         // Guard against no camera app (disable the "record" button).
         Activity activity = getActivity();
@@ -76,13 +75,6 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.buttonImageCapture:
                 startActivityForResult(mCaptureImageIntent, IMAGE_CAPTURED);
-                break;
-            case R.id.buttonImageExit:
-                Activity activity = getActivity();
-
-                if (activity != null) {
-                    activity.finish();
-                }
                 break;
         }
     }

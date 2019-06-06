@@ -68,14 +68,6 @@
             android:layout_marginBottom="8dp"
             android:text="@string/tictactoe_wikipedia_webview" />
 
-        <Button
-            android:id="@+id/button_help_ok"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/exit"
-            android:layout_marginRight="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp" />
     </LinearLayout>
 
 </ScrollView>

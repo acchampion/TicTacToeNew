@@ -1,6 +1,6 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 public class SplashScreenActivity extends SingleFragmentActivity {
