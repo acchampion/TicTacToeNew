@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -46,20 +45,6 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         ContactsContract.Contacts.LOOKUP_KEY,
         ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
     };
-
-//    // The column index for the _ID column
-//    private static final int CONTACT_ID_INDEX = 0;
-//    // The column index for the LOOKUP_KEY column
-//    private static final int LOOKUP_KEY_INDEX = 1;
-//
-//
-//    // The contact's _ID value
-//    long mContactId;
-//
-//    // The contact's LOOKUP_KEY
-//    String mContactKey;
-//    // A content URI for the selected contact
-//    Uri mContactUri;
 
     // An adapter that binds the result Cursor to the ListView
     private SimpleCursorAdapter mCursorAdapter;
@@ -118,17 +103,6 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         catch (NullPointerException npe) {
             Timber.e(TAG, "Could not set subtitle");
         }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (lacksReadContactPermission()) {
-                AppCompatActivity activity = (AppCompatActivity) getActivity();
-                if (activity != null) {
-                    FragmentManager fm = activity.getSupportFragmentManager();
-                    ContactPermissionDeniedDialogFragment dialogFragment = new ContactPermissionDeniedDialogFragment();
-                    dialogFragment.show(fm, "contact_perm_denied");
-                }
-            }
-        }
     }
 
 
@@ -163,7 +137,18 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
             }
             else {
                 Timber.e(TAG, "Error: Permission denied to read contacts");
-                Toast.makeText(getActivity(), getResources().getString(R.string.read_contacts_permission_denied), Toast.LENGTH_SHORT).show();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (lacksReadContactPermission()) {
+
+                        AppCompatActivity activity = (AppCompatActivity) getActivity();
+                        if (activity != null) {
+                            FragmentManager fm = activity.getSupportFragmentManager();
+                            ContactPermissionDeniedDialogFragment dialogFragment = new ContactPermissionDeniedDialogFragment();
+                            dialogFragment.show(fm, "contact_perm_denied");
+                        }
+                    }
+                }
             }
         }
     }
@@ -185,7 +170,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
             mContactsListView.setAdapter(mCursorAdapter);
 
             // Initializes the loader
-            getLoaderManager().initLoader(0, null, this);
+            LoaderManager.getInstance(this).initLoader(0, null, this);
         }
     }
 

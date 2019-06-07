@@ -1,15 +1,15 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,10 +27,8 @@ import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.plugins.building.BuildingPlugin;
 import com.mapbox.mapboxsdk.plugins.locationlayer.LocationLayerPlugin;
-import com.mapbox.mapboxsdk.plugins.locationlayer.modes.CameraMode;
 import com.mapbox.services.api.geocoding.v5.GeocodingCriteria;
 import com.mapbox.services.api.geocoding.v5.MapboxGeocoding;
 import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
@@ -39,6 +37,10 @@ import com.mapbox.services.commons.models.Position;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,7 +54,6 @@ import timber.log.Timber;
  * Created by adamcchampion on 2017/08/17.
  */
 
-@SuppressWarnings({"Convert2Lambda"})
 public class MapsActivity extends AppCompatActivity implements LocationEngineListener,
         PermissionsListener, View.OnClickListener {
     private final int ENABLE_GPS_REQUEST_CODE = 1;
@@ -81,15 +82,12 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
 
         mMapView = findViewById(R.id.map_view);
         mMapView.onCreate(savedInstanceState);
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(MapboxMap mapboxMap) {
-                mMapboxMap = mapboxMap;
-                mMapboxMap.getUiSettings().setCompassEnabled(true);
-                mMapboxMap.getUiSettings().setZoomControlsEnabled(true);
-                mMapboxMap.getUiSettings().setZoomGesturesEnabled(true);
-                enableLocationPlugin();
-            }
+        mMapView.getMapAsync(mapboxMap -> {
+            mMapboxMap = mapboxMap;
+            mMapboxMap.getUiSettings().setCompassEnabled(true);
+            mMapboxMap.getUiSettings().setZoomControlsEnabled(true);
+            mMapboxMap.getUiSettings().setZoomGesturesEnabled(true);
+            enableLocationPlugin();
         });
 
         mEditLocation = findViewById(R.id.location);
@@ -107,7 +105,6 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
         if (PermissionsManager.areLocationPermissionsGranted(this)) {
             mLocationLayerPlugin = new LocationLayerPlugin(mMapView, mMapboxMap, mLocationEngine);
             mLocationLayerPlugin.setLocationLayerEnabled(true);
-            mLocationLayerPlugin.setCameraMode(CameraMode.TRACKING_COMPASS);
 
             BuildingPlugin buildingPlugin = new BuildingPlugin(mMapView, mMapboxMap);
             buildingPlugin.setVisibility(true);
@@ -133,10 +130,16 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
         catch (NullPointerException npe) {
             Timber.e(TAG, "Could not set subtitle");
         }
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int editLocationWidth = displayMetrics.widthPixels - 350;
+        if (mEditLocation != null) {
+            mEditLocation.setWidth(Math.max(250, editLocationWidth));
+        }
     }
 
     @Override
-    @SuppressWarnings({"MissingPermission"})
     protected void onStart() {
         super.onStart();
         if (mLocationLayerPlugin != null) {
@@ -186,7 +189,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
     private void requestLocation() {
         Timber.d(TAG, "requestLocation()");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!hasLocationPermission()) {
+            if (lacksLocationPermission()) {
                 int PERMISSION_REQUEST_LOCATION = 1;
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         PERMISSION_REQUEST_LOCATION);
@@ -201,13 +204,22 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
+    private boolean lacksLocationPermission() {
+        return checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean hasLocationPermission() {
         return checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED;
     }
 
     private void doRequestLocation() {
-        mLocationEngine = initializeLocationEngine();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mLocationEngine = initializeLocationEngine();
+        }
+
         if (mMapboxMap != null) {
             if (mLocationLayerPlugin == null) {
                 mLocationLayerPlugin = new LocationLayerPlugin(mMapView, mMapboxMap, mLocationEngine);
@@ -215,18 +227,21 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
         }
     }
 
-    @SuppressWarnings( {"MissingPermission"})
+    @SuppressLint("MissingPermission")
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private LocationEngine initializeLocationEngine() {
         LocationEngine locationEngine = new LocationEngineProvider(this).obtainBestLocationEngineAvailable();
         locationEngine.setPriority(LocationEnginePriority.BALANCED_POWER_ACCURACY);
         locationEngine.setInterval(60000);
         locationEngine.activate();
 
-        Location lastLocation = locationEngine.getLastLocation();
-        if (lastLocation != null) {
-            setCameraPosition(lastLocation);
-        } else {
-            locationEngine.addLocationEngineListener(this);
+        if (hasLocationPermission()) {
+            Location lastLocation = locationEngine.getLastLocation();
+            if (lastLocation != null) {
+                setCameraPosition(lastLocation);
+            } else {
+                locationEngine.addLocationEngineListener(this);
+            }
         }
 
         return locationEngine;
@@ -319,8 +334,8 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
 
             // Direct users to turn on GPS (and send them to Location Settings if it's off).
             // Source: https://stackoverflow.com/questions/843675/how-do-i-find-out-if-the-gps-of-an-android-device-is-enabled
-            int provider = android.provider.Settings.Secure.getInt(getContentResolver(), android.provider.Settings.Secure.LOCATION_MODE, -1);
-            if (provider != android.provider.Settings.Secure.LOCATION_MODE_HIGH_ACCURACY) {
+            final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Toast.makeText(getApplicationContext(), "Please turn on GPS in the Settings app", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivityForResult(intent, ENABLE_GPS_REQUEST_CODE);
