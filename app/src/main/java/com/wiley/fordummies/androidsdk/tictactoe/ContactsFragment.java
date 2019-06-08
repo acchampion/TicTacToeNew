@@ -1,7 +1,6 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -39,7 +38,6 @@ import timber.log.Timber;
 public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private ListView mContactsListView;
 
-    @SuppressLint("InlinedApi")
     private static final String[] PROJECTION = {
         ContactsContract.Contacts._ID,
         ContactsContract.Contacts.LOOKUP_KEY,
@@ -57,7 +55,6 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
  * Defines an array that contains column names to move from
  * the Cursor to the ListView.
  */
-    @SuppressLint("InlinedApi")
     private final static String[] FROM_COLUMNS = {
             ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
     };

@@ -169,7 +169,6 @@ public class GameSessionFragment extends Fragment {
         theGame.setPlayerNames(mFirstPlayerName, mSecondPlayerName);
     }
 
-    @SuppressWarnings("ConstantConditions")
     void scheduleAndroidsTurn() {
         Timber.d(TAG, "Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
         mBoard.disableInput();
@@ -361,7 +360,6 @@ public class GameSessionFragment extends Fragment {
         return false;
     }
 
-    @SuppressWarnings("All")
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

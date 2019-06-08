@@ -2,7 +2,6 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import timber.log.Timber;
 
 /**
  * Fragment that shows WebView for Tic-Tac-Toe on Wikipedia.
@@ -31,7 +31,6 @@ public class HelpWebViewFragment extends Fragment  {
     private final String TAG = getClass().getSimpleName();
 
     @Override
-    @SuppressWarnings({"LogNotTimber"})
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_help_webview, container, false);
 
@@ -45,7 +44,7 @@ public class HelpWebViewFragment extends Fragment  {
             Bundle extras = activity.getIntent().getExtras();
             if (extras != null) {
                 mUrl = extras.getString(ARG_URI);
-                Log.d(TAG, "Loading URL " + mUrl);
+                Timber.d(TAG, "Loading URL " + mUrl);
             }
         }
 
@@ -75,7 +74,6 @@ public class HelpWebViewFragment extends Fragment  {
     }
 
     @Override
-    @SuppressWarnings({"LogNotTimber"})
     public void onResume() {
         super.onResume();
         try {
@@ -89,7 +87,7 @@ public class HelpWebViewFragment extends Fragment  {
             }
         }
         catch (NullPointerException npe) {
-            Log.e(TAG, "Could not set subtitle");
+            Timber.e(TAG, "Could not set subtitle");
         }
     }
 }

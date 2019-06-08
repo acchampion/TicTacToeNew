@@ -1,5 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
+import androidx.annotation.NonNull;
+
 public class Symbol {
     private enum MARK {X, O, Blank}
 
@@ -34,7 +36,7 @@ public class Symbol {
         return sSymbolBlank;
     }
 
-    @SuppressWarnings("NullableProblems")
+    @NonNull
     public String toString() {
         if (value == MARK.X)
             return "X";

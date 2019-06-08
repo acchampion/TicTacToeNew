@@ -66,14 +66,16 @@ class GameGrid {
         boolean foundMismatch = false;
         Timber.d(TAG,"Entering isRightToLeftDiagonalFilled");
         for (int index = SIZE - 1; (index >= 0) && (!foundMismatch); index--) {
-            Timber.d(TAG, ">" + mGrid[0][SIZE - 1].toString() + "<   >" + mGrid[index][index].toString() + "<");
+            final String logStr = ">" + mGrid[0][SIZE - 1].toString() + "<   >" + mGrid[index][index].toString() + "<";
+            Timber.d(TAG, logStr);
             if (mGrid[0][SIZE - 1] != mGrid[SIZE - 1 - index][index]) {
                 foundMismatch = true;
                 foundIndex = index;
             }
         }
         isFilled = (!foundMismatch) && (mGrid[0][SIZE - 1] != Symbol.SymbolBlankCreate());
-        Timber.d(TAG,"Leaving isRightToLeftDiagonalFilled" + foundMismatch + "index>" + foundIndex + "<>" + mGrid[0][SIZE - 1].toString() + "<");
+        final String leavingLogStr = "Leaving isRightToLeftDiagonalFilled" + foundMismatch + "index>" + foundIndex + "<>" + mGrid[0][SIZE - 1].toString() + "<";
+        Timber.d(TAG, leavingLogStr);
         return isFilled;
     }
 
