@@ -1,8 +1,8 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import android.util.Log;
-
 import java.util.ArrayList;
+
+import timber.log.Timber;
 
 class GameGrid {
     static final int SIZE = 3;
@@ -64,16 +64,16 @@ class GameGrid {
         int foundIndex = -1;
         boolean isFilled;
         boolean foundMismatch = false;
-        Log.d(TAG,"Entering isRightToLeftDiagonalFilled");
+        Timber.d(TAG,"Entering isRightToLeftDiagonalFilled");
         for (int index = SIZE - 1; (index >= 0) && (!foundMismatch); index--) {
-            Log.d(TAG, ">" + mGrid[0][SIZE - 1].toString() + "<   >" + mGrid[index][index].toString() + "<");
+            Timber.d(TAG, ">" + mGrid[0][SIZE - 1].toString() + "<   >" + mGrid[index][index].toString() + "<");
             if (mGrid[0][SIZE - 1] != mGrid[SIZE - 1 - index][index]) {
                 foundMismatch = true;
                 foundIndex = index;
             }
         }
         isFilled = (!foundMismatch) && (mGrid[0][SIZE - 1] != Symbol.SymbolBlankCreate());
-        Log.d(TAG,"Leaving isRightToLeftDiagonalFilled" + foundMismatch + "index>" + foundIndex + "<>" + mGrid[0][SIZE - 1].toString() + "<");
+        Timber.d(TAG,"Leaving isRightToLeftDiagonalFilled" + foundMismatch + "index>" + foundIndex + "<>" + mGrid[0][SIZE - 1].toString() + "<");
         return isFilled;
     }
 

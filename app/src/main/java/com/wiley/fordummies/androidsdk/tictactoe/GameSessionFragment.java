@@ -2,9 +2,9 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.KeyguardManager;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -14,20 +14,19 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import timber.log.Timber;
-
-import static android.content.Context.KEYGUARD_SERVICE;
 
 /**
  * Fragment where user plays Tic-Tac-Toe.
@@ -54,7 +53,6 @@ public class GameSessionFragment extends Fragment {
     private static final String GAMEKEY = "Game";
     private final String TAG = getClass().getSimpleName();
 
-    @SuppressWarnings("deprecation")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Timber.d("onCreateView()");
@@ -81,12 +79,6 @@ public class GameSessionFragment extends Fragment {
             mScorePlayerTwo = savedInstanceState.getInt(SCOREPLAYERTWOKEY);
         }
 
-        KeyguardManager keyguardManager = (KeyguardManager) getActivity().getSystemService(KEYGUARD_SERVICE);
-        KeyguardManager.KeyguardLock lock = Objects.requireNonNull(keyguardManager).newKeyguardLock("GameSession");
-        if (lock != null) {
-            lock.disableKeyguard();
-        }
-
         setupBoard(v);
 
         setHasOptionsMenu(true);
@@ -104,9 +96,15 @@ public class GameSessionFragment extends Fragment {
         mBoard.setGrid(gameGrid);
         mGameView = new GameView();
         mGameView.setGameViewComponents(mBoard, turnStatusView, scoreView);
-        this.setPlayers(mActiveGame);
+        setPlayers(mActiveGame);
         mGameView.showScores(mActiveGame.getPlayerOneName(), mScorePlayerOne, mActiveGame.getPlayerTwoName(), mScorePlayerTwo);
         mGameView.setGameStatus(mActiveGame.getCurrentPlayerName() + " to play.");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mSavedInstanceState = savedInstanceState;
     }
 
     @Override
@@ -120,6 +118,14 @@ public class GameSessionFragment extends Fragment {
                 ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
                 if (actionBar != null) {
                     actionBar.setSubtitle(getResources().getString(R.string.game));
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                    activity.setShowWhenLocked(true);
+                }
+                else {
+                    activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+                    activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
                 }
             }
         } catch (NullPointerException npe) {

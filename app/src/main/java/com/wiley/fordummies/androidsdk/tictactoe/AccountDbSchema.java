@@ -7,12 +7,12 @@ package com.wiley.fordummies.androidsdk.tictactoe;
  */
 
 class AccountDbSchema {
-    public static final class AccountsTable {
-        public static final String NAME = "accounts";
+    static final class AccountsTable {
+        static final String NAME = "accounts";
 
-        public static final class Cols {
-            public static final String NAME = "name";
-            public static final String PASSWORD = "password";
+        static final class Cols {
+            static final String NAME = "name";
+            static final String PASSWORD = "password";
         }
     }
 }

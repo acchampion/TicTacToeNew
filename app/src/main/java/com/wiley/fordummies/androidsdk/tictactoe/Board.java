@@ -8,12 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Cap;
 import android.graphics.Rect;
-import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 
@@ -178,7 +177,7 @@ public class Board extends View {
                 sSymBlank = BitmapFactory.decodeResource(res, R.drawable.blank);
                 sDrawablesInitialized = true;
             } catch (OutOfMemoryError ome) {
-                Log.d(TAG, "Ran out of memory decoding bitmaps");
+                Timber.d(TAG, "Ran out of memory decoding bitmaps");
                 ome.printStackTrace();
             }
         }

@@ -17,7 +17,7 @@ class Game {
 
     private int playCount = 0;
 
-    Game() { //Constructor
+    Game() { // Constructor
         gameGrid = new GameGrid();
         gameState = STATE.Active;
         currentSymbol = Symbol.SymbolXCreate();

@@ -3,13 +3,6 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
@@ -18,6 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import timber.log.Timber;
 
 /**
@@ -112,22 +111,21 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         String password = mEtPassword.getText().toString();
         String confirm = mEtConfirm.getText().toString();
         if (activity != null) {
-            if ((password.equals(confirm)) && (!username.equals("")) && (!password.equals("")) && (!confirm.equals(""))) {
+            if (password.equals(confirm) && !username.equals("") && !password.equals("")) {
                 AccountSingleton singleton = AccountSingleton.get(activity.getApplicationContext());
                 Account account = new Account(username, password);
                 singleton.addAccount(account);
                 Toast.makeText(activity.getApplicationContext(), "New record inserted", Toast.LENGTH_SHORT).show();
             } else if ((username.equals("")) || (password.equals("")) || (confirm.equals(""))) {
                 Toast.makeText(activity.getApplicationContext(), "Missing entry", Toast.LENGTH_SHORT).show();
-            } else if (!password.equals(confirm)) {
+            } else {
+                Timber.e("An unknown account creation error occurred.");
                 FragmentManager manager = getFragmentManager();
                 AccountErrorDialogFragment fragment = new AccountErrorDialogFragment();
 
                 if (manager != null) {
                     fragment.show(manager, "account_error");
                 }
-            } else {
-                Timber.e("An unknown account creation error occurred.");
             }
         }
     }
