@@ -1,7 +1,8 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
 
 public class SplashScreenActivity extends SingleFragmentActivity {
     @Override
@@ -16,11 +17,5 @@ public class SplashScreenActivity extends SingleFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
     }
 }
