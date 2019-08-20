@@ -44,7 +44,7 @@ public class HelpWebViewFragment extends Fragment  {
             Bundle extras = activity.getIntent().getExtras();
             if (extras != null) {
                 mUrl = extras.getString(ARG_URI);
-                Timber.d(TAG, "Loading URL " + mUrl);
+                Timber.d(TAG, "Loading URL %s", mUrl);
             }
         }
 
