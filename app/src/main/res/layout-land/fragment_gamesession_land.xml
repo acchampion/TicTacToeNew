@@ -3,7 +3,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.wiley.fordummies.androidsdk.tictactoe.Board
+    <com.wiley.fordummies.androidsdk.tictactoe.ui.Board
         android:id="@+id/board"
         android:layout_width="280dip"
         android:layout_height="match_parent" />

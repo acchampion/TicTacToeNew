@@ -26,40 +26,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".ui.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="com.wiley.fordummies.androidsdk.tictactoe.Login" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccountActivity"/>
-        <activity android:name=".GameOptionsActivity"/>
-        <activity android:name=".MapsActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".AudioActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".VideoActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".ImagesActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".SettingsActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".HelpActivity"
-            android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".HelpWebViewActivity"
-            android:parentActivityName=".HelpActivity"/>
-        <activity android:name=".SensorsActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".ContactsActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
-        <activity android:name=".GameSessionActivity"
-                  android:parentActivityName=".GameOptionsActivity"/>
+        <activity android:name=".ui.AccountActivity"/>
+        <activity android:name=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.MapsActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.AudioActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.VideoActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.ImagesActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.SettingsActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.HelpActivity"
+            android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.HelpWebViewActivity"
+            android:parentActivityName=".ui.HelpActivity"/>
+        <activity android:name=".ui.SensorsActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.ContactsActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
+        <activity android:name=".ui.GameSessionActivity"
+                  android:parentActivityName=".ui.GameOptionsActivity"/>
 
         <service
             android:name=".MediaPlaybackService"

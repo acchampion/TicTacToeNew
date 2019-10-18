@@ -5,6 +5,10 @@ import android.test.UiThreadTest;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.wiley.fordummies.androidsdk.tictactoe.ui.Board;
+import com.wiley.fordummies.androidsdk.tictactoe.ui.GameSessionActivity;
+import com.wiley.fordummies.androidsdk.tictactoe.ui.GameSessionFragment;
+
 import org.junit.Test;
 
 /**

@@ -1,6 +1,6 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-class Game {
+public class Game {
     private enum STATE {Inactive, Active, Won, Draw}
     private STATE gameState;
 
@@ -17,40 +17,40 @@ class Game {
 
     private int playCount = 0;
 
-    Game() { // Constructor
+    public Game() { // Constructor
         gameGrid = new GameGrid();
         gameState = STATE.Active;
         currentSymbol = Symbol.SymbolXCreate();
     }
 
-    GameGrid getGameGrid() {
+    public GameGrid getGameGrid() {
         return gameGrid;
     }
 
-    void setPlayerNames(String FirstPlayer, String SecondPlayer) {
+    public void setPlayerNames(String FirstPlayer, String SecondPlayer) {
         PlayerOneName = FirstPlayer;
         PlayerTwoName = SecondPlayer;
     }
 
-    String getPlayerOneName() {
+    public String getPlayerOneName() {
         return PlayerOneName;
     }
 
-    String getPlayerTwoName() {
+    public String getPlayerTwoName() {
         return PlayerTwoName;
     }
 
-    String getCurrentPlayerName() {
+    public String getCurrentPlayerName() {
         if (currentPlayer == PLAYER.Player1) return PlayerOneName;
         else return PlayerTwoName;
     }
 
-    String getWinningPlayerName() {
+    public String getWinningPlayerName() {
         if (winningPlayer == PLAYER.Player1) return PlayerOneName;
         else return PlayerTwoName;
     }
 
-    boolean play(int x, int y) {
+    public boolean play(int x, int y) {
         boolean successfulPlay = false;
         if ((gameGrid.getValueAtLocation(x, y) == Symbol.SymbolBlankCreate())) {
             successfulPlay = true;
@@ -86,15 +86,15 @@ class Game {
         } /* else, leave state as is */
     }
 
-    boolean isActive() {
+    public boolean isActive() {
         return gameState == STATE.Active;
     }
 
-    boolean isWon() {
+    public boolean isWon() {
         return gameState == STATE.Won;
     }
 
-    boolean isDrawn() {
+    public boolean isDrawn() {
         return gameState == STATE.Draw;
     }
 

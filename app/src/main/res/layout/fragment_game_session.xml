@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:gravity="center_horizontal">
 
-    <com.wiley.fordummies.androidsdk.tictactoe.Board
+    <com.wiley.fordummies.androidsdk.tictactoe.ui.Board
         android:id="@+id/board"
         android:layout_width="match_parent"
         android:layout_height="365dp"

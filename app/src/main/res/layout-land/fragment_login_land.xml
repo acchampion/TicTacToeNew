@@ -74,7 +74,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <fragment class="com.wiley.fordummies.androidsdk.tictactoe.AccountFragment"
+        <fragment class="com.wiley.fordummies.androidsdk.tictactoe.ui.AccountFragment"
                   android:id="@+id/titles"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"

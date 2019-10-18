@@ -12,7 +12,7 @@ public class Symbol {
 
     private Symbol() {/* Empty PRIVATE constructor to enforce Singleton */}
 
-    static Symbol SymbolXCreate() {
+    public static Symbol SymbolXCreate() {
         if (sSymbolX == null) {
             sSymbolX = new Symbol();
             sSymbolX.value = MARK.X;
@@ -20,7 +20,7 @@ public class Symbol {
         return sSymbolX;
     }
 
-    static Symbol SymbolOCreate() {
+    public static Symbol SymbolOCreate() {
         if (sSymbolO == null) {
             sSymbolO = new Symbol();
             sSymbolO.value = MARK.O;
@@ -28,7 +28,7 @@ public class Symbol {
         return sSymbolO;
     }
 
-    static Symbol SymbolBlankCreate() {
+    public static Symbol SymbolBlankCreate() {
         if (sSymbolBlank == null) {
             sSymbolBlank = new Symbol();
             sSymbolBlank.value = MARK.Blank;
