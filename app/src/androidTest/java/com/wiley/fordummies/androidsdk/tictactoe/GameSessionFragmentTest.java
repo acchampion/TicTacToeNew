@@ -1,7 +1,5 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -11,6 +9,13 @@ import com.wiley.fordummies.androidsdk.tictactoe.ui.GameSessionFragment;
 
 import org.junit.Test;
 
+import androidx.test.annotation.UiThreadTest;
+import androidx.test.rule.ActivityTestRule;
+
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
+
 /**
  * Test that Tic-Tac-Toe's Board UI works.
  * <p>
@@ -19,7 +24,7 @@ import org.junit.Test;
  * Created by adamcchampion on 2017/08/20.
  */
 
-public class GameSessionFragmentTest extends ActivityInstrumentationTestCase2<GameSessionActivity> {
+public class GameSessionFragmentTest extends ActivityTestRule<GameSessionActivity> {
     private GameSessionActivity mGameSessionActivity;
     private GameSessionFragment mGameSessionFragment;
     private Board mBoard;
@@ -32,8 +37,8 @@ public class GameSessionFragmentTest extends ActivityInstrumentationTestCase2<Ga
     }
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    protected void beforeActivityLaunched() {
+        super.beforeActivityLaunched();
 
         mGameSessionActivity = getActivity();
         mGameSessionFragment = new GameSessionFragment();
@@ -45,7 +50,6 @@ public class GameSessionFragmentTest extends ActivityInstrumentationTestCase2<Ga
         // Wait for the Activity to become idle so we don't have null Fragment references.
         getInstrumentation().waitForIdleSync();
 
-        setActivityInitialTouchMode(false);
         if (mGameSessionFragment != null) {
             View fragmentView = mGameSessionFragment.getView();
             if (fragmentView != null) {
@@ -86,6 +90,7 @@ public class GameSessionFragmentTest extends ActivityInstrumentationTestCase2<Ga
     }
 
     @UiThreadTest
+    @Test
     public void testUIThreadTest() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
         mBoard.requestFocus();
@@ -102,8 +107,10 @@ public class GameSessionFragmentTest extends ActivityInstrumentationTestCase2<Ga
         assertEquals(mGameSessionFragment.getPlayCount(), 0);
     }
 
-    protected void tearDown() throws Exception {
-        mGameSessionActivity.finish();
-        super.tearDown();
+    protected void afterActivityFinished() {
+        super.afterActivityFinished();
+        if (!getActivity().isFinishing()) {
+            mGameSessionActivity.finish();
+        }
     }
 }

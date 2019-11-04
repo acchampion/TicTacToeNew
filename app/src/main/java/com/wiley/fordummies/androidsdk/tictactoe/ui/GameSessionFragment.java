@@ -17,12 +17,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.Game;
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
-import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
+import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.Square;
 import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
+import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -334,7 +334,7 @@ public class GameSessionFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_ingame, menu);
     }
@@ -383,5 +383,15 @@ public class GameSessionFragment extends Fragment {
         // Save turn
         instanceState.putString(GAMEKEY, mActiveGame.toString());
         //Save board
+    }
+
+    public int getPlayCount() {
+        int playCount = 0;
+
+        if (mActiveGame != null) {
+            playCount = mActiveGame.getPlayCount();
+        }
+
+        return playCount;
     }
 }

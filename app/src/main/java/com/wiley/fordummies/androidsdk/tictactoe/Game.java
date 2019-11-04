@@ -98,7 +98,7 @@ public class Game {
         return gameState == STATE.Draw;
     }
 
-    int getPlayCount() {
+    public int getPlayCount() {
         return playCount;
     }
 
