@@ -13,8 +13,8 @@ import androidx.test.annotation.UiThreadTest;
 import androidx.test.rule.ActivityTestRule;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test that Tic-Tac-Toe's Board UI works.
@@ -29,23 +29,15 @@ public class GameSessionFragmentTest extends ActivityTestRule<GameSessionActivit
     private GameSessionFragment mGameSessionFragment;
     private Board mBoard;
 
-    private final float x[] = {(float) 56.0, (float) 143.0, (float) 227.0};
-    private final float y[] = {(float) 56.0, (float) 143.0, (float) 227.0};
+    private final float[] x = {(float) 56.0, (float) 143.0, (float) 227.0};
+    private final float[] y = {(float) 56.0, (float) 143.0, (float) 227.0};
 
     public GameSessionFragmentTest() {
         super(GameSessionActivity.class);
-    }
 
-    @Override
-    protected void beforeActivityLaunched() {
-        super.beforeActivityLaunched();
-
+        launchActivity(getActivityIntent());
         mGameSessionActivity = getActivity();
-        mGameSessionFragment = new GameSessionFragment();
-        mGameSessionActivity.getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_container, mGameSessionFragment, null)
-                .commit();
+        mGameSessionFragment = mGameSessionActivity.getFragmentForTest();
 
         // Wait for the Activity to become idle so we don't have null Fragment references.
         getInstrumentation().waitForIdleSync();
@@ -59,6 +51,13 @@ public class GameSessionFragmentTest extends ActivityTestRule<GameSessionActivit
         }
     }
 
+    @Override
+    protected void beforeActivityLaunched() {
+        super.beforeActivityLaunched();
+
+
+    }
+
     @Test
     public void testPreconditions() {
         assertNotNull(mGameSessionActivity);
@@ -70,22 +69,20 @@ public class GameSessionFragmentTest extends ActivityTestRule<GameSessionActivit
     public void testUI() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
         getInstrumentation().waitForIdleSync();
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
+        getActivity().runOnUiThread(() -> {
+            System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
 
-                mBoard.requestFocus();
+            mBoard.requestFocus();
 
-                MotionEvent newMotionEvent = MotionEvent.obtain((long) 1,
-                        (long) 1,
-                        MotionEvent.ACTION_DOWN,
-                        (float) 53.0,
-                        (float) 53.0,
-                        0);
-                mBoard.dispatchTouchEvent(newMotionEvent);
-                mGameSessionFragment.scheduleAndroidsTurn();
-                assertEquals(mGameSessionFragment.getPlayCount(), 0);
-            }
+            MotionEvent newMotionEvent = MotionEvent.obtain((long) 1,
+                    (long) 1,
+                    MotionEvent.ACTION_DOWN,
+                    (float) 53.0,
+                    (float) 53.0,
+                    0);
+            mBoard.dispatchTouchEvent(newMotionEvent);
+            mGameSessionFragment.scheduleAndroidsTurn();
+            assertEquals(mGameSessionFragment.getPlayCount(), 1);
         });
     }
 
@@ -104,7 +101,7 @@ public class GameSessionFragmentTest extends ActivityTestRule<GameSessionActivit
                     0);
             mBoard.dispatchTouchEvent(newMotionEvent);
         }
-        assertEquals(mGameSessionFragment.getPlayCount(), 0);
+        assertEquals(mGameSessionFragment.getPlayCount(), 1);
     }
 
     protected void afterActivityFinished() {
