@@ -16,6 +16,11 @@ public class GameSessionActivity extends SingleFragmentActivity {
         return mGameSessionFragment;
     }
 
+    public GameSessionFragment getFragmentForTest() {
+        recoverFragment();
+        return mGameSessionFragment;
+    }
+
     public void humanTakesATurn(int posX, int posY) {
         recoverFragment();
         mGameSessionFragment.humanTakesATurn(posX, posY);

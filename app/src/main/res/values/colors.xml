@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="background">#454545</color>
+    <color name="background_light">#F9F4EC</color>
+    <color name="grid">#63ACB3</color>
     <color name="dark">#AA545454</color>
     <color name="light">#AADEDEDE</color>
     <color name="white">#FFFFFF</color>

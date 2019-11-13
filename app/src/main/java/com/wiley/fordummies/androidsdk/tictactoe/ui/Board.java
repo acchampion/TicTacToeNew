@@ -6,14 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Paint.Cap;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
+import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
 
 import androidx.core.content.ContextCompat;
@@ -29,12 +28,13 @@ public class Board extends View {
     private boolean mIsEnabled = true;
 
     private Paint mBackgroundPaint;
-    private Paint mDarkPaint;
-    private Paint mLightPaint;
+    private Paint mGridPaint;
     private Paint mDitherPaint;
 
     static Bitmap sSymX = null, sSymO = null, sSymBlank = null;
     static boolean sDrawablesInitialized = false;
+
+    private static final int INSET = 60;
 
     private final String TAG = getClass().getSimpleName();
 
@@ -47,21 +47,13 @@ public class Board extends View {
 
         // Allocate Paint objects to save memory.
         mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBackgroundPaint.setColor(ContextCompat.getColor(context, R.color.white));
-        mDarkPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mDarkPaint.setColor(ContextCompat.getColor(context, R.color.dark));
+        mBackgroundPaint.setColor(ContextCompat.getColor(context, R.color.background_light));
+        mGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mGridPaint.setColor(ContextCompat.getColor(context, R.color.grid));
 
-        float strokeWidth = 2;
-        mDarkPaint.setStrokeWidth(strokeWidth);
-        mLightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mLightPaint.setColor(ContextCompat.getColor(context, R.color.light));
-        mLightPaint.setStrokeWidth(strokeWidth);
-        Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        linePaint.setColor(ContextCompat.getColor(context, R.color.dark));
+        float strokeWidth = 10;
+        mGridPaint.setStrokeWidth(strokeWidth);
 
-        float lineWidth = 10;
-        linePaint.setStrokeWidth(lineWidth);
-        linePaint.setStrokeCap(Cap.ROUND);
         mDitherPaint = new Paint();
         mDitherPaint.setDither(true);
     }
@@ -97,14 +89,14 @@ public class Board extends View {
             canvasWidth = Math.min(canvasHeight, canvasWidth);
         }
 
-        canvas.drawRect(0, 0, canvasWidth, canvasHeight, mBackgroundPaint);
+        // canvas.drawRect(0, 0, canvasWidth, canvasHeight, mBackgroundPaint);
 
         // Drawing lines
         for (int i = 0; i < GameGrid.SIZE - 1; i++) {
-            canvas.drawLine(0, (i + 1) * mBlockHeight, canvasWidth, (i + 1) * mBlockHeight, mDarkPaint);
-            canvas.drawLine(0, (i + 1) * mBlockHeight + 1, canvasWidth, (i + 1) * mBlockHeight + 1, mLightPaint);
-            canvas.drawLine((i + 1) * mBlockHeight, 0, (i + 1) * mBlockHeight, canvasHeight, mDarkPaint);
-            canvas.drawLine((i + 1) * mBlockHeight + 1, 0, (i + 1) * mBlockHeight + 1, canvasHeight, mLightPaint);
+            canvas.drawLine(0, (i + 1) * mBlockHeight, canvasWidth, (i + 1) * mBlockHeight, mGridPaint);
+            canvas.drawLine(0, (i + 1) * mBlockHeight + 1, canvasWidth, (i + 1) * mBlockHeight + 1, mGridPaint);
+            canvas.drawLine((i + 1) * mBlockHeight, 0, (i + 1) * mBlockHeight, canvasHeight, mGridPaint);
+            canvas.drawLine((i + 1) * mBlockHeight + 1, 0, (i + 1) * mBlockHeight + 1, canvasHeight, mGridPaint);
         }
 
         float offsetX;
@@ -172,14 +164,29 @@ public class Board extends View {
     }
 
     public Bitmap getBitmapForSymbol(Symbol aSymbol) {
-
         if (!sDrawablesInitialized) {
             try {
                 Resources res = getResources();
-                sSymX = BitmapFactory.decodeResource(res, R.drawable.x);
-                sSymO = BitmapFactory.decodeResource(res, R.drawable.o);
-                sSymBlank = BitmapFactory.decodeResource(res, R.drawable.blank);
+                Bitmap blankSym = BitmapFactory.decodeResource(res, R.mipmap.blank);
+                Bitmap oSym = BitmapFactory.decodeResource(res, R.mipmap.x);
+                Bitmap xSym = BitmapFactory.decodeResource(res, R.mipmap.o);
+                int imgWidth = blankSym.getWidth();
+                int imgHeight = blankSym.getHeight();
+                int finalImgWidth = (int)mBlockWidth - INSET;
+                int finalImgHeight = (int)mBlockHeight - INSET;
+                float widthRatio = (float) finalImgWidth / (float) imgWidth;
+                float heightRatio = (float) finalImgHeight / (float) imgHeight;
+                float imgScaleRatio = Math.min(widthRatio, heightRatio);
+
+                sSymX = Bitmap.createScaledBitmap(xSym, (int)(imgWidth * imgScaleRatio), (int)(imgHeight * imgScaleRatio), false);
+                sSymO = Bitmap.createScaledBitmap(oSym, (int)(imgWidth * imgScaleRatio), (int)(imgHeight * imgScaleRatio), false);
+                sSymBlank = Bitmap.createScaledBitmap(blankSym, (int)(imgWidth * imgScaleRatio), (int)(imgHeight * imgScaleRatio), true);
                 sDrawablesInitialized = true;
+
+                // Clean up old bitmaps.
+                blankSym.recycle();
+                oSym.recycle();
+                xSym.recycle();
             } catch (OutOfMemoryError ome) {
                 Timber.d(TAG, "Ran out of memory decoding bitmaps");
                 ome.printStackTrace();
@@ -187,7 +194,7 @@ public class Board extends View {
         }
 
 
-        Bitmap symSelected = sSymBlank;
+        Bitmap symSelected = null;
 
         if (aSymbol == Symbol.SymbolXCreate())
             symSelected = sSymX;
