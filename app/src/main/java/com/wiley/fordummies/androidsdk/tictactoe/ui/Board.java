@@ -165,8 +165,8 @@ public class Board extends View {
             try {
                 Resources res = getResources();
                 Bitmap blankSym = BitmapFactory.decodeResource(res, R.mipmap.blank);
-                Bitmap oSym = BitmapFactory.decodeResource(res, R.mipmap.x);
-                Bitmap xSym = BitmapFactory.decodeResource(res, R.mipmap.o);
+                Bitmap oSym = BitmapFactory.decodeResource(res, R.mipmap.o);
+                Bitmap xSym = BitmapFactory.decodeResource(res, R.mipmap.x);
                 int imgWidth = blankSym.getWidth();
                 int imgHeight = blankSym.getHeight();
                 int finalImgWidth = (int)mBlockWidth - INSET;
