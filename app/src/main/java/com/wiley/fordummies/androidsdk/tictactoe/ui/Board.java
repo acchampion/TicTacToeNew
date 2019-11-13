@@ -27,7 +27,6 @@ public class Board extends View {
     private GameGrid mGameGrid = null;
     private boolean mIsEnabled = true;
 
-    private Paint mBackgroundPaint;
     private Paint mGridPaint;
     private Paint mDitherPaint;
 
@@ -46,8 +45,6 @@ public class Board extends View {
         setFocusableInTouchMode(true);
 
         // Allocate Paint objects to save memory.
-        mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mBackgroundPaint.setColor(ContextCompat.getColor(context, R.color.background_light));
         mGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mGridPaint.setColor(ContextCompat.getColor(context, R.color.grid));
 
@@ -194,7 +191,7 @@ public class Board extends View {
         }
 
 
-        Bitmap symSelected = null;
+        Bitmap symSelected = sSymBlank;
 
         if (aSymbol == Symbol.SymbolXCreate())
             symSelected = sSymX;
