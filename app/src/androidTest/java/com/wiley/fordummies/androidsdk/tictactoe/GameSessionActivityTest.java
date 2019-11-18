@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
  * Created by adamcchampion on 2017/08/20.
  */
 
-public class GameSessionFragmentTest extends ActivityTestRule<GameSessionActivity> {
+public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivity> {
     private GameSessionActivity mGameSessionActivity;
     private GameSessionFragment mGameSessionFragment;
     private Board mBoard;
@@ -32,7 +32,7 @@ public class GameSessionFragmentTest extends ActivityTestRule<GameSessionActivit
     private final float[] x = {(float) 56.0, (float) 143.0, (float) 227.0};
     private final float[] y = {(float) 56.0, (float) 143.0, (float) 227.0};
 
-    public GameSessionFragmentTest() {
+    public GameSessionActivityTest() {
         super(GameSessionActivity.class);
 
         launchActivity(getActivityIntent());
