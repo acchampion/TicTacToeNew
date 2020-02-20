@@ -36,7 +36,7 @@ public class Board extends View {
 
     private static final int INSET = 60;
 
-    private static final String TAG = Board.class.getSimpleName();
+    // private static final String TAG = Board.class.getSimpleName();
 
     public Board(Context context, AttributeSet attributes) {
         super(context, attributes);

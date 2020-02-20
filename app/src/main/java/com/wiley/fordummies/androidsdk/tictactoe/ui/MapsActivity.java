@@ -70,7 +70,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
     private String whereAmIString = null;
 
     private static final String WHERE_AM_I_STRING = "WhereAmIString";
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    // private static final String TAG = MapsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

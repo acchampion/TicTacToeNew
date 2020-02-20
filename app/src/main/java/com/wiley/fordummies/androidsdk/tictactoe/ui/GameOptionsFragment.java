@@ -29,7 +29,7 @@ import timber.log.Timber;
  */
 
 public class GameOptionsFragment extends Fragment implements View.OnClickListener {
-    private final String TAG = getClass().getSimpleName();
+    // private final String TAG = getClass().getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
             }
         }
         catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
     }
 

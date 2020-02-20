@@ -36,7 +36,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 
     private static final int VIDEO_CAPTURED = 1;
 
-    private static final String TAG = VideoFragment.class.getSimpleName();
+    // private static final String TAG = VideoFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

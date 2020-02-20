@@ -31,7 +31,7 @@ public class HelpWebViewFragment extends Fragment  {
     private ProgressBar mProgressBar;
 
     private static final String ARG_URI = "url";
-    private static final String TAG = HelpWebViewFragment.class.getSimpleName();
+    // private static final String TAG = HelpWebViewFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

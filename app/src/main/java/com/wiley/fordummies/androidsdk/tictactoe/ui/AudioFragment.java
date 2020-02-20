@@ -40,7 +40,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
     private Uri mAudioFileUri;
     private Intent mRecordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
 
-    private static final String TAG = AudioFragment.class.getSimpleName();
+    // private static final String TAG = AudioFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

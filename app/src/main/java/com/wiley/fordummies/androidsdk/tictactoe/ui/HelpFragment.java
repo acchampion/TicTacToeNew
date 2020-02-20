@@ -29,7 +29,7 @@ import timber.log.Timber;
 public class HelpFragment extends Fragment implements View.OnClickListener {
 
     private final String mUrlStr = "https://en.wikipedia.org/wiki/Tic-tac-toe";
-    private static final String TAG = HelpFragment.class.getSimpleName();
+    // private static final String TAG = HelpFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

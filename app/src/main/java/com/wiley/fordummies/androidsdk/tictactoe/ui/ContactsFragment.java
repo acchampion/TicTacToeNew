@@ -52,7 +52,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
 
     private static final int PERMISSION_REQUEST_READ_CONTACTS = 1;
 
-    private static final String TAG = ContactsFragment.class.getSimpleName();
+    // private static final String TAG = ContactsFragment.class.getSimpleName();
 
     /*
  * Defines an array that contains column names to move from

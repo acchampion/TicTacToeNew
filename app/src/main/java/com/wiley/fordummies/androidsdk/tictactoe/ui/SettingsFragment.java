@@ -15,7 +15,7 @@ import timber.log.Timber;
  */
 
 public class SettingsFragment extends PreferenceFragmentCompat  {
-    private static final String TAG = SettingsFragment.class.getSimpleName();
+    // private static final String TAG = SettingsFragment.class.getSimpleName();
 
    @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

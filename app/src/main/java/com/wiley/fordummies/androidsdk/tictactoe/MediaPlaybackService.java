@@ -12,7 +12,7 @@ import timber.log.Timber;
 public class MediaPlaybackService extends Service {
     MediaPlayer player;
 
-    private final String TAG = getClass().getSimpleName();
+    // private static final String TAG = MediaPlaybackService.class.getSimpleName();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,7 +32,7 @@ public class MediaPlaybackService extends Service {
         if (extras != null) {
             String audioFileURIString = extras.getString("URIString");
             Uri audioFileURI = Uri.parse(audioFileURIString);
-            Timber.d(TAG, "URI = %s", audioFileURI.toString());
+            Timber.d("URI = %s", audioFileURI.toString());
             try {
                 player.reset();
                 player.setDataSource(this.getApplicationContext(), audioFileURI);

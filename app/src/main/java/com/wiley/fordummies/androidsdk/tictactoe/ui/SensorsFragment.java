@@ -65,7 +65,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     @Override
     public void onResume() {
         super.onResume();
-        Timber.d(TAG, "onResume()");
+        Timber.d("onResume()");
         try {
             AppCompatActivity activity = (AppCompatActivity) getActivity();
 
@@ -77,7 +77,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
                 }
             }
         } catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
 
         // Start listening to sensor updates
@@ -88,11 +88,11 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onPause() {
-        Timber.d(TAG, "Entering onPause()");
+        Timber.d("Entering onPause()");
         super.onPause();
         // Stop updates when paused
         mSensorManager.unregisterListener(this);
-        Timber.d(TAG, "Leaving onPause()");
+        Timber.d("Leaving onPause()");
     }
 
 
@@ -142,7 +142,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
             }
 
         }
-        Timber.d(TAG, "--- EVENT Raw Values ---; " + sensorName + "; " +
+        Timber.d("--- EVENT Raw Values ---; " + sensorName + "; " +
                 "Distance  Last= >" + distanceOfLastValue + "< ; " +
                 "Distance  This= >" + distanceOfThisValue + "< ; " +
                 "Change = >" + change + "< ; " +
@@ -152,7 +152,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
         if (lastValue == null ||
                 percentageChange > TOLERANCE) {
 
-            Timber.d(TAG, "--- Event Changed --- ;" +
+            Timber.d("--- Event Changed --- ;" +
                             "Change = >" + change + "< ; " +
                             "Percent = >" + percentageChange + "% ; " +
                             sensorEventString);

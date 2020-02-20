@@ -18,7 +18,7 @@ public class AccountDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Class name for logging.
-    private final String TAG = getClass().getSimpleName();
+    // private static final String TAG = AccountDbHelper.class.getSimpleName();
 
     public AccountDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -35,7 +35,7 @@ public class AccountDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        Timber.w(TAG, "Upgrading database; dropping and recreating tables.");
+        Timber.w("Upgrading database; dropping and recreating tables.");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + AccountsTable.NAME);
         onCreate(sqLiteDatabase);
     }

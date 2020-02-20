@@ -34,7 +34,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     private EditText mEtPassword;
     private EditText mEtConfirm;
 
-    private static final String TAG = AccountFragment.class.getSimpleName();
+    // private static final String TAG = AccountFragment.class.getSimpleName();
 
     @Override
     public void onAttach(@NonNull Context context) {
