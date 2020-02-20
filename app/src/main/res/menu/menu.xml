@@ -23,5 +23,6 @@
 		android:id="@+id/menu_contacts"
 		android:icon="@android:drawable/ic_menu_view"
 		android:title="@string/contacts"
+		app:showAsAction="ifRoom"
 		/>
 </menu>

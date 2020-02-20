@@ -12,14 +12,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.VideoView;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
-import java.io.File;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+
+import java.io.File;
+
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -35,7 +36,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 
     private static final int VIDEO_CAPTURED = 1;
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = VideoFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,7 +90,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
                 }
             }
         } catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
     }
 

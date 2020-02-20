@@ -11,12 +11,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+
 import timber.log.Timber;
 
 /**
@@ -30,7 +31,7 @@ public class HelpWebViewFragment extends Fragment  {
     private ProgressBar mProgressBar;
 
     private static final String ARG_URI = "url";
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = HelpWebViewFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class HelpWebViewFragment extends Fragment  {
             Bundle extras = activity.getIntent().getExtras();
             if (extras != null) {
                 mUrl = extras.getString(ARG_URI);
-                Timber.d(TAG, "Loading URL %s", mUrl);
+                Timber.d("Loading URL %s", mUrl);
             }
         }
 
@@ -89,7 +90,7 @@ public class HelpWebViewFragment extends Fragment  {
             }
         }
         catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
     }
 }

@@ -12,13 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+
 import timber.log.Timber;
 
 /**
@@ -28,7 +29,7 @@ import timber.log.Timber;
 public class HelpFragment extends Fragment implements View.OnClickListener {
 
     private final String mUrlStr = "https://en.wikipedia.org/wiki/Tic-tac-toe";
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = HelpFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
                 }
             }
         } catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
     }
 

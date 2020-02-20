@@ -12,10 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
@@ -26,6 +22,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+
+import java.util.Objects;
+
 import timber.log.Timber;
 
 /**
@@ -51,7 +52,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
 
     private static final int PERMISSION_REQUEST_READ_CONTACTS = 1;
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = ContactsFragment.class.getSimpleName();
 
     /*
  * Defines an array that contains column names to move from
@@ -100,7 +101,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
             }
         }
         catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
     }
 
@@ -135,7 +136,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                 showContacts();
             }
             else {
-                Timber.e(TAG, "Error: Permission denied to read contacts");
+                Timber.e("Error: Permission denied to read contacts");
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (lacksReadContactPermission()) {
@@ -153,7 +154,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void showContacts() {
-        Timber.d(TAG, "showContacts()");
+        Timber.d("showContacts()");
         Activity activity = getActivity();
 
         if (activity != null) {

@@ -2,11 +2,11 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
 import android.os.Bundle;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import timber.log.Timber;
 
@@ -15,7 +15,7 @@ import timber.log.Timber;
  */
 
 public class SettingsFragment extends PreferenceFragmentCompat  {
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = SettingsFragment.class.getSimpleName();
 
    @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -37,7 +37,7 @@ public class SettingsFragment extends PreferenceFragmentCompat  {
             }
         }
         catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
     }
 

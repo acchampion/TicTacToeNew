@@ -11,11 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
-import java.util.Hashtable;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +18,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+
+import java.util.Hashtable;
+import java.util.List;
+
 import timber.log.Timber;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -35,7 +36,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     private List<Sensor> mSensorList;
     private Hashtable<String, float[]> lastSensorValues = new Hashtable<>();
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = SensorsFragment.class.getSimpleName();
     private static final float TOLERANCE = (float) 10.0;
 
 
@@ -75,8 +76,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
                     actionBar.setSubtitle(getResources().getString(R.string.sensors));
                 }
             }
-        }
-        catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             Timber.e(TAG, "Could not set subtitle");
         }
 
@@ -135,28 +135,26 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
             if (distanceOfLastValue != 0.0) {
                 percentageChange = change * (float) 100.0 / distanceOfLastValue;
-            }
-            else if (distanceOfThisValue != 0.0) {
+            } else if (distanceOfThisValue != 0.0) {
                 percentageChange = change * (float) 100.0 / distanceOfThisValue;
-            }
-            else {
+            } else {
                 percentageChange = (float) 0.0; // both distances are zero
             }
 
         }
-        Timber.d(TAG, "--- EVENT Raw Values ---\n" + sensorName + "\n" +
-                "Distance  Last= >" + distanceOfLastValue + "<\n" +
-                "Distance  This= >" + distanceOfThisValue + "<\n" +
-                "Change = >" + change + "<\n" +
-                "Percent = >" + percentageChange + "%\n" +
-                "Last value = " + lastValueString + "<\n" +
+        Timber.d(TAG, "--- EVENT Raw Values ---; " + sensorName + "; " +
+                "Distance  Last= >" + distanceOfLastValue + "< ; " +
+                "Distance  This= >" + distanceOfThisValue + "< ; " +
+                "Change = >" + change + "< ; " +
+                "Percent = >" + percentageChange + "% ; " +
+                "Last value = " + lastValueString + "< ; " +
                 sensorEventString);
         if (lastValue == null ||
                 percentageChange > TOLERANCE) {
-            Timber.d(TAG + sensorName,
-                    "--- Event Changed --- \n" +
-                            "Change = >" + change + "<\n" +
-                            "Percent = >" + percentageChange + "%\n" +
+
+            Timber.d(TAG, "--- Event Changed --- ;" +
+                            "Change = >" + change + "< ; " +
+                            "Percent = >" + percentageChange + "% ; " +
                             sensorEventString);
         }
     }
@@ -165,18 +163,17 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
         StringBuilder builder = new StringBuilder();
         builder.append("Sensor: ");
         builder.append(event.sensor.getName());
-        builder.append("\nAccuracy: ");
+        builder.append("; Accuracy: ");
         builder.append(event.accuracy);
-        builder.append("\nTimestamp: ");
+        builder.append("; Timestamp: ");
         builder.append(event.timestamp);
-        builder.append("\nValues:\n");
+        builder.append("; Values: ");
         for (int i = 0; i < event.values.length; i++) {
             builder.append("   [");
             builder.append(i);
             builder.append("] = ");
             builder.append(event.values[i]);
         }
-        builder.append("\n");
         return builder.toString();
     }
 

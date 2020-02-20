@@ -11,14 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.wiley.fordummies.androidsdk.tictactoe.MediaPlaybackService;
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.wiley.fordummies.androidsdk.tictactoe.MediaPlaybackService;
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+
 import timber.log.Timber;
 
 /**
@@ -76,12 +77,12 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu, menu);
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Activity activity = getActivity();
 
         if (activity != null) {

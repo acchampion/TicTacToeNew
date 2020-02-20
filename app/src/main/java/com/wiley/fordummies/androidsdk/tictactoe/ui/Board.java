@@ -11,11 +11,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
 
-import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 
@@ -35,7 +36,7 @@ public class Board extends View {
 
     private static final int INSET = 60;
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = Board.class.getSimpleName();
 
     public Board(Context context, AttributeSet attributes) {
         super(context, attributes);
@@ -116,7 +117,7 @@ public class Board extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!this.mIsEnabled) {
-            Timber.d(TAG, "Board.onTouchEvent(): Board not mIsEnabled");
+            Timber.d("Board.onTouchEvent(): Board not mIsEnabled");
             return false;
         }
 
@@ -127,7 +128,7 @@ public class Board extends View {
         if (action == MotionEvent.ACTION_DOWN) {
             float x = event.getX();
             float y = event.getY();
-            Timber.d(TAG, "Coordinates: " + x + ", " + y);
+            Timber.d("Coordinates: " + x + ", " + y);
             if (x > mBlockWidth && x < mBlockWidth * 2) posX = 1;
             if (x > mBlockWidth * 2 && x < mBlockWidth * 3) posX = 2;
 
@@ -141,7 +142,7 @@ public class Board extends View {
     }
 
     public void placeSymbol(int x, int y) {
-        Timber.d(TAG,"Thread ID in Board.placeSymbol: %s", Thread.currentThread().getId());
+        Timber.d("Thread ID in Board.placeSymbol: %s", Thread.currentThread().getId());
         invalidateBlock(x, y);
     }
 
@@ -152,12 +153,12 @@ public class Board extends View {
 
     public void disableInput() {
         this.mIsEnabled = false;
-        Timber.d(TAG,"Board.disableInput(): Board not mIsEnabled");
+        Timber.d("Board.disableInput(): Board not mIsEnabled");
     }
 
     public void enableInput() {
         this.mIsEnabled = true;
-        Timber.d(TAG,"Board.enableInput(): Board mIsEnabled");
+        Timber.d("Board.enableInput(): Board mIsEnabled");
     }
 
     public Bitmap getBitmapForSymbol(Symbol aSymbol) {
@@ -185,7 +186,7 @@ public class Board extends View {
                 oSym.recycle();
                 xSym.recycle();
             } catch (OutOfMemoryError ome) {
-                Timber.d(TAG, "Ran out of memory decoding bitmaps");
+                Timber.d("Ran out of memory decoding bitmaps");
                 ome.printStackTrace();
             }
         }

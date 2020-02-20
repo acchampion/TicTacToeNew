@@ -12,15 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.wiley.fordummies.androidsdk.tictactoe.MediaPlaybackService;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -39,7 +40,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
     private Uri mAudioFileUri;
     private Intent mRecordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = AudioFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
             }
         }
         catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e( "Could not set subtitle");
         }
     }
 
@@ -108,7 +109,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
                     if (!mStarted) {
                         Intent musicIntent = new Intent(activity.getApplicationContext(), MediaPlaybackService.class);
                         musicIntent.putExtra("URIString", mAudioFileUri.toString());
-                        Timber.d(TAG, "URI: %s", mAudioFileUri.toString());
+                        Timber.d("URI: %s", mAudioFileUri.toString());
                         getActivity().startService(musicIntent);
                         mStarted = true;
                     }
@@ -127,7 +128,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == AUDIO_CAPTURED) {
             mAudioFileUri = data.getData();
-            Timber.v(TAG, "Audio File URI: %s", mAudioFileUri);
+            Timber.v( "Audio File URI: %s", mAudioFileUri);
         }
     }
 }

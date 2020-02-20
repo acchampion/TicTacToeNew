@@ -17,6 +17,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.wiley.fordummies.androidsdk.tictactoe.Game;
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
@@ -27,12 +34,6 @@ import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 import java.util.ArrayList;
 import java.util.Random;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import timber.log.Timber;
 
 /**
@@ -58,7 +59,7 @@ public class GameSessionFragment extends Fragment {
     private static final String SCOREPLAYERONEKEY = "ScorePlayerOne";
     private static final String SCOREPLAYERTWOKEY = "ScorePlayerTwo";
     private static final String GAMEKEY = "Game";
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = GameSessionFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,7 +118,7 @@ public class GameSessionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Timber.d(TAG, "onResume()");
+        Timber.d("onResume()");
         try {
             Activity activity = getActivity();
 
@@ -136,7 +137,7 @@ public class GameSessionFragment extends Fragment {
                 }
             }
         } catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
 
         playNewGame();
@@ -145,19 +146,19 @@ public class GameSessionFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Timber.d(TAG, "onStop()");
+        Timber.d("onStop()");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Timber.d(TAG, "onDestroyView()");
+        Timber.d("onDestroyView()");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Timber.d(TAG, "onDestroy()");
+        Timber.d("onDestroy()");
     }
 
     private void playNewGame() {
@@ -177,7 +178,7 @@ public class GameSessionFragment extends Fragment {
     }
 
     public void scheduleAndroidsTurn() {
-        Timber.d(TAG, "Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
+        Timber.d("Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
         mBoard.disableInput();
         boolean testMode = false;
         if (!testMode) {
@@ -194,7 +195,7 @@ public class GameSessionFragment extends Fragment {
 
     private void androidTakesATurn() {
         int pickedX, pickedY;
-        Timber.d(TAG, "Thread ID in androidTakesATurn: %s", Thread.currentThread().getId());
+        Timber.d("Thread ID in androidTakesATurn: %s", Thread.currentThread().getId());
 
         GameGrid gameGrid = mActiveGame.getGameGrid();
         ArrayList<Square> emptyBlocks = gameGrid.getEmptySquares();
@@ -213,7 +214,7 @@ public class GameSessionFragment extends Fragment {
     }
 
     void humanTakesATurn(int x, int y) {/* human's turn */
-        Timber.d(TAG, "Thread ID in humanTakesATurn: %s", Thread.currentThread().getId());
+        Timber.d("Thread ID in humanTakesATurn: %s", Thread.currentThread().getId());
         boolean successfulPlay = mActiveGame.play(x, y);
         if (successfulPlay) {
             mGameView.placeSymbol(x, y); /* Update the display */

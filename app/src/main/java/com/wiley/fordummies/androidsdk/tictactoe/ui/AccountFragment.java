@@ -11,16 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-import com.wiley.fordummies.androidsdk.tictactoe.model.Account;
-import com.wiley.fordummies.androidsdk.tictactoe.model.AccountSingleton;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+import com.wiley.fordummies.androidsdk.tictactoe.model.Account;
+import com.wiley.fordummies.androidsdk.tictactoe.model.AccountSingleton;
+
 import timber.log.Timber;
 
 /**
@@ -33,10 +34,10 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     private EditText mEtPassword;
     private EditText mEtConfirm;
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = AccountFragment.class.getSimpleName();
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
@@ -80,7 +81,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
             }
         }
         catch (NullPointerException npe) {
-            Timber.e(TAG, "Could not set subtitle");
+            Timber.e("Could not set subtitle");
         }
     }
 
