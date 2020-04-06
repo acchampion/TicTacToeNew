@@ -3,14 +3,14 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.test.annotation.UiThreadTest;
+import androidx.test.rule.ActivityTestRule;
+
 import com.wiley.fordummies.androidsdk.tictactoe.ui.Board;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.GameSessionActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.GameSessionFragment;
 
 import org.junit.Test;
-
-import androidx.test.annotation.UiThreadTest;
-import androidx.test.rule.ActivityTestRule;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertEquals;
@@ -69,21 +69,21 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     public void testUI() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
         getInstrumentation().waitForIdleSync();
-        getActivity().runOnUiThread(() -> {
-            System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
+        getActivity().runOnUiThread((Runnable) () -> {
+			System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
 
-            mBoard.requestFocus();
+			mBoard.requestFocus();
 
-            MotionEvent newMotionEvent = MotionEvent.obtain((long) 1,
-                    (long) 1,
-                    MotionEvent.ACTION_DOWN,
-                    (float) 53.0,
-                    (float) 53.0,
-                    0);
-            mBoard.dispatchTouchEvent(newMotionEvent);
-            mGameSessionFragment.scheduleAndroidsTurn();
-            assertEquals(mGameSessionFragment.getPlayCount(), 1);
-        });
+			MotionEvent newMotionEvent = MotionEvent.obtain((long) 1,
+				(long) 1,
+				MotionEvent.ACTION_DOWN,
+				(float) 53.0,
+				(float) 53.0,
+				0);
+			mBoard.dispatchTouchEvent(newMotionEvent);
+			mGameSessionFragment.scheduleAndroidsTurn();
+			assertEquals(mGameSessionFragment.getPlayCount(), 1);
+		});
     }
 
     @UiThreadTest
