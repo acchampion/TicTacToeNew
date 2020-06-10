@@ -96,13 +96,10 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     // 0oi1OI!
 
     private void noNetworkConnectionNotify() {
-        FragmentManager manager = getFragmentManager();
+        FragmentManager manager = getParentFragmentManager();
         NoNetworkConnectionDialogFragment fragment = new NoNetworkConnectionDialogFragment();
-
-        if (manager != null) {
-            fragment.show(manager, "no_net_conn");
-        }
-    }
+		fragment.show(manager, "no_net_conn");
+	}
 
 
     @Override

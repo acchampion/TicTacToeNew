@@ -111,13 +111,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), GameOptionsActivity.class));
                 getActivity().finish();
             } else {
-                FragmentManager manager = getFragmentManager();
+                FragmentManager manager = getParentFragmentManager();
                 LoginErrorDialogFragment fragment = new LoginErrorDialogFragment();
-
-                if (manager != null) {
-                    fragment.show(manager, "login_error");
-                }
-            }
+                fragment.show(manager, "login_error");
+			}
         }
     }
 
@@ -135,23 +132,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     break;
                 case R.id.new_user_button:
                     int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-                    FragmentManager fm = getFragmentManager();
+                    FragmentManager fm = getParentFragmentManager();
                     Fragment fragment = new AccountFragment();
                     if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
-                        if (fm != null) {
-                            fm.beginTransaction()
-                                    .replace(R.id.fragment_container, fragment)
-                                    .addToBackStack("account_fragment")
-                                    .commit();
-                        }
-                    } else {
-                        if (fm != null) {
-                            fm.beginTransaction()
-                                    .add(R.id.account_fragment_container, fragment)
-                                    .addToBackStack("account_fragment")
-                                    .commit();
-                        }
-                    }
+						fm.beginTransaction()
+								.replace(R.id.fragment_container, fragment)
+								.addToBackStack("account_fragment")
+								.commit();
+					} else {
+						fm.beginTransaction()
+								.add(R.id.account_fragment_container, fragment)
+								.addToBackStack("account_fragment")
+								.commit();
+					}
                     break;
             }
         }

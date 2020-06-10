@@ -125,13 +125,10 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(activity.getApplicationContext(), "Missing entry", Toast.LENGTH_SHORT).show();
             } else {
                 Timber.e("An unknown account creation error occurred.");
-                FragmentManager manager = getFragmentManager();
+                FragmentManager manager = getParentFragmentManager();
                 AccountErrorDialogFragment fragment = new AccountErrorDialogFragment();
-
-                if (manager != null) {
-                    fragment.show(manager, "account_error");
-                }
-            }
+				fragment.show(manager, "account_error");
+			}
         }
     }
 }

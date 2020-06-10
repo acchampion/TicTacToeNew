@@ -69,20 +69,28 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     public void testUI() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
         getInstrumentation().waitForIdleSync();
-        getActivity().runOnUiThread((Runnable) () -> {
-			System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
+        getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
 
-			mBoard.requestFocus();
+				mBoard.requestFocus();
 
-			MotionEvent newMotionEvent = MotionEvent.obtain((long) 1,
-				(long) 1,
-				MotionEvent.ACTION_DOWN,
-				(float) 53.0,
-				(float) 53.0,
-				0);
-			mBoard.dispatchTouchEvent(newMotionEvent);
-			mGameSessionFragment.scheduleAndroidsTurn();
-			assertEquals(mGameSessionFragment.getPlayCount(), 1);
+				MotionEvent newMotionEvent = MotionEvent.obtain(1,
+						1,
+					MotionEvent.ACTION_DOWN,
+					(float) 53.0,
+					(float) 53.0,
+					0);
+				mBoard.dispatchTouchEvent(newMotionEvent);
+				mGameSessionFragment.scheduleAndroidsTurn();
+				try {
+					Thread.sleep(2000L);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				assertEquals(mGameSessionFragment.getPlayCount(), 1);
+			}
 		});
     }
 
@@ -93,8 +101,8 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
         mBoard.requestFocus();
         int i;
         for (i = 0; i < 3; i++) {
-            MotionEvent newMotionEvent = MotionEvent.obtain((long) 1,
-                    (long) 1,
+            MotionEvent newMotionEvent = MotionEvent.obtain(1,
+					1,
                     MotionEvent.ACTION_DOWN,
                     x[i],
                     y[i],

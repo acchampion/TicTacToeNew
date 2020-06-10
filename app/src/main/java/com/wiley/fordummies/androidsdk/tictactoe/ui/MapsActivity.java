@@ -337,11 +337,13 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
             // Direct users to turn on GPS (and send them to Location Settings if it's off).
             // Source: https://stackoverflow.com/questions/843675/how-do-i-find-out-if-the-gps-of-an-android-device-is-enabled
             final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                Toast.makeText(getApplicationContext(), "Please turn on GPS in the Settings app", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(intent, ENABLE_GPS_REQUEST_CODE);
-            }
+            if (manager != null) {
+				if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+					Toast.makeText(getApplicationContext(), "Please turn on GPS in the Settings app", Toast.LENGTH_LONG).show();
+					Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					startActivityForResult(intent, ENABLE_GPS_REQUEST_CODE);
+				}
+			}
         }
     }
 
@@ -416,7 +418,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
         }
     }
 
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         whereAmIString = savedInstanceState.getString(WHERE_AM_I_STRING);
         if (whereAmIString != null)

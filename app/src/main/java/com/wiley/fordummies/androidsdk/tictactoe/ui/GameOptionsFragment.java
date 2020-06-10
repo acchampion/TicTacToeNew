@@ -144,12 +144,9 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
     }
 
     private void showQuitAppDialog() {
-        FragmentManager manager = getFragmentManager();
+        FragmentManager manager = getParentFragmentManager();
         QuitAppDialogFragment fragment = new QuitAppDialogFragment();
-
-        if (manager != null) {
-            fragment.show(manager, "quit_app");
-        }
-    }
+        fragment.show(manager, "quit_app");
+	}
 
 }
