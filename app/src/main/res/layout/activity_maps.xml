@@ -4,7 +4,6 @@
                 xmlns:mapbox="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/white"
                 android:orientation="vertical">
 
     <!-- Set the starting camera position and map style using xml-->
@@ -27,14 +26,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-           <EditText
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_address"
-                android:inputType="text"
-                android:minWidth="250dp"
-                android:layout_margin="8dp"/>
+			<EditText
+				android:id="@+id/location"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="8dp"
+				android:hint="@string/enter_address"
+				android:inputType="text"
+				android:minWidth="250dp"
+				android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/button_locate"
