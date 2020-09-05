@@ -8,10 +8,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 /**
  * Fragment for splash screen.
@@ -48,12 +48,9 @@ public class SplashScreenFragment extends Fragment implements View.OnTouchListen
                 } catch (InterruptedException e) {
                     // do nothing
                 } finally {
-                    Activity activity = getActivity();
-
-                    if (activity != null) {
-                        getActivity().finish();
-                    }
-                    startActivity(new Intent("com.wiley.fordummies.androidsdk.tictactoe.Login"));
+                    Activity activity = requireActivity();
+					activity.finish();
+					startActivity(new Intent("com.wiley.fordummies.androidsdk.tictactoe.Login"));
                 }
             }
         };

@@ -27,15 +27,13 @@ public class SettingsFragment extends PreferenceFragmentCompat  {
     public void onResume() {
         super.onResume();
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            AppCompatActivity activity = (AppCompatActivity) requireActivity();
 
-            if (activity != null) {
-                ActionBar actionBar = activity.getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setSubtitle(getResources().getString(R.string.settings));
-                }
-            }
-        }
+			ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.settings));
+			}
+		}
         catch (NullPointerException npe) {
             Timber.e("Could not set subtitle");
         }

@@ -45,41 +45,37 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account, container, false);
 
-        Activity activity = getActivity();
-        if (activity != null){
-            int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        Activity activity = requireActivity();
+		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 
-            mEtUsername = v.findViewById(R.id.username);
-            mEtPassword = v.findViewById(R.id.password);
-            mEtConfirm = v.findViewById(R.id.password_confirm);
-            Button btnAdd = v.findViewById(R.id.done_button);
-            btnAdd.setOnClickListener(this);
-            Button btnCancel = v.findViewById(R.id.cancel_button);
-            btnCancel.setOnClickListener(this);
-            Button btnExit = v.findViewById(R.id.exit_button);
-            if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
-                btnExit.setOnClickListener(this);
-            }
-            else {
-                btnExit.setVisibility(View.GONE);
-            }
-        }
+		mEtUsername = v.findViewById(R.id.username);
+		mEtPassword = v.findViewById(R.id.password);
+		mEtConfirm = v.findViewById(R.id.password_confirm);
+		Button btnAdd = v.findViewById(R.id.done_button);
+		btnAdd.setOnClickListener(this);
+		Button btnCancel = v.findViewById(R.id.cancel_button);
+		btnCancel.setOnClickListener(this);
+		Button btnExit = v.findViewById(R.id.exit_button);
+		if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+			btnExit.setOnClickListener(this);
+		}
+		else {
+			btnExit.setVisibility(View.GONE);
+		}
 
-        return v;
+		return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-            if (activity != null) {
-                ActionBar actionBar = activity.getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setSubtitle(getResources().getString(R.string.account));
-                }
-            }
-        }
+            AppCompatActivity activity = (AppCompatActivity) requireActivity();
+			ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.account));
+			}
+		}
         catch (NullPointerException npe) {
             Timber.e("Could not set subtitle");
         }
@@ -103,32 +99,28 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                 mEtConfirm.setText("");
                 break;
             case R.id.exit_button:
-                FragmentActivity activity = getActivity();
-                if (activity != null) {
-                    activity.getSupportFragmentManager().popBackStack();
-                }
-        }
+                FragmentActivity activity = requireActivity();
+				activity.getSupportFragmentManager().popBackStack();
+		}
     }
 
     private void createAccount() {
-        FragmentActivity activity = getActivity();
+        FragmentActivity activity = requireActivity();
         String username = mEtUsername.getText().toString();
         String password = mEtPassword.getText().toString();
         String confirm = mEtConfirm.getText().toString();
-        if (activity != null) {
-            if (password.equals(confirm) && !username.equals("") && !password.equals("")) {
-                AccountSingleton singleton = AccountSingleton.get(activity.getApplicationContext());
-                Account account = new Account(username, password);
-                singleton.addAccount(account);
-                Toast.makeText(activity.getApplicationContext(), "New record inserted", Toast.LENGTH_SHORT).show();
-            } else if ((username.equals("")) || (password.equals("")) || (confirm.equals(""))) {
-                Toast.makeText(activity.getApplicationContext(), "Missing entry", Toast.LENGTH_SHORT).show();
-            } else {
-                Timber.e("An unknown account creation error occurred.");
-                FragmentManager manager = getParentFragmentManager();
-                AccountErrorDialogFragment fragment = new AccountErrorDialogFragment();
-				fragment.show(manager, "account_error");
-			}
-        }
-    }
+		if (password.equals(confirm) && !username.equals("") && !password.equals("")) {
+			AccountSingleton singleton = AccountSingleton.get(activity.getApplicationContext());
+			Account account = new Account(username, password);
+			singleton.addAccount(account);
+			Toast.makeText(activity.getApplicationContext(), "New record inserted", Toast.LENGTH_SHORT).show();
+		} else if ((username.equals("")) || (password.equals("")) || (confirm.equals(""))) {
+			Toast.makeText(activity.getApplicationContext(), "Missing entry", Toast.LENGTH_SHORT).show();
+		} else {
+			Timber.e("An unknown account creation error occurred.");
+			FragmentManager manager = getParentFragmentManager();
+			AccountErrorDialogFragment fragment = new AccountErrorDialogFragment();
+			fragment.show(manager, "account_error");
+		}
+	}
 }

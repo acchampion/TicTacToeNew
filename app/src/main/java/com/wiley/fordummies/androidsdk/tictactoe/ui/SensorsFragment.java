@@ -44,22 +44,19 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sensor_list, container, false);
 
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
         RecyclerView sensorRecyclerView = v.findViewById(R.id.sensor_recycler_view);
+		sensorRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
-        if (activity != null) {
-            sensorRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
+		mSensorManager = (SensorManager) activity.getSystemService(SENSOR_SERVICE);
+		if (mSensorManager != null) {
+			mSensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+			SensorAdapter adapter = new SensorAdapter(mSensorList);
+			sensorRecyclerView.setAdapter(adapter);
+			sensorRecyclerView.setItemAnimator(new DefaultItemAnimator());
+		}
 
-            mSensorManager = (SensorManager) activity.getSystemService(SENSOR_SERVICE);
-            if (mSensorManager != null) {
-                mSensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-                SensorAdapter adapter = new SensorAdapter(mSensorList);
-                sensorRecyclerView.setAdapter(adapter);
-                sensorRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            }
-        }
-
-        return v;
+		return v;
     }
 
     @Override
@@ -67,16 +64,13 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
         super.onResume();
         Timber.d("onResume()");
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            AppCompatActivity activity = (AppCompatActivity) requireActivity();
+            ActionBar actionBar = activity.getSupportActionBar();
 
-            if (activity != null) {
-                ActionBar actionBar = activity.getSupportActionBar();
-
-                if (actionBar != null) {
-                    actionBar.setSubtitle(getResources().getString(R.string.sensors));
-                }
-            }
-        } catch (NullPointerException npe) {
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.sensors));
+			}
+		} catch (NullPointerException npe) {
             Timber.e("Could not set subtitle");
         }
 
@@ -208,7 +202,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
         @NonNull
         @Override
         public SensorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            LayoutInflater inflater = LayoutInflater.from(requireActivity());
             return new SensorHolder(inflater, parent);
         }
 

@@ -29,7 +29,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.preference:preference:1.1.1'
 	implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.6.1'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.11.0'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-building:0.4.0'

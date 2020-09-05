@@ -1,12 +1,12 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
@@ -24,7 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected int getLayoutResId() {
         return R.layout.activity_fragment;
     }
- 
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

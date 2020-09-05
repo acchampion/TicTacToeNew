@@ -1,7 +1,8 @@
 package com.wiley.fordummies.androidsdk.tictactoe.model;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 
 /**
  * Class for reading settings from SharedPreferences.

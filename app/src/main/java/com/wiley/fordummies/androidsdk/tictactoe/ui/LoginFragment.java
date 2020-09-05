@@ -40,21 +40,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v;
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
 
-        if (activity != null) {
-            int rotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
-            if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
-                v = inflater.inflate(R.layout.fragment_login_land, container, false);
-            } else {
-                v = inflater.inflate(R.layout.fragment_login, container, false);
-            }
-        }
-        else {
-            v = inflater.inflate(R.layout.fragment_login, container, false);
-        }
+		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+			v = inflater.inflate(R.layout.fragment_login_land, container, false);
+		} else {
+			v = inflater.inflate(R.layout.fragment_login, container, false);
+		}
 
-        mUsernameEditText = v.findViewById(R.id.username_text);
+		mUsernameEditText = v.findViewById(R.id.username_text);
         mPasswordEditText = v.findViewById(R.id.password_text);
 
         Button loginButton = v.findViewById(R.id.login_button);
@@ -76,77 +71,69 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void checkLogin() {
         String username = mUsernameEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
 
         if (mAccountSingleton == null) {
-            if (activity != null) {
-                mAccountSingleton = AccountSingleton.get(activity.getApplicationContext());
-            }
-        }
+			mAccountSingleton = AccountSingleton.get(activity.getApplicationContext());
+		}
 
         if (mDbHelper == null) {
-            if (activity != null) {
-                mDbHelper = new AccountDbHelper(getActivity().getApplicationContext());
-            }
-        }
+			mDbHelper = new AccountDbHelper(activity.getApplicationContext());
+		}
 
-        if (activity != null) {
-            List<Account> accountList = mAccountSingleton.getAccounts();
-            boolean hasMatchingAccount = false;
-            for (Account account : accountList) {
-                if (account.getName().equals(username) && account.getPassword().equals(password)) {
-                    hasMatchingAccount = true;
-                    break;
-                }
-            }
-
-            if (accountList.size() > 0 && hasMatchingAccount) {
-                // Save username as the name of the player
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString(OPT_NAME, username);
-                editor.apply();
-
-                // Bring up the GameOptions screen
-                startActivity(new Intent(getActivity(), GameOptionsActivity.class));
-                getActivity().finish();
-            } else {
-                FragmentManager manager = getParentFragmentManager();
-                LoginErrorDialogFragment fragment = new LoginErrorDialogFragment();
-                fragment.show(manager, "login_error");
+		List<Account> accountList = mAccountSingleton.getAccounts();
+		boolean hasMatchingAccount = false;
+		for (Account account : accountList) {
+			if (account.getName().equals(username) && account.getPassword().equals(password)) {
+				hasMatchingAccount = true;
+				break;
 			}
-        }
-    }
+		}
+
+		if (accountList.size() > 0 && hasMatchingAccount) {
+			// Save username as the name of the player
+			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString(OPT_NAME, username);
+			editor.apply();
+
+			// Bring up the GameOptions screen
+			startActivity(new Intent(activity, GameOptionsActivity.class));
+			activity.finish();
+		} else {
+			FragmentManager manager = getParentFragmentManager();
+			LoginErrorDialogFragment fragment = new LoginErrorDialogFragment();
+			fragment.show(manager, "login_error");
+		}
+	}
 
     @Override
     public void onClick(View view) {
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
 
-        if (activity != null) {
-            switch (view.getId()) {
-                case R.id.login_button:
-                    checkLogin();
-                    break;
-                case R.id.cancel_button:
-                    activity.finish();
-                    break;
-                case R.id.new_user_button:
-                    int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-                    FragmentManager fm = getParentFragmentManager();
-                    Fragment fragment = new AccountFragment();
-                    if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
-						fm.beginTransaction()
-								.replace(R.id.fragment_container, fragment)
-								.addToBackStack("account_fragment")
-								.commit();
-					} else {
-						fm.beginTransaction()
-								.add(R.id.account_fragment_container, fragment)
-								.addToBackStack("account_fragment")
-								.commit();
-					}
-                    break;
-            }
-        }
-    }
+		switch (view.getId()) {
+			case R.id.login_button:
+				checkLogin();
+				break;
+			case R.id.cancel_button:
+				activity.finish();
+				break;
+			case R.id.new_user_button:
+				int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+				FragmentManager fm = getParentFragmentManager();
+				Fragment fragment = new AccountFragment();
+				if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+					fm.beginTransaction()
+							.replace(R.id.fragment_container, fragment)
+							.addToBackStack("account_fragment")
+							.commit();
+				} else {
+					fm.beginTransaction()
+							.add(R.id.account_fragment_container, fragment)
+							.addToBackStack("account_fragment")
+							.commit();
+				}
+				break;
+		}
+	}
 }

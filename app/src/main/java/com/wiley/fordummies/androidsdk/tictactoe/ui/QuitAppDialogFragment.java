@@ -5,12 +5,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 
 /**
  * Created by adamcchampion on 2017/08/12.
@@ -20,7 +20,7 @@ public class QuitAppDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
         return new AlertDialog.Builder(activity)
                 .setTitle(Objects.requireNonNull(activity).getResources().getString(R.string.exit))
                 .setMessage(Objects.requireNonNull(activity).getResources().getString(R.string.should_quit))

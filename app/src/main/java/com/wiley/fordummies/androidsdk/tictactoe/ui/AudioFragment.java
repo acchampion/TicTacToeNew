@@ -40,8 +40,6 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
     private Uri mAudioFileUri;
     private Intent mRecordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
 
-    // private static final String TAG = AudioFragment.class.getSimpleName();
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_audio, container, false);
@@ -53,46 +51,37 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
         Button buttonRecord = v.findViewById(R.id.buttonAudioRecord);
         buttonRecord.setOnClickListener(this);
 
-        File audioFile = new File(mAudioFilePath);
-        if (audioFile.exists()) {
-            mAudioFileUri = Uri.fromFile(new File(mAudioFilePath));
-        }
-        else {
-            Activity activity = getActivity();
+		// Guard against no audio recorder app (disable the "record" button).
+		Activity activity = requireActivity();
+		PackageManager packageManager = activity.getPackageManager();
+		if (packageManager.resolveActivity(mRecordAudioIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+			buttonRecord.setEnabled(false);
+		}
 
-            // Audio file doesn't exist, so load sample audio from resources.
-            if (activity != null) {
-                String audioResourceName = "android.resource://" + activity.getPackageName() +
-                        File.separator + R.raw.sample_audio;
-                mAudioFileUri = Uri.parse(audioResourceName);
-            }
-        }
+		File audioFile = new File(mAudioFilePath);
+		if (audioFile.exists()) {
+			mAudioFileUri = Uri.fromFile(new File(mAudioFilePath));
+		}
+		else {
+			// Audio file doesn't exist, so load sample audio from resources.
+			String audioResourceName = "android.resource://" + activity.getPackageName() +
+					File.separator + R.raw.sample_audio;
+			mAudioFileUri = Uri.parse(audioResourceName);
+		}
 
-        // Guard against no audio recorder app (disable the "record" button).
-        Activity activity = getActivity();
-        if (activity != null) {
-            PackageManager packageManager = activity.getPackageManager();
-            if (packageManager.resolveActivity(mRecordAudioIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
-                buttonRecord.setEnabled(false);
-            }
-        }
-
-        return v;
+		return v;
     }
 
-    @Override
+	@Override
     public void onResume() {
         super.onResume();
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-
-            if (activity != null) {
-                ActionBar actionBar = activity.getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setSubtitle(getResources().getString(R.string.audio));
-                }
-            }
-        }
+            AppCompatActivity activity = (AppCompatActivity) requireActivity();
+            ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.audio));
+			}
+		}
         catch (NullPointerException npe) {
             Timber.e( "Could not set subtitle");
         }
@@ -101,29 +90,27 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
 
-        if (activity != null) {
-            switch (view.getId()) {
-                case R.id.buttonAudioStart:
-                    if (!mStarted) {
-                        Intent musicIntent = new Intent(activity.getApplicationContext(), MediaPlaybackService.class);
-                        musicIntent.putExtra("URIString", mAudioFileUri.toString());
-                        Timber.d("URI: %s", mAudioFileUri.toString());
-                        getActivity().startService(musicIntent);
-                        mStarted = true;
-                    }
-                    break;
-                case R.id.buttonAudioStop:
-                    activity.stopService(new Intent(activity.getApplicationContext(), MediaPlaybackService.class));
-                    mStarted = false;
-                    break;
-                case R.id.buttonAudioRecord:
-                    startActivityForResult(mRecordAudioIntent, AUDIO_CAPTURED);
-                    break;
-            }
-        }
-    }
+		switch (view.getId()) {
+			case R.id.buttonAudioStart:
+				if (!mStarted) {
+					Intent musicIntent = new Intent(activity.getApplicationContext(), MediaPlaybackService.class);
+					musicIntent.putExtra("URIString", mAudioFileUri.toString());
+					Timber.d("URI: %s", mAudioFileUri.toString());
+					activity.startService(musicIntent);
+					mStarted = true;
+				}
+				break;
+			case R.id.buttonAudioStop:
+				activity.stopService(new Intent(activity.getApplicationContext(), MediaPlaybackService.class));
+				mStarted = false;
+				break;
+			case R.id.buttonAudioRecord:
+				startActivityForResult(mRecordAudioIntent, AUDIO_CAPTURED);
+				break;
+		}
+	}
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == AUDIO_CAPTURED) {

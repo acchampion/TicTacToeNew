@@ -40,11 +40,10 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
         View v = inflater.inflate(R.layout.fragment_video, container, false);
 
         mVideoView = v.findViewById(R.id.videoView);
-
         Button buttonStart = v.findViewById(R.id.buttonVideoStart);
         buttonStart.setOnClickListener(this);
         Button buttonStop = v.findViewById(R.id.buttonVideoStop);
@@ -59,37 +58,31 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
             mVideoFileUri = Uri.fromFile(videoFile);
         } else {
             // Video file doesn't exist, so load sample video from resources.
-            if (activity != null) {
-                String videoResourceName = "android.resource://" + activity.getPackageName() +
-                        File.separator + R.raw.sample_video;
-                mVideoFileUri = Uri.parse(videoResourceName);
-            }
-        }
+			String videoResourceName = "android.resource://" + activity.getPackageName() +
+					File.separator + R.raw.sample_video;
+			mVideoFileUri = Uri.parse(videoResourceName);
+		}
 
         // Guard against no audio recorder app (disable the "record" button).
-        if (activity != null) {
-            PackageManager packageManager = activity.getPackageManager();
-            if (packageManager.resolveActivity(mRecordVideoIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
-                buttonRecord.setEnabled(false);
-            }
-        }
+		PackageManager packageManager = activity.getPackageManager();
+		if (packageManager.resolveActivity(mRecordVideoIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+			buttonRecord.setEnabled(false);
+		}
 
-        return v;
+		return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            AppCompatActivity activity = (AppCompatActivity) requireActivity();
 
-            if (activity != null) {
-                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setSubtitle(getResources().getString(R.string.video));
-                }
-            }
-        } catch (NullPointerException npe) {
+			ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.video));
+			}
+		} catch (NullPointerException npe) {
             Timber.e("Could not set subtitle");
         }
     }

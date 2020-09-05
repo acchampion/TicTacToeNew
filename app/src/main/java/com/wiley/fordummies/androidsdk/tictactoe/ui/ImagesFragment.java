@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,16 +48,14 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
         buttonCapture.setOnClickListener(this);
 
         // Guard against no camera app (disable the "record" button).
-        Activity activity = getActivity();
-        if (activity != null) {
-            PackageManager packageManager = activity.getPackageManager();
-            if (packageManager.resolveActivity(mCaptureImageIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
-                buttonCapture.setEnabled(false);
-            }
-        }
+        Activity activity = requireActivity();
+		PackageManager packageManager = activity.getPackageManager();
+		if (packageManager.resolveActivity(mCaptureImageIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+			buttonCapture.setEnabled(false);
+		}
 
 
-        return v;
+		return v;
     }
 
     @Override

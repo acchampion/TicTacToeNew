@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -147,8 +146,9 @@ public class Board extends View {
     }
 
     public void invalidateBlock(int x, int y) {
-        Rect selBlock = new Rect((int) (x * mBlockWidth), (int) (y * mBlockHeight), (int) ((x + 1) * mBlockWidth), (int) ((y + 1) * mBlockHeight));
-        invalidate(selBlock);
+//        Rect selBlock = new Rect((int) (x * mBlockWidth), (int) (y * mBlockHeight), (int) ((x + 1) * mBlockWidth), (int) ((y + 1) * mBlockHeight));
+//        invalidate(selBlock);
+        invalidate();
     }
 
     public void disableInput() {

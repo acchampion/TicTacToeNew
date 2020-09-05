@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,10 +25,13 @@ import timber.log.Timber;
  * Created by adamcchampion on 2017/08/14.
  */
 
-public class HelpFragment extends Fragment implements View.OnClickListener {
+public class HelpFragment extends Fragment implements View.OnClickListener,
+		ConnectivityManager.OnNetworkActiveListener {
 
     private final String mUrlStr = "https://en.wikipedia.org/wiki/Tic-tac-toe";
     // private static final String TAG = HelpFragment.class.getSimpleName();
+
+	private boolean mIsNetActive = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,34 +49,37 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            AppCompatActivity activity = (AppCompatActivity) requireActivity();
 
-            if (activity != null) {
-                ActionBar actionBar = activity.getSupportActionBar();
+			ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.help));
+			}
 
-                if (actionBar != null) {
-                    actionBar.setSubtitle(getResources().getString(R.string.help));
-                }
-            }
-        } catch (NullPointerException npe) {
+			ConnectivityManager connectivityManager =
+					(ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+			if (connectivityManager != null) {
+				connectivityManager.addDefaultNetworkActiveListener(this);
+			}
+		} catch (NullPointerException npe) {
             Timber.e("Could not set subtitle");
         }
     }
 
-    private boolean hasNetworkConnection() {
-        Activity activity = getActivity();
+	@Override
+	public void onPause() {
+		super.onPause();
 
-        if (activity != null) {
-            ConnectivityManager connectivityManager =
-                    (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (connectivityManager != null) {
-                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-                return (activeNetwork != null && activeNetwork.isConnected());
-            }
-            return false;
-        } else {
-            return false;
-        }
+		Activity activity = requireActivity();
+		ConnectivityManager connectivityManager =
+				(ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (connectivityManager != null) {
+			connectivityManager.removeDefaultNetworkActiveListener(this);
+		}
+	}
+
+	private boolean hasNetworkConnection() {
+        return mIsNetActive;
     }
 
     private void launchBrowser() {
@@ -84,14 +89,11 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void launchWebView() {
-        Activity activity = getActivity();
-
-        if (activity != null) {
-            Intent launchWebViewIntent = new Intent(getActivity().getApplicationContext(), HelpWebViewActivity.class);
-            launchWebViewIntent.putExtra("url", mUrlStr);
-            startActivity(launchWebViewIntent);
-        }
-    }
+        Activity activity = requireActivity();
+		Intent launchWebViewIntent = new Intent(activity.getApplicationContext(), HelpWebViewActivity.class);
+		launchWebViewIntent.putExtra("url", mUrlStr);
+		startActivity(launchWebViewIntent);
+	}
 
     // 0oi1OI!
 
@@ -121,4 +123,9 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+	@Override
+	public void onNetworkActive() {
+		mIsNetActive = true;
+	}
 }

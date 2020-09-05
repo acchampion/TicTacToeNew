@@ -41,17 +41,15 @@ public class HelpWebViewFragment extends Fragment  {
         mProgressBar = v.findViewById(R.id.webviewprogress);
         mProgressBar.setMax(100);
 
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
 
-        if (activity != null) {
-            Bundle extras = activity.getIntent().getExtras();
-            if (extras != null) {
-                mUrl = extras.getString(ARG_URI);
-                Timber.d("Loading URL %s", mUrl);
-            }
-        }
+		Bundle extras = activity.getIntent().getExtras();
+		if (extras != null) {
+			mUrl = extras.getString(ARG_URI);
+			Timber.d("Loading URL %s", mUrl);
+		}
 
-        WebView.setWebContentsDebuggingEnabled(true);
+		WebView.setWebContentsDebuggingEnabled(true);
         // helpInWebView.getSettings().setJavaScriptEnabled(true);
         helpInWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -80,15 +78,12 @@ public class HelpWebViewFragment extends Fragment  {
     public void onResume() {
         super.onResume();
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-
-            if (activity != null) {
-                ActionBar actionBar = activity.getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setSubtitle(getResources().getString(R.string.help_webview));
-                }
-            }
-        }
+            AppCompatActivity activity = (AppCompatActivity) requireActivity();
+            ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.help_webview));
+			}
+		}
         catch (NullPointerException npe) {
             Timber.e("Could not set subtitle");
         }
