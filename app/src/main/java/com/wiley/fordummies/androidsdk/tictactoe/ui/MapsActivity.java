@@ -30,6 +30,7 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.plugins.building.BuildingPlugin;
@@ -64,6 +65,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
     private MapView mMapView;
     private MapboxMap mMapboxMap;
     private LocationLayerPlugin mLocationLayerPlugin;
+    private LocationComponent mLocationComponent;
     private LocationEngine mLocationEngine;
 
     private EditText mEditLocation;

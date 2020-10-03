@@ -6,11 +6,9 @@
         android:id="@+id/menu_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/settings"
-        app:showAsAction="ifRoom"/>
+        />
     <item
         android:id="@+id/menu_help"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/help"
         app:showAsAction="ifRoom"/>

@@ -19,21 +19,20 @@ import androidx.fragment.app.FragmentManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
+import java.util.Objects;
+
 import timber.log.Timber;
 
 /**
  * Created by adamcchampion on 2017/08/14.
  */
 
-public class HelpFragment extends Fragment implements View.OnClickListener,
-		ConnectivityManager.OnNetworkActiveListener {
+public class HelpFragment extends Fragment implements View.OnClickListener {
 
     private final String mUrlStr = "https://en.wikipedia.org/wiki/Tic-tac-toe";
     // private static final String TAG = HelpFragment.class.getSimpleName();
 
-	private boolean mIsNetActive = false;
-
-    @Override
+	@Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_help, container, false);
 
@@ -55,31 +54,16 @@ public class HelpFragment extends Fragment implements View.OnClickListener,
 			if (actionBar != null) {
 				actionBar.setSubtitle(getResources().getString(R.string.help));
 			}
-
-			ConnectivityManager connectivityManager =
-					(ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-			if (connectivityManager != null) {
-				connectivityManager.addDefaultNetworkActiveListener(this);
-			}
 		} catch (NullPointerException npe) {
             Timber.e("Could not set subtitle");
         }
     }
 
-	@Override
-	public void onPause() {
-		super.onPause();
-
-		Activity activity = requireActivity();
-		ConnectivityManager connectivityManager =
-				(ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (connectivityManager != null) {
-			connectivityManager.removeDefaultNetworkActiveListener(this);
-		}
-	}
-
 	private boolean hasNetworkConnection() {
-        return mIsNetActive;
+		Context ctx = requireContext();
+		ConnectivityManager connectivityManager =
+				(ConnectivityManager) ctx.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		return Objects.requireNonNull(connectivityManager).isDefaultNetworkActive();
     }
 
     private void launchBrowser() {
@@ -123,9 +107,4 @@ public class HelpFragment extends Fragment implements View.OnClickListener,
                 break;
         }
     }
-
-	@Override
-	public void onNetworkActive() {
-		mIsNetActive = true;
-	}
 }

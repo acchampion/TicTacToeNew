@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.MediaPlaybackService;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
+import java.util.Objects;
 
 import timber.log.Timber;
 
@@ -28,28 +30,26 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * Audio playback Fragment.
- *
+ * <p>
  * Created by adamcchampion on 2017/08/12.
  */
 public class AudioFragment extends Fragment implements View.OnClickListener {
-    private boolean mStarted = false;
-    private String mAudioFilePath =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getPath() +
-            File.separator + "sample_audio.mp3";
-    private static final int AUDIO_CAPTURED = 1;
-    private Uri mAudioFileUri;
-    private Intent mRecordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+	private boolean mStarted = false;
+	private String mAudioFilePath;
+	private static final int AUDIO_CAPTURED = 1;
+	private Uri mAudioFileUri;
+	private Intent mRecordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_audio, container, false);
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_audio, container, false);
 
-        Button buttonStart = v.findViewById(R.id.buttonAudioStart);
-        buttonStart.setOnClickListener(this);
-        Button buttonStop = v.findViewById(R.id.buttonAudioStop);
-        buttonStop.setOnClickListener(this);
-        Button buttonRecord = v.findViewById(R.id.buttonAudioRecord);
-        buttonRecord.setOnClickListener(this);
+		Button buttonStart = v.findViewById(R.id.buttonAudioStart);
+		buttonStart.setOnClickListener(this);
+		Button buttonStop = v.findViewById(R.id.buttonAudioStop);
+		buttonStop.setOnClickListener(this);
+		Button buttonRecord = v.findViewById(R.id.buttonAudioRecord);
+		buttonRecord.setOnClickListener(this);
 
 		// Guard against no audio recorder app (disable the "record" button).
 		Activity activity = requireActivity();
@@ -61,8 +61,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 		File audioFile = new File(mAudioFilePath);
 		if (audioFile.exists()) {
 			mAudioFileUri = Uri.fromFile(new File(mAudioFilePath));
-		}
-		else {
+		} else {
 			// Audio file doesn't exist, so load sample audio from resources.
 			String audioResourceName = "android.resource://" + activity.getPackageName() +
 					File.separator + R.raw.sample_audio;
@@ -70,27 +69,33 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 		}
 
 		return v;
-    }
+	}
 
 	@Override
-    public void onResume() {
-        super.onResume();
-        try {
-            AppCompatActivity activity = (AppCompatActivity) requireActivity();
-            ActionBar actionBar = activity.getSupportActionBar();
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		File musicDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+		mAudioFilePath = Objects.requireNonNull(musicDir).getPath() + File.separator + "sample_audio.mp3";
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		try {
+			AppCompatActivity activity = (AppCompatActivity) requireActivity();
+			ActionBar actionBar = activity.getSupportActionBar();
 			if (actionBar != null) {
 				actionBar.setSubtitle(getResources().getString(R.string.audio));
 			}
+		} catch (NullPointerException npe) {
+			Timber.e("Could not set subtitle");
 		}
-        catch (NullPointerException npe) {
-            Timber.e( "Could not set subtitle");
-        }
-    }
+	}
 
 
-    @Override
-    public void onClick(View view) {
-        Activity activity = requireActivity();
+	@Override
+	public void onClick(View view) {
+		Activity activity = requireActivity();
 
 		switch (view.getId()) {
 			case R.id.buttonAudioStart:
@@ -112,10 +117,10 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 		}
 	}
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == AUDIO_CAPTURED) {
-            mAudioFileUri = data.getData();
-            Timber.v( "Audio File URI: %s", mAudioFileUri);
-        }
-    }
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK && requestCode == AUDIO_CAPTURED) {
+			mAudioFileUri = data.getData();
+			Timber.v("Audio File URI: %s", mAudioFileUri);
+		}
+	}
 }

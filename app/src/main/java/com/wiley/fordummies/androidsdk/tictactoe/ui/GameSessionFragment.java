@@ -268,9 +268,7 @@ public class GameSessionFragment extends Fragment {
 					}
 					playNewGame();
 				})
-				.setNegativeButton("No", (dialog, which) -> {
-					activity.finish();
-				})
+				.setNegativeButton("No", (dialog, which) -> activity.finish())
 				.show();
 
 	}
