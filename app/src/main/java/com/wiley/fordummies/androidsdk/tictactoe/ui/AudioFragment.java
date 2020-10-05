@@ -58,6 +58,16 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 			buttonRecord.setEnabled(false);
 		}
 
+		return v;
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		Activity activity = requireActivity();
+		File musicDir = activity.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+		mAudioFilePath = Objects.requireNonNull(musicDir).getPath() + File.separator + "sample_audio.mp3";
+
 		File audioFile = new File(mAudioFilePath);
 		if (audioFile.exists()) {
 			mAudioFileUri = Uri.fromFile(new File(mAudioFilePath));
@@ -67,15 +77,6 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 					File.separator + R.raw.sample_audio;
 			mAudioFileUri = Uri.parse(audioResourceName);
 		}
-
-		return v;
-	}
-
-	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		File musicDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-		mAudioFilePath = Objects.requireNonNull(musicDir).getPath() + File.separator + "sample_audio.mp3";
 	}
 
 	@Override
