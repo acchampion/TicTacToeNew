@@ -23,6 +23,8 @@ import com.wiley.fordummies.androidsdk.tictactoe.model.AccountSingleton;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * Fragment for login screen.
  *
@@ -109,31 +111,25 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Activity activity = requireActivity();
+        final Activity activity = requireActivity();
+        final int viewId = view.getId();
 
-		switch (view.getId()) {
-			case R.id.login_button:
-				checkLogin();
-				break;
-			case R.id.cancel_button:
-				activity.finish();
-				break;
-			case R.id.new_user_button:
-				int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-				FragmentManager fm = getParentFragmentManager();
-				Fragment fragment = new AccountFragment();
-				if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
-					fm.beginTransaction()
-							.replace(R.id.fragment_container, fragment)
-							.addToBackStack("account_fragment")
-							.commit();
-				} else {
-					fm.beginTransaction()
-							.add(R.id.account_fragment_container, fragment)
-							.addToBackStack("account_fragment")
-							.commit();
-				}
-				break;
+        if (viewId == R.id.login_button) {
+			checkLogin();
+		} else if (viewId == R.id.cancel_button) {
+			activity.finish();
+		} else if (viewId == R.id.new_user_button) {
+			final int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+			FragmentManager fm = getParentFragmentManager();
+			Fragment fragment = new AccountFragment();
+			if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+				fm.beginTransaction()
+						.replace(R.id.fragment_container, fragment)
+						.addToBackStack("account_fragment")
+						.commit();
+			}
+		} else {
+        	Timber.e("Invalid button click!");
 		}
 	}
 }

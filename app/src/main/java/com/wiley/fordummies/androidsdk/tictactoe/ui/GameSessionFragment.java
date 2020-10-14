@@ -2,6 +2,7 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -318,24 +319,27 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
+		final int itemId = item.getItemId();
+		final Activity activity = requireActivity();
+		final Context appContext = activity.getApplicationContext();
 
-		switch (item.getItemId()) {
-			case R.id.menu_help:
-				Activity activity = requireActivity();
-				startActivity(new Intent(activity.getApplicationContext(), HelpActivity.class));
-				return true;
-			case R.id.menu_exit:
-				quitGame();
-				return true;
-			case R.id.menu_email:
-				sendScoresViaEmail();
-				return true;
-			case R.id.menu_sms:
-				sendScoresViaSMS();
-				return true;
-			case R.id.menu_call:
-				callTicTacToeHelp();
-				return true;
+		if (itemId == R.id.menu_help) {
+			startActivity(new Intent(appContext, HelpActivity.class));
+			return true;
+		} else if (itemId == R.id.menu_exit) {
+			quitGame();
+			return true;
+		} else if (itemId == R.id.menu_email) {
+			sendScoresViaEmail();
+			return true;
+		} else if (itemId == R.id.menu_sms) {
+			sendScoresViaSMS();
+			return true;
+		} else if (itemId == R.id.menu_call) {
+			callTicTacToeHelp();
+			return true;
+		} else {
+			Timber.e("Invalid menu item selected");
 		}
 
 		return false;

@@ -26,7 +26,7 @@ public class QuitAppDialogFragment extends DialogFragment {
                 .setMessage(Objects.requireNonNull(activity).getResources().getString(R.string.should_quit))
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(Objects.requireNonNull(activity).getResources().getString(R.string.yes),
-                        (dialog, which) -> System.exit(0))
+                        (dialog, which) -> activity.finish())
                 .setNegativeButton(Objects.requireNonNull(activity).getString(R.string.no),
                         (dialog, which) -> {
                         }).create();

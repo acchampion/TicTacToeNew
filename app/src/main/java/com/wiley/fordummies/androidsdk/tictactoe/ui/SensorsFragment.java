@@ -34,10 +34,9 @@ import static android.content.Context.SENSOR_SERVICE;
 public class SensorsFragment extends Fragment implements SensorEventListener {
     private SensorManager mSensorManager;
     private List<Sensor> mSensorList;
-    private Hashtable<String, float[]> lastSensorValues = new Hashtable<>();
+    private final Hashtable<String, float[]> lastSensorValues = new Hashtable<>();
 
-    private static final String TAG = SensorsFragment.class.getSimpleName();
-    private static final float TOLERANCE = (float) 10.0;
+	private static final float TOLERANCE = (float) 10.0;
 
 
     @Override
@@ -85,7 +84,9 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
         Timber.d("Entering onPause()");
         super.onPause();
         // Stop updates when paused
-        mSensorManager.unregisterListener(this);
+		for (Sensor sensor : mSensorList) {
+			mSensorManager.unregisterListener(this, sensor);
+		}
         Timber.d("Leaving onPause()");
     }
 
@@ -173,12 +174,11 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
+		Timber.d("onAccuracyChanged(): Accuracy of %s changed to %d", sensor.toString(), i);
     }
 
     private class SensorHolder extends RecyclerView.ViewHolder {
-        private String mDescriptionStr;
-        private TextView mSensorInfoTextView;
+		private final TextView mSensorInfoTextView;
 
         SensorHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_sensor, parent, false));
@@ -187,13 +187,13 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
         }
 
         void bind(Sensor sensor) {
-            mDescriptionStr = getSensorDescription(sensor);
+			String mDescriptionStr = getSensorDescription(sensor);
             mSensorInfoTextView.setText(mDescriptionStr);
         }
     }
 
     private class SensorAdapter extends RecyclerView.Adapter<SensorHolder> {
-        private List<Sensor> mSensorList;
+        private final List<Sensor> mSensorList;
 
         SensorAdapter(List<Sensor> sensorList) {
             mSensorList = sensorList;

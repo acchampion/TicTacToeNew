@@ -1,6 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -80,59 +81,54 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Activity activity = requireActivity();
+        final Activity activity = requireActivity();
+        final Context appContext = activity.getApplicationContext();
+        final int itemId = item.getItemId();
 
-		switch (item.getItemId()) {
-			case R.id.menu_settings:
-				startActivity(new Intent(activity.getApplicationContext(), SettingsActivity.class));
-				return true;
-			case R.id.menu_help:
-				startActivity(new Intent(activity.getApplicationContext(), HelpActivity.class));
-				return true;
-			case R.id.menu_exit:
-				showQuitAppDialog();
-				return true;
-			case R.id.menu_contacts:
-				startActivity(new Intent(activity.getApplicationContext(), ContactsActivity.class));
-				return true;
+        if (itemId == R.id.menu_settings) {
+			startActivity(new Intent(appContext, SettingsActivity.class));
+			return true;
+		} else if (itemId == R.id.menu_help) {
+			startActivity(new Intent(appContext, HelpActivity.class));
+			return true;
+		} else if (itemId == R.id.menu_exit) {
+			showQuitAppDialog();
+			return true;
+		} else if (itemId == R.id.menu_contacts) {
+			startActivity(new Intent(appContext, ContactsActivity.class));
+			return true;
+		} else {
+        	Timber.e("Invalid menu item selection");
+        	return false;
 		}
-		return false;
     }
 
 
     public void onClick(View v) {
-        Activity activity = requireActivity();
+        final Activity activity = requireActivity();
+        final Context appContext = activity.getApplicationContext();
+        final int viewId = v.getId();
 
-		switch (v.getId()) {
-			case R.id.buttonNewGame:
-				startActivity(new Intent(activity.getApplicationContext(), GameSessionActivity.class));
-				break;
-			case R.id.buttonAudio:
-				startActivity(new Intent(activity.getApplicationContext(), AudioActivity.class));
-				break;
-			case R.id.buttonVideo:
-				startActivity(new Intent(activity.getApplicationContext(), VideoActivity.class));
-				break;
-			case R.id.buttonImages:
-				startActivity(new Intent(activity.getApplicationContext(), ImagesActivity.class));
-				break;
-			case R.id.buttonMaps:
-				startActivity(new Intent(activity.getApplicationContext(), MapsActivity.class));
-				break;
-			case R.id.buttonSettings:
-				startActivity(new Intent(activity.getApplicationContext(), SettingsActivity.class));
-				break;
-			case R.id.buttonHelp:
-				startActivity(new Intent(activity.getApplicationContext(), HelpActivity.class));
-				break;
-			case R.id.buttonSensors:
-				startActivity(new Intent(activity.getApplicationContext(), SensorsActivity.class));
-				break;
-			case R.id.buttonExit: {
-				activity.stopService(new Intent(activity.getApplicationContext(), MediaPlaybackService.class));
-				showQuitAppDialog();
-			}
-			break;
+        if (viewId == R.id.buttonNewGame) {
+			startActivity(new Intent(appContext, GameSessionActivity.class));
+		} else if (viewId == R.id.buttonAudio) {
+			startActivity(new Intent(appContext, AudioActivity.class));
+		} else if (viewId == R.id.buttonVideo) {
+			startActivity(new Intent(appContext, VideoActivity.class));
+		} else if (viewId == R.id.buttonImages) {
+			startActivity(new Intent(appContext, ImagesActivity.class));
+		} else if (viewId == R.id.buttonMaps) {
+			startActivity(new Intent(appContext, MapsActivity.class));
+		} else if (viewId == R.id.buttonSettings) {
+			startActivity(new Intent(appContext, SettingsActivity.class));
+		} else if (viewId == R.id.buttonHelp) {
+			startActivity(new Intent(appContext, HelpActivity.class));
+		} else if (viewId == R.id.buttonSensors) {
+			startActivity(new Intent(appContext, SensorsActivity.class));
+		} else if (viewId == R.id.buttonExit) {
+			activity.stopService(new Intent(appContext, MediaPlaybackService.class));
+		} else {
+        	Timber.e("Invalid button selection!");
 		}
 	}
 

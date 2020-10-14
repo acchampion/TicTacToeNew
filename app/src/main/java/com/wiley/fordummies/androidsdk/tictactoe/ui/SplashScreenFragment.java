@@ -21,9 +21,9 @@ import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 public class SplashScreenFragment extends Fragment implements View.OnTouchListener{
     private boolean mIsActive = true;
-    private int mSplashTime = 500;
-    private int mTimeIncrement = 100;
-    private int mSleepTime = 100;
+    private final int mSplashTime = 500;
+    private final int mTimeIncrement = 100;
+    private final int mSleepTime = 100;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class SplashScreenFragment extends Fragment implements View.OnTouchListen
                 try {
                     int elapsedTime = 0;
                     while (mIsActive && (elapsedTime < mSplashTime)) {
-                        sleep(mSleepTime);
+						sleep(mSleepTime);
                         if (mIsActive) elapsedTime = elapsedTime + mTimeIncrement;
                     }
                 } catch (InterruptedException e) {

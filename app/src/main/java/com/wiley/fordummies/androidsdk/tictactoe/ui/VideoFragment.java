@@ -34,7 +34,7 @@ import static android.app.Activity.RESULT_OK;
 public class VideoFragment extends Fragment implements View.OnClickListener {
 	private VideoView mVideoView = null;
 	private Uri mVideoFileUri = null;
-	private Intent mRecordVideoIntent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
+	private final Intent mRecordVideoIntent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
 
 	private static final int VIDEO_CAPTURED = 1;
 
@@ -97,18 +97,18 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.buttonVideoStart:
-				// Load and start the movie
-				mVideoView.setVideoURI(mVideoFileUri);
-				mVideoView.start();
-				break;
-			case R.id.buttonVideoRecord:
-				startActivityForResult(mRecordVideoIntent, VIDEO_CAPTURED);
-				break;
-			case R.id.buttonVideoStop:
-				mVideoView.stopPlayback();
-				break;
+		final int viewId = view.getId();
+
+		if (viewId == R.id.buttonVideoStart) {
+			// Load and start the movie
+			mVideoView.setVideoURI(mVideoFileUri);
+			mVideoView.start();
+		} else if (viewId == R.id.buttonVideoStop) {
+			mVideoView.stopPlayback();
+		} else if (viewId == R.id.buttonVideoRecord) {
+			startActivityForResult(mRecordVideoIntent, VIDEO_CAPTURED);
+		} else {
+			Timber.e("Invalid button press");
 		}
 	}
 

@@ -30,7 +30,6 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.plugins.building.BuildingPlugin;
@@ -65,7 +64,6 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
     private MapView mMapView;
     private MapboxMap mMapboxMap;
     private LocationLayerPlugin mLocationLayerPlugin;
-    private LocationComponent mLocationComponent;
     private LocationEngine mLocationEngine;
 
     private EditText mEditLocation;
@@ -360,64 +358,63 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineLis
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_locate:
-                try {
-                    String locationName = mEditLocation.getText().toString();
-                    MapboxGeocoding mapboxGeocoding = new MapboxGeocoding.Builder()
-                            .setAccessToken(Mapbox.getAccessToken())
-                            .setLocation(locationName)
-                            .setGeocodingType(GeocodingCriteria.TYPE_ADDRESS)
-                            .build();
+    	final int viewId = view.getId();
 
-                    mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
-                        @Override
-                        public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
-                            //if (response != null) {
-                                GeocodingResponse responseBody = response.body();
-                                if (responseBody != null) {
-                                    List<CarmenFeature> results = responseBody.getFeatures();
-                                    if (results != null && results.size() > 0) {
-                                        // Log the first results position.
-                                        Position firstResultPos = results.get(0).asPosition();
-                                        Timber.d("onResponse: %s", firstResultPos.toString());
+    	if (viewId == R.id.button_locate) {
+			try {
+				String locationName = mEditLocation.getText().toString();
+				MapboxGeocoding mapboxGeocoding = new MapboxGeocoding.Builder()
+						.setAccessToken(Mapbox.getAccessToken())
+						.setLocation(locationName)
+						.setGeocodingType(GeocodingCriteria.TYPE_ADDRESS)
+						.build();
+
+				mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+					@Override
+					public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
+						//if (response != null) {
+						GeocodingResponse responseBody = response.body();
+						if (responseBody != null) {
+							List<CarmenFeature> results = responseBody.getFeatures();
+							if (results != null && results.size() > 0) {
+								// Log the first results position.
+								Position firstResultPos = results.get(0).asPosition();
+								Timber.d("onResponse: %s", firstResultPos.toString());
 
 
-                                        if (mMapboxMap != null) {
-                                            LatLng latLng = new LatLng(firstResultPos.getLatitude(), firstResultPos.getLongitude());
+								if (mMapboxMap != null) {
+									LatLng latLng = new LatLng(firstResultPos.getLatitude(), firstResultPos.getLongitude());
 
-                                            CameraPosition cameraPosition = new CameraPosition.Builder()
-                                                    .target(latLng)
-                                                    .zoom(15.0)
-                                                    .build();
-                                            mMapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                                        }
-                                    } else {
-                                        // No result for your request were found.
-                                        Timber.d("onResponse: No result found");
-                                        Toast.makeText(MapsActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            //}
-                        }
+									CameraPosition cameraPosition = new CameraPosition.Builder()
+											.target(latLng)
+											.zoom(15.0)
+											.build();
+									mMapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+								}
+							} else {
+								// No result for your request were found.
+								Timber.d("onResponse: No result found");
+								Toast.makeText(MapsActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
+							}
+						}
+						//}
+					}
 
-                        @Override
-                        public void onFailure(@NonNull Call<GeocodingResponse> call, @NonNull Throwable throwable) {
-                            Timber.e("Error receiving geocoding response");
-                            Toast.makeText(MapsActivity.this, "Geocoding error, please try again.",
-                                    Toast.LENGTH_SHORT).show();
-                            throwable.printStackTrace();
-                        }
-                    });
-                } catch (Exception e) {
-                    Timber.e("Could not locate this address");
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.button_findme:
-                requestLocation();
-                break;
-        }
+					@Override
+					public void onFailure(@NonNull Call<GeocodingResponse> call, @NonNull Throwable throwable) {
+						Timber.e("Error receiving geocoding response");
+						Toast.makeText(MapsActivity.this, "Geocoding error, please try again.",
+								Toast.LENGTH_SHORT).show();
+						throwable.printStackTrace();
+					}
+				});
+			} catch (Exception e) {
+				Timber.e("Could not locate this address");
+				e.printStackTrace();
+			}
+		} else if (viewId == R.id.button_findme) {
+			requestLocation();
+		}
     }
 
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {

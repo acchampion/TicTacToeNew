@@ -87,24 +87,23 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 		fragment.show(manager, "no_net_conn");
 	}
 
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_lookup_wikipedia:
-                if (hasNetworkConnection()) {
-                    launchBrowser();
-                } else {
-                    noNetworkConnectionNotify();
-                }
-                break;
-            case R.id.button_lookup_wikipedia_in_web_view:
-                if (hasNetworkConnection()) {
-                    launchWebView();
-                } else {
-                    noNetworkConnectionNotify();
-                }
-                break;
-        }
+		final int viewId = view.getId();
+		if (viewId == R.id.button_lookup_wikipedia) {
+			if (hasNetworkConnection()) {
+				launchBrowser();
+			} else {
+				noNetworkConnectionNotify();
+			}
+		} else if (viewId == R.id.button_lookup_wikipedia_in_web_view) {
+			if (hasNetworkConnection()) {
+				launchWebView();
+			} else {
+				noNetworkConnectionNotify();
+			}
+		} else {
+			Timber.e("Invalid button click!");
+		}
     }
 }

@@ -22,6 +22,8 @@ import com.wiley.fordummies.androidsdk.tictactoe.R;
 import java.io.File;
 import java.util.Objects;
 
+import timber.log.Timber;
+
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -35,7 +37,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	private final static int IMAGE_CAPTURED = 1;
 	private String imageFilePath;
 	private Bitmap imageBitmap = null;
-	private Intent mCaptureImageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+	private final Intent mCaptureImageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,22 +70,23 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.buttonImageShow:
-				File imageFile = new File(imageFilePath);
-				if (imageFile.exists()) {
-					imageBitmap = BitmapFactory.decodeFile(imageFilePath);
-					imageView.setImageBitmap(imageBitmap);
-				} else {
-					// File doesn't exist, so load a sample SVG image.
-					// Disable hardware acceleration for SVGs
-					imageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-					imageView.setImageResource(R.drawable.ic_scoreboard);
-				}
-				break;
-			case R.id.buttonImageCapture:
-				startActivityForResult(mCaptureImageIntent, IMAGE_CAPTURED);
-				break;
+		final int viewId = view.getId();
+
+		if (viewId == R.id.buttonImageShow) {
+			File imageFile = new File(imageFilePath);
+			if (imageFile.exists()) {
+				imageBitmap = BitmapFactory.decodeFile(imageFilePath);
+				imageView.setImageBitmap(imageBitmap);
+			} else {
+				// File doesn't exist, so load a sample SVG image.
+				// Disable hardware acceleration for SVGs
+				imageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+				imageView.setImageResource(R.drawable.ic_scoreboard);
+			}
+		} else if (viewId == R.id.buttonImageCapture) {
+			startActivityForResult(mCaptureImageIntent, IMAGE_CAPTURED);
+		} else {
+			Timber.e("Invalid button click");
 		}
 	}
 

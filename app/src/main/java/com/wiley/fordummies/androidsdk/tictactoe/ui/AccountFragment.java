@@ -61,6 +61,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 		}
 		else {
 			btnExit.setVisibility(View.GONE);
+			btnExit.invalidate();
 		}
 
 		return v;
@@ -89,18 +90,19 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.done_button:
-                createAccount();
-                break;
-            case R.id.cancel_button:
-                mEtUsername.setText("");
-                mEtPassword.setText("");
-                mEtConfirm.setText("");
-                break;
-            case R.id.exit_button:
-                FragmentActivity activity = requireActivity();
-				activity.getSupportFragmentManager().popBackStack();
+    	final int viewId = view.getId();
+    	if (viewId == R.id.done_button) {
+			createAccount();
+		} else if (viewId == R.id.cancel_button) {
+			mEtUsername.setText("");
+			mEtPassword.setText("");
+			mEtConfirm.setText("");
+
+		} else if (viewId == R.id.exit_button) {
+			FragmentActivity activity = requireActivity();
+			activity.getSupportFragmentManager().popBackStack();
+		} else {
+			Timber.e("Invalid button click");
 		}
     }
 
