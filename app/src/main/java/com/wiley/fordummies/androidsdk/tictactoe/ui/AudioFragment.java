@@ -69,7 +69,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 
 		File audioFile = new File(mAudioFilePath);
 		if (audioFile.exists()) {
-			mAudioFileUri = Uri.fromFile(new File(mAudioFilePath));
+			mAudioFileUri = Uri.fromFile(audioFile);
 		} else {
 			// Audio file doesn't exist, so load sample audio from resources.
 			String audioResourceName = "android.resource://" + activity.getPackageName() +

@@ -20,7 +20,7 @@ import java.util.List;
 public class AccountSingleton {
     private static AccountSingleton sAccount;
 
-    private SQLiteDatabase mDatabase;
+    private final SQLiteDatabase mDatabase;
 
     private static final String INSERT_STMT = "INSERT INTO " + AccountsTable.NAME + " (name, password) VALUES (?, ?)" ;
 

@@ -350,11 +350,7 @@ public class GameSessionFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 		Bundle instanceState;
 
-		if (outState == null) {
-			instanceState = new Bundle();
-		} else {
-			instanceState = outState;
-		}
+		instanceState = outState;
 		// Save session score
 		instanceState.putInt(SCOREPLAYERONEKEY, mScorePlayerOne);
 		instanceState.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo);
