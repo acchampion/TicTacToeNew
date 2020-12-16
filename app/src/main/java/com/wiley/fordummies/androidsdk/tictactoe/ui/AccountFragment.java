@@ -46,7 +46,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_account, container, false);
 
         Activity activity = requireActivity();
-		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+		int rotation = activity.getDisplay().getRotation();
 
 		mEtUsername = v.findViewById(R.id.username);
 		mEtPassword = v.findViewById(R.id.password);

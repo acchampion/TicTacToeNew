@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -68,7 +69,7 @@ public class GameSessionFragment extends Fragment {
 		View v;
 
 		Activity activity = requireActivity();
-		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+		int rotation = activity.getDisplay().getRotation();
 		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
 			v = inflater.inflate(R.layout.fragment_gamesession_land, container, false);
 		} else {
@@ -176,7 +177,7 @@ public class GameSessionFragment extends Fragment {
 		boolean testMode = false;
 		if (!testMode) {
 			Random randomNumber = new Random();
-			Handler handler = new Handler();
+			Handler handler = new Handler(Looper.getMainLooper());
 			handler.postDelayed(
 					this::androidTakesATurn,
 					ANDROID_TIMEOUT_BASE + randomNumber.nextInt(ANDROID_TIMEOUT_SEED)

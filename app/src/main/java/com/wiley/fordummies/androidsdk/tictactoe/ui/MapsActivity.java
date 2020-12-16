@@ -33,6 +33,7 @@ import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
+import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.Style;
@@ -112,12 +113,12 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 		// Check if permissions are enabled and if not request
 		if (PermissionsManager.areLocationPermissionsGranted(this)) {
 			LocationComponent locationComponent = mMapboxMap.getLocationComponent();
-			locationComponent.activateLocationComponent(this,
-					Objects.requireNonNull(mMapboxMap.getStyle()));
-
-//			BuildingPlugin buildingPlugin = new BuildingPlugin(mMapView, mMapboxMap);
-//			buildingPlugin.setVisibility(true);
-//			buildingPlugin.setMinZoomLevel(15.0f);
+			LocationComponentActivationOptions.Builder builder =
+					new LocationComponentActivationOptions.Builder(this,
+							Objects.requireNonNull(mMapboxMap.getStyle()));
+			builder.useDefaultLocationEngine(true);
+			LocationComponentActivationOptions options = builder.build();
+			locationComponent.activateLocationComponent(options);
 		} else {
 			mPermissionsManager = new PermissionsManager(this);
 			mPermissionsManager.requestLocationPermissions(this);
@@ -140,7 +141,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 		}
 
 		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		getDisplay().getRealMetrics(displayMetrics);
 		int editLocationWidth = displayMetrics.widthPixels - 350;
 		if (mEditLocation != null) {
 			mEditLocation.setWidth(Math.max(250, editLocationWidth));
