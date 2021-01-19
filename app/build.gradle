@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '29.0.3'
+    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId "com.wiley.fordummies.androidsdk.tictactoe"
         minSdkVersion 21
@@ -33,7 +33,7 @@ dependencies {
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.1'
     implementation 'com.mapbox.mapboxsdk:mapbox-java-geojson:2.2.10'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-services:2.2.10'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-telemetry:6.2.1'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-telemetry:6.2.2'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-ui:2.2.10'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 	implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
