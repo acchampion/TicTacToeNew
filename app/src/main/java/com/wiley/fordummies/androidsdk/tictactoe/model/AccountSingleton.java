@@ -22,6 +22,7 @@ public class AccountSingleton {
 
     private final SQLiteDatabase mDatabase;
 
+    // private static final String NEW_INSERT = String.format(Locale.US, "INSERT INTO %s (name, pwd) VALUES (?, ?", AccountsTable.NAME)"
     private static final String INSERT_STMT = "INSERT INTO " + AccountsTable.NAME + " (name, password) VALUES (?, ?)" ;
 
     public static AccountSingleton get(Context context) {

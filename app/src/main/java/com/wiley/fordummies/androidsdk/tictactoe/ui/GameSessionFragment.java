@@ -34,6 +34,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
 import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 import timber.log.Timber;
@@ -161,12 +162,13 @@ public class GameSessionFragment extends Fragment {
 
 	private void setPlayers(Game theGame) {
 		Activity activity = requireActivity();
-		if (Settings.doesHumanPlayFirst(activity)) {
-			mFirstPlayerName = Settings.getName(activity);
+		final Context appContext = activity.getApplicationContext();
+		if (Settings.doesHumanPlayFirst(appContext)) {
+			mFirstPlayerName = Settings.getName(appContext);
 			mSecondPlayerName = "Android";
 		} else {
 			mFirstPlayerName = "Android";
-			mSecondPlayerName = Settings.getName(activity);
+			mSecondPlayerName = Settings.getName(appContext);
 		}
 		theGame.setPlayerNames(mFirstPlayerName, mSecondPlayerName);
 	}
@@ -283,24 +285,22 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	private void sendScoresViaEmail() {
+		String emailText = String.format(Locale.US, "%s score is %d and %s score is %d",
+				mFirstPlayerName, mScorePlayerOne, mSecondPlayerName, mScorePlayerTwo);
 		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
 				"Look at my AWESOME TicTacToe Score!");
 		emailIntent.setType("plain/text");
-		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-				mFirstPlayerName + " score is  " + mScorePlayerOne +
-						" and " +
-						mSecondPlayerName + " score is  " + mScorePlayerTwo);
+		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText);
 		startActivity(emailIntent);
 	}
 
 	private void sendScoresViaSMS() {
+		String smsText = String.format(Locale.US, "Look at my AWESOME Tic-Tac-Toe score! " +
+				"%s score is %d and %s score is %d", mFirstPlayerName, mScorePlayerOne,
+				mSecondPlayerName, mScorePlayerOne);
 		Intent SMSIntent = new Intent(Intent.ACTION_VIEW);
-		SMSIntent.putExtra("sms_body",
-				"Look at my AWESOME TicTacToe Score!" +
-						mFirstPlayerName + " score is  " + mScorePlayerOne +
-						" and " +
-						mSecondPlayerName + " score is  " + mScorePlayerTwo);
+		SMSIntent.putExtra("sms_body", smsText);
 		SMSIntent.setType("vnd.android-dir/mms-sms");
 		startActivity(SMSIntent);
 	}

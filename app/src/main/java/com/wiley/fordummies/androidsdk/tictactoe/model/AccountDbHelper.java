@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.wiley.fordummies.androidsdk.tictactoe.model.AccountDbSchema.AccountsTable;
 
+import java.util.Locale;
+
 import timber.log.Timber;
 
 /**
@@ -26,17 +28,19 @@ public class AccountDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + AccountsTable.NAME + "(" +
-             "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-             AccountsTable.Cols.NAME + " TEXT, " +
-             AccountsTable.Cols.PASSWORD + " TEXT" +
-            ")");
+    	final String sqlCreate = String.format(Locale.US,
+				"CREATE TABLE %s " +
+				"( _id INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"%s TEXT," +
+				"%s TEXT)", AccountsTable.NAME, AccountsTable.Cols.NAME, AccountsTable.Cols.PASSWORD);
+        sqLiteDatabase.execSQL(sqlCreate);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         Timber.w("Upgrading database; dropping and recreating tables.");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + AccountsTable.NAME);
+        final String dropTable = String.format(Locale.US, "DROP TABLE IF EXISTS %s", AccountsTable.NAME);
+        sqLiteDatabase.execSQL(dropTable);
         onCreate(sqLiteDatabase);
     }
 }

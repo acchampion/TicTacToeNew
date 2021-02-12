@@ -33,7 +33,8 @@
 				android:hint="@string/enter_address"
 				android:inputType="text"
 				android:minWidth="250dp"
-				android:textColor="#FFFFFF" />
+				android:textColor="#FFFFFF"
+				android:autofillHints="@string/enter_address" />
 
             <Button
                 android:id="@+id/button_locate"

@@ -6,21 +6,23 @@
         android:id="@+id/menu_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/settings"
+		app:showAsAction="ifRoom"
         />
     <item
         android:id="@+id/menu_help"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@android:drawable/ic_menu_help"
         android:title="@string/help"
         app:showAsAction="ifRoom"/>
-	<item
-		android:id="@+id/menu_exit"
-		android:icon="@android:drawable/ic_menu_close_clear_cancel"
-		android:title="@string/exit"
-		/>
 	<item
 		android:id="@+id/menu_contacts"
 		android:icon="@android:drawable/ic_menu_view"
 		android:title="@string/contacts"
-		app:showAsAction="ifRoom"
+		app:showAsAction="never"
+		/>
+	<item
+		android:id="@+id/menu_exit"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel"
+		android:title="@string/exit"
+		app:showAsAction="never"
 		/>
 </menu>
