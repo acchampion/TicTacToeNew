@@ -33,17 +33,17 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class ImagesFragment extends Fragment implements View.OnClickListener {
-	private ImageView imageView = null;
+	private ImageView mImageView = null;
 	private final static int IMAGE_CAPTURED = 1;
-	private String imageFilePath;
-	private Bitmap imageBitmap = null;
+	private String mImageFilePath;
+	private Bitmap mImageBitmap = null;
 	private final Intent mCaptureImageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_images, container, false);
 
-		imageView = v.findViewById(R.id.imageView);
+		mImageView = v.findViewById(R.id.imageView);
 
 		Button buttonShow = v.findViewById(R.id.buttonImageShow);
 		buttonShow.setOnClickListener(this);
@@ -64,7 +64,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		File imageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-		imageFilePath = Objects.requireNonNull(imageDir).getPath() + File.separator + "sample_image.jpg";
+		mImageFilePath = Objects.requireNonNull(imageDir).getPath() + File.separator + "sample_image.jpg";
 	}
 
 
@@ -73,15 +73,15 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		final int viewId = view.getId();
 
 		if (viewId == R.id.buttonImageShow) {
-			File imageFile = new File(imageFilePath);
+			File imageFile = new File(mImageFilePath);
 			if (imageFile.exists()) {
-				imageBitmap = BitmapFactory.decodeFile(imageFilePath);
-				imageView.setImageBitmap(imageBitmap);
+				mImageBitmap = BitmapFactory.decodeFile(mImageFilePath);
+				mImageView.setImageBitmap(mImageBitmap);
 			} else {
 				// File doesn't exist, so load a sample SVG image.
 				// Disable hardware acceleration for SVGs
-				imageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-				imageView.setImageResource(R.drawable.ic_scoreboard);
+				mImageView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+				mImageView.setImageResource(R.drawable.ic_scoreboard);
 			}
 		} else if (viewId == R.id.buttonImageCapture) {
 			startActivityForResult(mCaptureImageIntent, IMAGE_CAPTURED);
@@ -94,8 +94,8 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		if (resultCode == RESULT_OK && requestCode == IMAGE_CAPTURED) {
 			Bundle extras = cameraIntent.getExtras();
 			if (extras != null) {
-				imageBitmap = (Bitmap) extras.get("data");
-				imageView.setImageBitmap(imageBitmap);
+				mImageBitmap = (Bitmap) extras.get("data");
+				mImageView.setImageBitmap(mImageBitmap);
 			}
 		}
 	}

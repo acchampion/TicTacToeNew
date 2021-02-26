@@ -62,7 +62,7 @@ public class GameSessionFragment extends Fragment {
 	private static final String SCOREPLAYERONEKEY = "ScorePlayerOne";
 	private static final String SCOREPLAYERTWOKEY = "ScorePlayerTwo";
 	private static final String GAMEKEY = "Game";
-	// private static final String TAG = GameSessionFragment.class.getSimpleName();
+	private final String TAG = getClass().getSimpleName();
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

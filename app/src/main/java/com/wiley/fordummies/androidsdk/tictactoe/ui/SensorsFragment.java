@@ -23,6 +23,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -92,9 +93,9 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
 
     private String getSensorDescription(Sensor sensor) {
-        return "Sensor: " + sensor.getName() + "; Ver :" + sensor.getVersion() + "; Range: " +
-                sensor.getMaximumRange() + "; Power: " + sensor.getPower() +
-                "; Res: " + sensor.getResolution();
+		return String.format(Locale.getDefault(), "Sensor: %s; Version: %d; Range: %f; Power: %f; Res: %f",
+				sensor.getName(), sensor.getVersion(), sensor.getMaximumRange(),
+				sensor.getPower(), sensor.getResolution());
     }
 
     @Override
@@ -137,20 +138,15 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
             }
 
         }
-        Timber.d("--- EVENT Raw Values ---; " + sensorName + "; " +
-                "Distance  Last= >" + distanceOfLastValue + "< ; " +
-                "Distance  This= >" + distanceOfThisValue + "< ; " +
-                "Change = >" + change + "< ; " +
-                "Percent = >" + percentageChange + "% ; " +
-                "Last value = " + lastValueString + "< ; " +
-                sensorEventString);
-        if (lastValue == null ||
-                percentageChange > TOLERANCE) {
-
-            Timber.d("--- Event Changed --- ;" +
-                            "Change = >" + change + "< ; " +
-                            "Percent = >" + percentageChange + "% ; " +
-                            sensorEventString);
+        String eventStr = String.format(Locale.getDefault(),
+				"EVENT: Raw Values: %s; Distance Last: %f; Distance This: %f; " +
+						"Change: %f; Percent: %f%%; Last value: %s; %s",
+				 	sensorName, distanceOfLastValue, distanceOfThisValue, change, percentageChange,
+					lastValueString, sensorEventString);
+        Timber.d(eventStr);
+        if (lastValue == null || percentageChange > TOLERANCE) {
+            Timber.d("--- Event Changed --- : Change: %f; Percent: %f%%; %s",
+					change, percentageChange, sensorEventString);
         }
     }
 
@@ -208,7 +204,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
         @Override
         public void onBindViewHolder(@NonNull SensorHolder holder, int position) {
-            Sensor sensor = SensorsFragment.this.mSensorList.get(position);
+            Sensor sensor = mSensorList.get(position);
             holder.bind(sensor);
         }
 
