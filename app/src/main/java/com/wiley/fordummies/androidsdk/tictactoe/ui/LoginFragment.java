@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         View v;
         Activity activity = requireActivity();
 
-		int rotation = activity.getDisplay().getRotation();
+		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
 			v = inflater.inflate(R.layout.fragment_login_land, container, false);
 		} else {
@@ -119,7 +119,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		} else if (viewId == R.id.cancel_button) {
 			activity.finish();
 		} else if (viewId == R.id.new_user_button) {
-			final int rotation = activity.getDisplay().getRotation();
+			final int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 			FragmentManager fm = getParentFragmentManager();
 			Fragment fragment = new AccountFragment();
 			if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
