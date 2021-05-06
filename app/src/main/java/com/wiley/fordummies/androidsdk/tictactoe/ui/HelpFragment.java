@@ -73,13 +73,11 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void launchWebView() {
-        Activity activity = requireActivity();
+		Activity activity = requireActivity();
 		Intent launchWebViewIntent = new Intent(activity.getApplicationContext(), HelpWebViewActivity.class);
 		launchWebViewIntent.putExtra("url", mUrlStr);
 		startActivity(launchWebViewIntent);
 	}
-
-    // 0oi1OI!
 
     private void noNetworkConnectionNotify() {
         FragmentManager manager = getParentFragmentManager();

@@ -31,8 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_gravity="start"
-                android:labelFor="@+id/username_text"
-                android:textColor="@android:color/black" />
+                android:labelFor="@+id/username_text"/>
             <EditText
                 android:id="@+id/username_text"
                 android:layout_width="match_parent"
@@ -46,8 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_gravity="start"
-                android:labelFor="@+id/password_text"
-                android:textColor="@android:color/black" />
+                android:labelFor="@+id/password_text" />
             <EditText
                 android:id="@+id/password_text"
                 android:layout_width="match_parent"
