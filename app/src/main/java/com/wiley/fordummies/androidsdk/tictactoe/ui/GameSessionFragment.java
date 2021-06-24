@@ -70,7 +70,7 @@ public class GameSessionFragment extends Fragment {
 		View v;
 
 		Activity activity = requireActivity();
-		int rotation = activity.getDisplay().getRotation();
+		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
 			v = inflater.inflate(R.layout.fragment_gamesession_land, container, false);
 		} else {
@@ -103,14 +103,17 @@ public class GameSessionFragment extends Fragment {
 		mGameView = new GameView();
 		mGameView.setGameViewComponents(mBoard, turnStatusView, scoreView);
 		setPlayers(mActiveGame);
-		mGameView.showScores(mActiveGame.getPlayerOneName(), mScorePlayerOne, mActiveGame.getPlayerTwoName(), mScorePlayerTwo);
+		mGameView.showScores(mActiveGame.getPlayerOneName(), mScorePlayerOne,
+				mActiveGame.getPlayerTwoName(), mScorePlayerTwo);
 		mGameView.setGameStatus(mActiveGame.getCurrentPlayerName() + " to play.");
 	}
 
 	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		mSavedInstanceState = savedInstanceState;
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		if (savedInstanceState != null) {
+			mSavedInstanceState = savedInstanceState;
+		}
 	}
 
 	@Override

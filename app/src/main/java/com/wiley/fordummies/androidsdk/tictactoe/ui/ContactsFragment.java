@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -75,11 +76,10 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		Activity activity = requireActivity();
 		mContactsListView = activity.findViewById(R.id.contact_list_view);
-		requestContacts();
 	}
 
 	@Override
@@ -91,6 +91,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
 			if (actionBar != null) {
 				actionBar.setSubtitle(getResources().getString(R.string.contacts));
 			}
+			requestContacts();
 		} catch (NullPointerException npe) {
 			Timber.e("Could not set subtitle");
 		}

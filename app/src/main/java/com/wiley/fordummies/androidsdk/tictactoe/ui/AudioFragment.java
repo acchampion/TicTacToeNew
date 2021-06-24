@@ -1,6 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -22,7 +23,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.MediaPlaybackService;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
-import java.util.Objects;
+import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -38,6 +39,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 	private static final int AUDIO_CAPTURED = 1;
 	private Uri mAudioFileUri;
 	private final Intent mRecordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,22 +63,24 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 	}
 
 	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		Activity activity = requireActivity();
-		File musicDir = activity.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-		String mAudioFilePath = Objects.requireNonNull(musicDir).getPath() + File.separator + "sample_audio.mp3";
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Context ctx = requireContext();
+		File musicDir = ctx.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+		String mAudioFilePath = String.format(Locale.US, "%s%s%s",
+				musicDir.getPath(), File.separator, "sample_audio.mp3");
 
 		File audioFile = new File(mAudioFilePath);
 		if (audioFile.exists()) {
 			mAudioFileUri = Uri.fromFile(audioFile);
 		} else {
 			// Audio file doesn't exist, so load sample audio from resources.
-			String audioResourceName = "android.resource://" + activity.getPackageName() +
-					File.separator + R.raw.sample_audio;
+			String audioResourceName = String.format(Locale.US, "android.resource://%s%s%d",
+					ctx.getPackageName(), File.separator, R.raw.sample_audio);
 			mAudioFileUri = Uri.parse(audioResourceName);
 		}
 	}
+
 
 	@Override
 	public void onResume() {

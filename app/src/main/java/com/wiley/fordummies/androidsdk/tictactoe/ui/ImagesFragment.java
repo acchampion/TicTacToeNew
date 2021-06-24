@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
-import java.util.Objects;
+import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -61,12 +61,12 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	}
 
 	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		File imageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-		mImageFilePath = Objects.requireNonNull(imageDir).getPath() + File.separator + "sample_image.jpg";
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		File imageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+		mImageFilePath = String.format(Locale.US, "%s%s%s",
+				imageDir.getPath(), File.separator, "sample_image.jpg");
 	}
-
 
 	@Override
 	public void onClick(View view) {

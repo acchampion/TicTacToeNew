@@ -42,9 +42,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v;
-        Activity activity = requireActivity();
+        Activity context = requireActivity();
 
-		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+		int rotation = context.getWindowManager().getDefaultDisplay().getRotation();
 		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
 			v = inflater.inflate(R.layout.fragment_login_land, container, false);
 		} else {

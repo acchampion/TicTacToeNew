@@ -1,6 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
+import java.util.Locale;
 import java.util.Objects;
 
 import timber.log.Timber;
@@ -63,19 +65,20 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 	}
 
 	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
-		Activity activity = requireActivity();
-		File videoDir = activity.getExternalFilesDir(Environment.DIRECTORY_MOVIES);
-		File videoFile = new File(Objects.requireNonNull(videoDir).getPath() + File.separator + "sample_video.mp4");
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Context ctx = requireContext();
+		File videoDir = ctx.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MOVIES);
+		String videoFilePath = String.format(Locale.getDefault(), "%s%s%s",
+				videoDir.getPath(), File.separator, "sample_video.mp4");
+		File videoFile = new File(videoFilePath);
 
 		if (Objects.requireNonNull(videoFile).exists()) {
 			mVideoFileUri = Uri.fromFile(videoFile);
 		} else {
 			// Video file doesn't exist, so load sample video from resources.
-			String videoResourceName = "android.resource://" + activity.getPackageName() +
-					File.separator + R.raw.sample_video;
+			String videoResourceName = String.format(Locale.getDefault(), "android.resource://%s%s%d",
+					ctx.getPackageName(), File.separator, R.raw.sample_video);
 			mVideoFileUri = Uri.parse(videoResourceName);
 		}
 	}
