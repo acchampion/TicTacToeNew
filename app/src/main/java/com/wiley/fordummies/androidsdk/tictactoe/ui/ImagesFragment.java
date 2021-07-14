@@ -16,11 +16,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
-import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -38,6 +38,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	private String mImageFilePath;
 	private Bitmap mImageBitmap = null;
 	private final Intent mCaptureImageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,8 +65,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		File imageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-		mImageFilePath = String.format(Locale.US, "%s%s%s",
-				imageDir.getPath(), File.separator, "sample_image.jpg");
+		mImageFilePath = imageDir.getPath() + File.separator + "sample_image.jpg";
 	}
 
 	@Override
@@ -98,6 +98,11 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 				mImageView.setImageBitmap(mImageBitmap);
 			}
 		}
+	}
+
+	private void takeImage() {
+		Lifecycle lifecycle = getLifecycle();
+
 	}
 
 }

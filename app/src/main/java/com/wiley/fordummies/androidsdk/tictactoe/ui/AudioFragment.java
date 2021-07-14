@@ -23,7 +23,6 @@ import com.wiley.fordummies.androidsdk.tictactoe.MediaPlaybackService;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
-import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -66,17 +65,16 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Context ctx = requireContext();
-		File musicDir = ctx.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-		String mAudioFilePath = String.format(Locale.US, "%s%s%s",
-				musicDir.getPath(), File.separator, "sample_audio.mp3");
+		final File musicDir = ctx.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+		final String mAudioFilePath = musicDir.getPath() + File.separator + "sample_audio.mp3";
 
 		File audioFile = new File(mAudioFilePath);
 		if (audioFile.exists()) {
 			mAudioFileUri = Uri.fromFile(audioFile);
 		} else {
 			// Audio file doesn't exist, so load sample audio from resources.
-			String audioResourceName = String.format(Locale.US, "android.resource://%s%s%d",
-					ctx.getPackageName(), File.separator, R.raw.sample_audio);
+			final String audioResourceName = "android.resource://" + ctx.getPackageName() +
+					File.separator + R.raw.sample_audio;
 			mAudioFileUri = Uri.parse(audioResourceName);
 		}
 	}

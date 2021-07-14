@@ -22,7 +22,6 @@ import androidx.fragment.app.Fragment;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
-import java.util.Locale;
 import java.util.Objects;
 
 import timber.log.Timber;
@@ -69,16 +68,15 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		Context ctx = requireContext();
 		File videoDir = ctx.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_MOVIES);
-		String videoFilePath = String.format(Locale.getDefault(), "%s%s%s",
-				videoDir.getPath(), File.separator, "sample_video.mp4");
+		final String videoFilePath = videoDir.getPath() + File.separator + "sample_video.mp4";
 		File videoFile = new File(videoFilePath);
 
 		if (Objects.requireNonNull(videoFile).exists()) {
 			mVideoFileUri = Uri.fromFile(videoFile);
 		} else {
 			// Video file doesn't exist, so load sample video from resources.
-			String videoResourceName = String.format(Locale.getDefault(), "android.resource://%s%s%d",
-					ctx.getPackageName(), File.separator, R.raw.sample_video);
+			final String videoResourceName = "android.resource://" + ctx.getPackageName() +
+					File.separator + R.raw.sample_video;
 			mVideoFileUri = Uri.parse(videoResourceName);
 		}
 	}
