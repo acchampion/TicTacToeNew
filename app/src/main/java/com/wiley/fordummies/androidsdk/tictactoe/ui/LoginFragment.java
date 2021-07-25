@@ -17,10 +17,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
+import com.wiley.fordummies.androidsdk.tictactoe.StringUtils;
 import com.wiley.fordummies.androidsdk.tictactoe.model.Account;
 import com.wiley.fordummies.androidsdk.tictactoe.model.AccountDbHelper;
 import com.wiley.fordummies.androidsdk.tictactoe.model.AccountSingleton;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import timber.log.Timber;
@@ -73,39 +77,49 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void checkLogin() {
         String username = mUsernameEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
-        Activity activity = requireActivity();
 
-        if (mAccountSingleton == null) {
-			mAccountSingleton = AccountSingleton.get(activity.getApplicationContext());
-		}
+		MessageDigest digest = null;
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+			byte[] sha256HashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+			String sha256HashStr = StringUtils.bytesToHex(sha256HashBytes);
 
-        if (mDbHelper == null) {
-			mDbHelper = new AccountDbHelper(activity.getApplicationContext());
-		}
+			Activity activity = requireActivity();
 
-		List<Account> accountList = mAccountSingleton.getAccounts();
-		boolean hasMatchingAccount = false;
-		for (Account account : accountList) {
-			if (account.getName().equals(username) && account.getPassword().equals(password)) {
-				hasMatchingAccount = true;
-				break;
+			if (mAccountSingleton == null) {
+				mAccountSingleton = AccountSingleton.get(activity.getApplicationContext());
 			}
-		}
 
-		if (accountList.size() > 0 && hasMatchingAccount) {
-			// Save username as the name of the player
-			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-			SharedPreferences.Editor editor = settings.edit();
-			editor.putString(OPT_NAME, username);
-			editor.apply();
+			if (mDbHelper == null) {
+				mDbHelper = new AccountDbHelper(activity.getApplicationContext());
+			}
 
-			// Bring up the GameOptions screen
-			startActivity(new Intent(activity, GameOptionsActivity.class));
-			activity.finish();
-		} else {
-			FragmentManager manager = getParentFragmentManager();
-			LoginErrorDialogFragment fragment = new LoginErrorDialogFragment();
-			fragment.show(manager, "login_error");
+			List<Account> accountList = mAccountSingleton.getAccounts();
+			boolean hasMatchingAccount = false;
+			for (Account account : accountList) {
+				if (account.getName().equals(username) && account.getPassword().equals(sha256HashStr)) {
+					hasMatchingAccount = true;
+					break;
+				}
+			}
+
+			if (accountList.size() > 0 && hasMatchingAccount) {
+				// Save username as the name of the player
+				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString(OPT_NAME, username);
+				editor.apply();
+
+				// Bring up the GameOptions screen
+				startActivity(new Intent(activity, GameOptionsActivity.class));
+				activity.finish();
+			} else {
+				FragmentManager manager = getParentFragmentManager();
+				LoginErrorDialogFragment fragment = new LoginErrorDialogFragment();
+				fragment.show(manager, "login_error");
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 	}
 

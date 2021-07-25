@@ -19,8 +19,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
+import com.wiley.fordummies.androidsdk.tictactoe.StringUtils;
 import com.wiley.fordummies.androidsdk.tictactoe.model.Account;
 import com.wiley.fordummies.androidsdk.tictactoe.model.AccountSingleton;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import timber.log.Timber;
 
@@ -46,7 +51,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_account, container, false);
 
         Activity activity = requireActivity();
-		int rotation = activity.getDisplay().getRotation();
+		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 
 		mEtUsername = v.findViewById(R.id.username);
 		mEtPassword = v.findViewById(R.id.password);
@@ -113,9 +118,18 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         String confirm = mEtConfirm.getText().toString();
 		if (password.equals(confirm) && !username.equals("") && !password.equals("")) {
 			AccountSingleton singleton = AccountSingleton.get(activity.getApplicationContext());
-			Account account = new Account(username, password);
-			singleton.addAccount(account);
-			Toast.makeText(activity.getApplicationContext(), "New record inserted", Toast.LENGTH_SHORT).show();
+			try {
+				MessageDigest digest = MessageDigest.getInstance("SHA-256");
+				byte[] sha256HashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+				String sha256HashStr = StringUtils.bytesToHex(sha256HashBytes);
+				Account account = new Account(username, sha256HashStr);
+				singleton.addAccount(account);
+				Toast.makeText(activity.getApplicationContext(), "New record inserted", Toast.LENGTH_SHORT).show();
+
+			} catch (NoSuchAlgorithmException e) {
+				Toast.makeText(activity, "Error: No SHA-256 algorithm found", Toast.LENGTH_SHORT).show();
+				e.printStackTrace();
+			}
 		} else if ((username.equals("")) || (password.equals("")) || (confirm.equals(""))) {
 			Toast.makeText(activity.getApplicationContext(), "Missing entry", Toast.LENGTH_SHORT).show();
 		} else {
