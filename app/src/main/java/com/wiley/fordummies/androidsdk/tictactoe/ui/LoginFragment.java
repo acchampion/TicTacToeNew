@@ -46,9 +46,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v;
-        Activity context = requireActivity();
+        Activity activity = requireActivity();
 
-		int rotation = context.getWindowManager().getDefaultDisplay().getRotation();
+		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
 			v = inflater.inflate(R.layout.fragment_login_land, container, false);
 		} else {
@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         String username = mUsernameEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
-		MessageDigest digest = null;
+		MessageDigest digest;
 		try {
 			digest = MessageDigest.getInstance("SHA-256");
 			byte[] sha256HashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));

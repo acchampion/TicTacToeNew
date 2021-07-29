@@ -27,8 +27,8 @@ public class Board extends View {
     private GameGrid mGameGrid = null;
     private boolean mIsEnabled = true;
 
-    private Paint mGridPaint;
-    private Paint mDitherPaint;
+    private final Paint mGridPaint = new Paint();
+    private final Paint mDitherPaint = new Paint();
 
     static Bitmap sSymX = null, sSymO = null, sSymBlank = null;
     static boolean sDrawablesInitialized = false;
@@ -45,13 +45,10 @@ public class Board extends View {
         setFocusableInTouchMode(true);
 
         // Allocate Paint objects to save memory.
-        mGridPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mGridPaint.setColor(ContextCompat.getColor(context, R.color.grid));
 
         float strokeWidth = 10;
         mGridPaint.setStrokeWidth(strokeWidth);
-
-        mDitherPaint = new Paint();
         mDitherPaint.setDither(true);
     }
 

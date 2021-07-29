@@ -28,11 +28,10 @@ public class AccountDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-    	final String sqlCreate = String.format(Locale.US,
-				"CREATE TABLE %s " +
+    	final String sqlCreate = "CREATE TABLE " + AccountsTable.NAME +
 				"( _id INTEGER PRIMARY KEY AUTOINCREMENT," +
-				"%s TEXT," +
-				"%s TEXT)", AccountsTable.NAME, AccountsTable.Cols.NAME, AccountsTable.Cols.PASSWORD);
+				AccountsTable.Cols.NAME + " TEXT," +
+				AccountsTable.Cols.PASSWORD + " TEXT)";
         sqLiteDatabase.execSQL(sqlCreate);
     }
 

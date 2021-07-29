@@ -4,7 +4,7 @@ package com.wiley.fordummies.androidsdk.tictactoe.model;
  * Created by adamcchampion on 2017/08/16.
  */
 public class Contact {
-    private String mName;
+    private final String mName;
 
     public Contact(String name) { mName = name; }
 

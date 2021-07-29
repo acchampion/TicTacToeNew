@@ -141,7 +141,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 		}
 
 		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getDisplay().getRealMetrics(displayMetrics);
+		getWindowManager().getDefaultDisplay().getRealMetrics(displayMetrics);
 		int editLocationWidth = displayMetrics.widthPixels - 350;
 		if (mEditLocation != null) {
 			mEditLocation.setWidth(Math.max(250, editLocationWidth));

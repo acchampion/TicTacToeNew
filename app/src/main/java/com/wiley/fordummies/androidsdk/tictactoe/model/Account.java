@@ -7,8 +7,8 @@ package com.wiley.fordummies.androidsdk.tictactoe.model;
  */
 
 public class Account {
-    private String mName;
-    private String mPassword;
+    private final String mName;
+    private final String mPassword;
 
     public Account(String name, String password) {
         mName = name;
