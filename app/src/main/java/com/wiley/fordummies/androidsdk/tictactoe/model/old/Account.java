@@ -1,4 +1,4 @@
-package com.wiley.fordummies.androidsdk.tictactoe.model;
+package com.wiley.fordummies.androidsdk.tictactoe.model.old;
 
 /**
  * Model-layer class for user account with username and password.

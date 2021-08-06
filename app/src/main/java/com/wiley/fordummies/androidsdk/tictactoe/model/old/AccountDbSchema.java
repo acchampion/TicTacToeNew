@@ -1,4 +1,4 @@
-package com.wiley.fordummies.androidsdk.tictactoe.model;
+package com.wiley.fordummies.androidsdk.tictactoe.model.old;
 
 /**
  * Class for referencing (name, password) table columns in database.

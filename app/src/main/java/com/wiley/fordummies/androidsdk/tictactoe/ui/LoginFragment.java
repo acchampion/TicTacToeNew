@@ -14,34 +14,59 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.preference.PreferenceManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.StringUtils;
-import com.wiley.fordummies.androidsdk.tictactoe.model.Account;
-import com.wiley.fordummies.androidsdk.tictactoe.model.AccountDbHelper;
-import com.wiley.fordummies.androidsdk.tictactoe.model.AccountSingleton;
+import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccount;
+import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccountViewModel;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Objects;
 
 import timber.log.Timber;
 
 /**
  * Fragment for login screen.
  *
- * Created by adamcchampion on 2017/08/03.
+ * Created by adamcchampion on 2017/08/03. Modified on 2020/08/06 by acc.
  */
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
-    private AccountSingleton mAccountSingleton;
-    private AccountDbHelper mDbHelper;
+    private UserAccountViewModel mUserAccountViewModel;
+
+    // "Old way" variables for querying the database directly for username, password combinations.
+    // private AccountSingleton mAccountSingleton;
+    // private AccountDbHelper mDbHelper;
+
+    private final String TAG = getClass().getSimpleName();
 
     private final static String OPT_NAME = "name";
+
+    @Override
+	public void onCreate(Bundle icicle) {
+    	super.onCreate(icicle);
+
+    	Activity activity = requireActivity();
+    	mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
+    	// Here's a dummy observer object that indicates when the UserAccounts change in the database.
+		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, new Observer<List<UserAccount>>() {
+			@Override
+			public void onChanged(List<UserAccount> userAccounts) {
+				Timber.d(TAG, "The list of UserAccounts just changed; it has %s elements", userAccounts.size());
+			}
+		});
+	}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,15 +83,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		mUsernameEditText = v.findViewById(R.id.username_text);
         mPasswordEditText = v.findViewById(R.id.password_text);
 
-        Button loginButton = v.findViewById(R.id.login_button);
+        final Button loginButton = v.findViewById(R.id.login_button);
         if (loginButton != null) {
             loginButton.setOnClickListener(this);
         }
-        Button cancelButton = v.findViewById(R.id.cancel_button);
+        final Button cancelButton = v.findViewById(R.id.cancel_button);
         if (cancelButton != null) {
             cancelButton.setOnClickListener(this);
         }
-        Button newUserButton = v.findViewById(R.id.new_user_button);
+        final Button newUserButton = v.findViewById(R.id.new_user_button);
         if (newUserButton != null) {
             newUserButton.setOnClickListener(this);
         }
@@ -75,8 +100,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void checkLogin() {
-        String username = mUsernameEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
+        final String username = mUsernameEditText.getText().toString();
+        final String password = mPasswordEditText.getText().toString();
 
 		MessageDigest digest;
 		try {
@@ -86,7 +111,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 			Activity activity = requireActivity();
 
-			if (mAccountSingleton == null) {
+			/*
+			 * This is the "old way" of querying the database directly for a matching Account.
+			 * For the "new way", we would observe changes in the database via the ViewModel,
+			 * then validate if the username/password combination is valid.
+			 */
+			/*if (mAccountSingleton == null) {
 				mAccountSingleton = AccountSingleton.get(activity.getApplicationContext());
 			}
 
@@ -102,8 +132,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 					break;
 				}
 			}
+			*/
+			// if (accountList.size() > 0 && hasMatchingAccount) {
+			UserAccount userAccount = new UserAccount(username, sha256HashStr);
+			LiveData<List<UserAccount>> userAccountListData = mUserAccountViewModel.getAllUserAccounts();
+			List<UserAccount> userAccountList = userAccountListData.getValue();
 
-			if (accountList.size() > 0 && hasMatchingAccount) {
+
+
+			if (Objects.requireNonNull(userAccountList).contains(userAccount)) {
 				// Save username as the name of the player
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
 				SharedPreferences.Editor editor = settings.edit();

@@ -3,6 +3,7 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
@@ -12,16 +13,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.StringUtils;
-import com.wiley.fordummies.androidsdk.tictactoe.model.Account;
-import com.wiley.fordummies.androidsdk.tictactoe.model.AccountSingleton;
+import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccount;
+import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccountViewModel;
+import com.wiley.fordummies.androidsdk.tictactoe.model.old.AccountSingleton;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -39,14 +44,23 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     private EditText mEtPassword;
     private EditText mEtConfirm;
 
-    // private static final String TAG = AccountFragment.class.getSimpleName();
+    private UserAccountViewModel mUserAccountViewModel;
+
+    private final String TAG = getClass().getSimpleName();
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
-    @Override
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Activity activity = requireActivity();
+		mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
+	}
+
+	@Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account, container, false);
 
@@ -102,7 +116,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 			mEtUsername.setText("");
 			mEtPassword.setText("");
 			mEtConfirm.setText("");
-
 		} else if (viewId == R.id.exit_button) {
 			FragmentActivity activity = requireActivity();
 			activity.getSupportFragmentManager().popBackStack();
@@ -113,18 +126,26 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
     private void createAccount() {
         FragmentActivity activity = requireActivity();
-        String username = mEtUsername.getText().toString();
-        String password = mEtPassword.getText().toString();
-        String confirm = mEtConfirm.getText().toString();
-		if (password.equals(confirm) && !username.equals("") && !password.equals("")) {
+        final String username = mEtUsername.getText().toString();
+        final String password = mEtPassword.getText().toString();
+        final String confirm = mEtConfirm.getText().toString();
+		if (password.equals(confirm) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
+
+			// Old way to add account: directly via singleton
 			AccountSingleton singleton = AccountSingleton.get(activity.getApplicationContext());
 			try {
 				MessageDigest digest = MessageDigest.getInstance("SHA-256");
 				byte[] sha256HashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 				String sha256HashStr = StringUtils.bytesToHex(sha256HashBytes);
-				Account account = new Account(username, sha256HashStr);
-				singleton.addAccount(account);
-				Toast.makeText(activity.getApplicationContext(), "New record inserted", Toast.LENGTH_SHORT).show();
+
+				// Old way: add account directly
+				// Account account = new Account(username, sha256HashStr);
+				// singleton.addAccount(account);
+
+				// New way: create new UserAccount, then add it to ViewModel
+				UserAccount userAccount = new UserAccount(username, sha256HashStr);
+				mUserAccountViewModel.insert(userAccount);
+				Toast.makeText(activity.getApplicationContext(), "New UserAccount added", Toast.LENGTH_SHORT).show();
 
 			} catch (NoSuchAlgorithmException e) {
 				Toast.makeText(activity, "Error: No SHA-256 algorithm found", Toast.LENGTH_SHORT).show();

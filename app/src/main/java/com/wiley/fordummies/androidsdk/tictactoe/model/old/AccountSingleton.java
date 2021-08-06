@@ -1,4 +1,4 @@
-package com.wiley.fordummies.androidsdk.tictactoe.model;
+package com.wiley.fordummies.androidsdk.tictactoe.model.old;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.wiley.fordummies.androidsdk.tictactoe.model.AccountDbSchema.AccountsTable;
+import com.wiley.fordummies.androidsdk.tictactoe.model.old.AccountDbSchema.AccountsTable;
 
 import java.util.ArrayList;
 import java.util.List;

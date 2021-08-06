@@ -1,5 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by adamcchampion on 2017/08/16.
  */
@@ -26,4 +28,10 @@ public class Contact {
     public int hashCode() {
         return mName.hashCode();
     }
+
+	@NonNull
+	@Override
+	public String toString() {
+		return mName;
+	}
 }

@@ -11,6 +11,6 @@ import androidx.fragment.app.Fragment;
 public class ContactsActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
-        return new ContactsFragment();
+        return new ContactsFragmentOld();
     }
 }

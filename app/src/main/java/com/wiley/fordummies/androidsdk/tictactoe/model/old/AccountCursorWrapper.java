@@ -1,9 +1,9 @@
-package com.wiley.fordummies.androidsdk.tictactoe.model;
+package com.wiley.fordummies.androidsdk.tictactoe.model.old;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import com.wiley.fordummies.androidsdk.tictactoe.model.AccountDbSchema.AccountsTable;
+import com.wiley.fordummies.androidsdk.tictactoe.model.old.AccountDbSchema.AccountsTable;
 
 /**
  * Created by adamcchampion on 2017/08/04.
