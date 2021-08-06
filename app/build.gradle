@@ -41,7 +41,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appcompat_version"
 
 	// Lifecycle
-	implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycle_version"
 	implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycle_version"
 	implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycle_version"
 	implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycle_version"
@@ -60,6 +59,8 @@ dependencies {
     implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:$rootProject.mapbox_telemetry_version"
     implementation "com.mapbox.mapboxsdk:mapbox-android-ui:$rootProject.mapbox_java_version"
 	implementation "com.jakewharton.timber:timber:$rootProject.timber_version"
+
+	// Testing
 	testImplementation "junit:junit:$rootProject.junit_version"
     androidTestImplementation "androidx.test:core:$rootProject.test_version"
     androidTestImplementation "androidx.test:rules:$rootProject.test_version"
