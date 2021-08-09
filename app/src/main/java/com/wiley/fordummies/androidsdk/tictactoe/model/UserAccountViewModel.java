@@ -15,7 +15,6 @@ import java.util.Objects;
 public class UserAccountViewModel extends AndroidViewModel {
 
 	private UserAccountRepository mRepository;
-
 	private final LiveData<List<UserAccount>> mAllUserAccounts;
 
 	public UserAccountViewModel(@NonNull Application application) {

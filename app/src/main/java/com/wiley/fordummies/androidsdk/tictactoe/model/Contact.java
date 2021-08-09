@@ -1,14 +1,26 @@
 package com.wiley.fordummies.androidsdk.tictactoe.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Fts4;
+import androidx.room.PrimaryKey;
 
 /**
- * Created by adamcchampion on 2017/08/16.
+ * Created by adamcchampion on 2017/08/16. Updated on 2021/08/09.
  */
+@Fts4
+@Entity(tableName = "contact")
 public class Contact {
-    private final String mName;
+	@PrimaryKey(autoGenerate = true)
+	@ColumnInfo(name = "rowid")
+	public int mUid;
 
-    public Contact(String name) { mName = name; }
+	@NonNull
+	@ColumnInfo(name = "name")
+	public String mName;
+
+    public Contact(@NonNull String name) { mName = name; }
 
     public String getName() {
         return mName;

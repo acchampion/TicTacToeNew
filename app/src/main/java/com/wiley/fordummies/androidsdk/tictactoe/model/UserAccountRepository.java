@@ -65,4 +65,6 @@ public class UserAccountRepository {
 		UserAccountDatabase.databaseWriteExecutor.execute(() ->
 				mUserAccountDao.insert(userAccount));
 	}
+
+	// TODO: Implement update() and delete methods()
 }

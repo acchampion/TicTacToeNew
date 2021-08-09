@@ -1,12 +1,8 @@
 package com.wiley.fordummies.androidsdk.tictactoe.model;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
-
-import java.util.List;
 
 /**
  * View model class for Contacts, displayed as Strings.
@@ -16,20 +12,14 @@ import java.util.List;
  * Created by acc on 2021/08/03.
  */
 public class ContactViewModel extends AndroidViewModel {
-	private final MutableLiveData<List<String>> mListData = new MutableLiveData<>();
+
+	private final ContactLiveData mAllContacts;
 
 	public ContactViewModel(Application application) {
 		super(application);
-
+		mAllContacts = new ContactLiveData(application);
 	}
 
-	private void loadData() {
-		new AsyncTask<Void, Void, List<String>>() {
+	public ContactLiveData getAllContacts() { return mAllContacts; }
 
-			@Override
-			protected List<String> doInBackground(Void... voids) {
-				return null;
-			}
-		}.execute();
-	}
 }
