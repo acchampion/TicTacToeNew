@@ -1,5 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
+import static android.content.Context.SENSOR_SERVICE;
+
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -26,8 +28,6 @@ import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;
-
-import static android.content.Context.SENSOR_SERVICE;
 
 /**
  * Created by adamcchampion on 2017/08/14.
@@ -138,12 +138,9 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
             }
 
         }
-        String eventStr = String.format(Locale.getDefault(),
-				"EVENT: Raw Values: %s; Distance Last: %f; Distance This: %f; " +
-						"Change: %f; Percent: %f%%; Last value: %s; %s",
-				 	sensorName, distanceOfLastValue, distanceOfThisValue, change, percentageChange,
-					lastValueString, sensorEventString);
-        Timber.d(eventStr);
+        Timber.d("EVENT: Raw Values: %s; Distance Last: %f; Distance This: %f; Change: %f; Percent: %f%%; Last value: %s; %s",
+				sensorName, distanceOfLastValue, distanceOfThisValue, change, percentageChange,
+				lastValueString, sensorEventString);
         if (lastValue == null || percentageChange > TOLERANCE) {
             Timber.d("--- Event Changed --- : Change: %f; Percent: %f%%; %s",
 					change, percentageChange, sensorEventString);
