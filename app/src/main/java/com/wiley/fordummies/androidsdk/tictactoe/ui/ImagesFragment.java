@@ -1,10 +1,9 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -13,18 +12,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.MutableLiveData;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
 
 import timber.log.Timber;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Fragment for showing and capturing images.
@@ -36,9 +38,30 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	private ImageView mImageView = null;
 	private final static int IMAGE_CAPTURED = 1;
 	private String mImageFilePath;
-	private Bitmap mImageBitmap = null;
+	private final MutableLiveData<Bitmap> mBitmapLiveData = new MutableLiveData<>();
+
+	private final String TAG = getClass().getSimpleName();
+
 	private final Intent mCaptureImageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
+	ActivityResultLauncher<Void> mCapturePhotoLaunch = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(),
+			new ActivityResultCallback<Bitmap>() {
+				@Override
+				public void onActivityResult(Bitmap result) {
+					mBitmapLiveData.setValue(result);
+					mImageView.setImageBitmap(mBitmapLiveData.getValue());
+				}
+			});
+
+	ActivityResultLauncher<String> mPickImageResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
+			new ActivityResultCallback<Uri>() {
+				@Override
+				public void onActivityResult(Uri result) {
+					String uriString = result.toString();
+					Uri imageUri = Uri.parse(uriString);
+					mImageView.setImageURI(imageUri);
+				}
+			});
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,13 +73,8 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		buttonShow.setOnClickListener(this);
 		Button buttonCapture = v.findViewById(R.id.buttonImageCapture);
 		buttonCapture.setOnClickListener(this);
-
-		// Guard against no camera app (disable the "record" button).
-		Activity activity = requireActivity();
-		PackageManager packageManager = activity.getPackageManager();
-		if (packageManager.resolveActivity(mCaptureImageIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
-			buttonCapture.setEnabled(false);
-		}
+		Button buttonSelect = v.findViewById(R.id.buttonImageSelect);
+		buttonSelect.setOnClickListener(this);
 
 		return v;
 	}
@@ -69,14 +87,29 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		try {
+			AppCompatActivity activity = (AppCompatActivity) requireActivity();
+			ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.images));
+			}
+		} catch (NullPointerException npe) {
+			Timber.e("Could not set subtitle");
+		}
+	}
+
+
+	@Override
 	public void onClick(View view) {
 		final int viewId = view.getId();
 
 		if (viewId == R.id.buttonImageShow) {
 			File imageFile = new File(mImageFilePath);
 			if (imageFile.exists()) {
-				mImageBitmap = BitmapFactory.decodeFile(mImageFilePath);
-				mImageView.setImageBitmap(mImageBitmap);
+				Bitmap imageBitmap = BitmapFactory.decodeFile(mImageFilePath);
+				mImageView.setImageBitmap(imageBitmap);
 			} else {
 				// File doesn't exist, so load a sample SVG image.
 				// Disable hardware acceleration for SVGs
@@ -84,25 +117,11 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 				mImageView.setImageResource(R.drawable.ic_scoreboard);
 			}
 		} else if (viewId == R.id.buttonImageCapture) {
-			startActivityForResult(mCaptureImageIntent, IMAGE_CAPTURED);
+			mCapturePhotoLaunch.launch(null);
+		} else if (viewId == R.id.buttonImageSelect) {
+			mPickImageResult.launch("image/*");
 		} else {
 			Timber.e("Invalid button click");
 		}
 	}
-
-	public void onActivityResult(int requestCode, int resultCode, Intent cameraIntent) {
-		if (resultCode == RESULT_OK && requestCode == IMAGE_CAPTURED) {
-			Bundle extras = cameraIntent.getExtras();
-			if (extras != null) {
-				mImageBitmap = (Bitmap) extras.get("data");
-				mImageView.setImageBitmap(mImageBitmap);
-			}
-		}
-	}
-
-	private void takeImage() {
-		Lifecycle lifecycle = getLifecycle();
-
-	}
-
 }

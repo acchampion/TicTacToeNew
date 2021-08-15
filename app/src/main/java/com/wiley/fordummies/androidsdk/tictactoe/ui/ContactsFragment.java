@@ -37,6 +37,8 @@ import timber.log.Timber;
 
 /**
  * New Fragment to show contacts in a RecyclerView.
+ *
+ * Created by acc on 2021/08/09.
  */
 public class ContactsFragment extends Fragment {
 

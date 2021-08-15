@@ -1,39 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_marginTop="8dp">
-	<LinearLayout
-		android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/linearLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+
+	<Button
+		android:id="@+id/buttonAudioStart"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:layout_margin="16dp">
-		<Button
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:id="@+id/buttonAudioStart"
-			android:text="@string/start_audio"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="8dp"
-			android:layout_marginBottom="8dp"
-			/>
-		<Button
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:text="@string/stop_audio"
-			android:id="@+id/buttonAudioStop"
-			android:layout_marginLeft="8dp"
-			android:layout_marginRight="8dp"
-			android:layout_marginBottom="8dp"
-			/>
-	</LinearLayout>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAudioRecord"
-        android:text="@string/record_audio"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"/>
-</LinearLayout>
+		android:layout_margin="8dp"
+		android:text="@string/start_audio"
+		app:layout_constraintEnd_toStartOf="@+id/buttonAudioStop"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<Button
+		android:id="@+id/buttonAudioStop"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
+		android:text="@string/stop_audio"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/buttonAudioStart"
+		app:layout_constraintTop_toTopOf="parent" />
+
+
+	<Button
+		android:id="@+id/buttonAudioRecord"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
+		android:text="@string/record_audio"
+		app:layout_constraintEnd_toStartOf="@id/buttonAudioSelect"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/buttonAudioStart" />
+
+	<Button
+		android:id="@+id/buttonAudioSelect"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
+		android:text="@string/select_audio"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/buttonAudioRecord"
+		app:layout_constraintTop_toBottomOf="@+id/buttonAudioStop" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
