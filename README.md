@@ -1,9 +1,11 @@
 Tic-Tac-Toe for Android
 =======================
 
-Play Tic-Tac-Toe on your Android smartphone! This app also demonstrates how to use various Android 
+Play Tic-Tac-Toe on your Android smartphone! This app also demonstrates how to use various Android
 programming techniques. It's the main reference for the course:
 [CSE 5236: Mobile Application Development](http://web.cse.ohio-state.edu/~champion/5236).
+
+**Caveat:** The maps part of the app won't work unless you get your own [Mapbox][https://www.mapbox.com] token.
 
 License
 =======
