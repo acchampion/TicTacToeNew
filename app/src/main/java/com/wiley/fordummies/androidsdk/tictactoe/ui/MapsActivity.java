@@ -44,6 +44,7 @@ import com.mapbox.services.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.services.api.geocoding.v5.models.GeocodingResponse;
 import com.mapbox.services.commons.models.Position;
 import com.mapzen.android.lost.api.LocationRequest;
+import com.wiley.fordummies.androidsdk.tictactoe.BuildConfig;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.util.List;
@@ -83,7 +84,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 
 		// Mapbox access token is configured here. This needs to be called either in your application
 		// object or in the same activity which contains the MapView.
-		Mapbox.getInstance(this, getString(R.string.access_token));
+		Mapbox.getInstance(this, BuildConfig.MapboxAccessToken);
 
 		setContentView(R.layout.activity_maps);
 

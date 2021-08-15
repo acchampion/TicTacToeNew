@@ -75,7 +75,6 @@
     <!-- Maps -->
     <string name="maps">Maps</string>
     <string name="location_permission_denied">User denied permission to get location.</string>
-    <string name="access_token" translatable="false">pk.eyJ1IjoiYWNjaGFtcGlvbiIsImEiOiJjajZneDMwZDgwMGxjMnd0ZXFpeG1iZDVxIn0.yCuFPMo0P6hS8U9_OS5etQ</string>
     <string name="find">Locate</string>
     <string name="findme">Find Me</string>
     <string name="enter_address">Enter address …</string>

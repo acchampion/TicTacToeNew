@@ -25,7 +25,11 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     buildTypes {
+		debug {
+			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
+		}
         release {
+			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
             minifyEnabled false
         }
     }
