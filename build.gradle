@@ -8,7 +8,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.1'
+        classpath 'com.android.tools.build:gradle:7.0.2'
     }
 }
 
@@ -31,6 +31,7 @@ allprojects {
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             options.compilerArgs << "-Xlint:deprecation"
+			options.compilerArgs << "-Xlint:unchecked"
         }
     }
 }
@@ -50,7 +51,7 @@ ext {
 	test_version = "1.4.0"
 
 	// Timber version
-	timber_version = "4.7.1"
+	timber_version = '5.0.1'
 
 	// Mapbox versions
 	mapbox_sdk_version = "9.2.1"
