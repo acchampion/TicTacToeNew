@@ -46,27 +46,29 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 	private Button mButtonStart, mButtonStop;
 
 	ActivityResultLauncher<Intent> mRecordAudioResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-			new ActivityResultCallback<ActivityResult>() {
+			new ActivityResultCallback<>() {
 				@Override
 				public void onActivityResult(ActivityResult result) {
 					if (result.getResultCode() == RESULT_OK) {
 						Intent intent = result.getData();
 						if (intent != null) {
 							mAudioFileUri = intent.getData();
-							Timber.v("Audio File URI: %s", mAudioFileUri);
+							Timber.tag(TAG).v("Audio File URI: %s", mAudioFileUri);
 						}
 					}
 				}
 			});
 
 	ActivityResultLauncher<String> mPickAudioResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
-			new ActivityResultCallback<Uri>() {
+			new ActivityResultCallback<>() {
 				@Override
 				public void onActivityResult(Uri result) {
 					String uriString = result.toString();
 					mAudioFileUri = Uri.parse(uriString);
 				}
 			});
+
+	private final String TAG = getClass().getSimpleName();
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -120,7 +122,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 				actionBar.setSubtitle(getResources().getString(R.string.audio));
 			}
 		} catch (NullPointerException npe) {
-			Timber.e("Could not set subtitle");
+			Timber.tag(TAG).e("Could not set subtitle");
 		}
 	}
 
@@ -134,7 +136,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 			if (!mStarted) {
 				Intent musicIntent = new Intent(activity.getApplicationContext(), MediaPlaybackService.class);
 				musicIntent.putExtra("URIString", mAudioFileUri.toString());
-				Timber.d("URI: %s", mAudioFileUri.toString());
+				Timber.tag(TAG).d("URI: %s", mAudioFileUri.toString());
 				activity.startService(musicIntent);
 				mStarted = true;
 
@@ -152,7 +154,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 		} else if (viewId == R.id.buttonAudioSelect) {
 			mPickAudioResult.launch("audio/*");
 		} else {
-			Timber.e("Invalid button click");
+			Timber.tag(TAG).e("Invalid button click");
 		}
 	}
 

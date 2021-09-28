@@ -27,9 +27,11 @@ android {
     buildTypes {
 		debug {
 			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
+			buildConfigField 'String', "FlickrAccessToken", FLICKR_ACCESS_TOKEN
 		}
         release {
 			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
+			buildConfigField 'String', "FlickrAccessToken", FLICKR_ACCESS_TOKEN
             minifyEnabled false
         }
     }
@@ -64,6 +66,11 @@ dependencies {
     implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:$rootProject.mapbox_telemetry_version"
     implementation "com.mapbox.mapboxsdk:mapbox-android-ui:$rootProject.mapbox_java_version"
 	implementation "com.jakewharton.timber:timber:$rootProject.timber_version"
+
+	implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
+	implementation "com.squareup.retrofit2:converter-scalars:$rootProject.retrofit_version"
+	implementation "com.google.code.gson:gson:$rootProject.gson_version"
+	implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
 
 	// Testing
 	testImplementation "junit:junit:$rootProject.junit_version"

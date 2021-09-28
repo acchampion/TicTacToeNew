@@ -39,12 +39,10 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 	private Button mButtonStart, mButtonStop;
 	private final Intent mRecordVideoIntent = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
 
-	private static final int VIDEO_CAPTURED = 1;
-
 	private static final String TAG = VideoFragment.class.getSimpleName();
 
 	ActivityResultLauncher<Intent> mCaptureVideoResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-			new ActivityResultCallback<ActivityResult>() {
+			new ActivityResultCallback<>() {
 				@Override
 				public void onActivityResult(ActivityResult result) {
 					if (result.getResultCode() == Activity.RESULT_OK) {
@@ -52,25 +50,24 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 						if (intent != null) {
 							mVideoFileUri = intent.getData();
 							mVideoView.setVideoURI(mVideoFileUri);
-							Timber.v("Audio File URI: %s", mVideoFileUri);
+							Timber.tag(TAG).v("Audio File URI: %s", mVideoFileUri);
 						}
 					}
 				}
 			});
 
 	ActivityResultLauncher<String> mPickVideoResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
-			new ActivityResultCallback<Uri>() {
+			new ActivityResultCallback<>() {
 				@Override
 				public void onActivityResult(Uri result) {
 					String uriString = result.toString();
-					mVideoFileUri  = Uri.parse(uriString);
+					mVideoFileUri = Uri.parse(uriString);
 					mVideoView.setVideoURI(mVideoFileUri);
 				}
 			});
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Activity activity = requireActivity();
 		View v = inflater.inflate(R.layout.fragment_video, container, false);
 
 		mVideoView = v.findViewById(R.id.videoView);
@@ -121,7 +118,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 				actionBar.setSubtitle(getResources().getString(R.string.video));
 			}
 		} catch (NullPointerException npe) {
-			Timber.e("Could not set subtitle");
+			Timber.tag(TAG).e("Could not set subtitle");
 		}
 	}
 
@@ -146,7 +143,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 		} else if (viewId == R.id.buttonVideoSelect) {
 			mPickVideoResult.launch("video/*");
 		} else {
-			Timber.e("Invalid button press");
+			Timber.tag(TAG).e("Invalid button press");
 		}
 	}
 }

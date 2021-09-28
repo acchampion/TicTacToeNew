@@ -53,6 +53,8 @@
         </activity>
         <activity android:name=".ui.AccountActivity"/>
         <activity android:name=".ui.GameOptionsActivity"/>
+		<activity android:name=".ui.PhotoGalleryActivity"
+			android:parentActivityName=".ui.GameOptionsActivity" />
         <activity android:name=".ui.MapsActivity"
                   android:parentActivityName=".ui.GameOptionsActivity"/>
         <activity android:name=".ui.AudioActivity"

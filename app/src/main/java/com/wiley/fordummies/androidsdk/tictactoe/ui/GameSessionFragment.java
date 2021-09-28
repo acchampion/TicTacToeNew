@@ -33,7 +33,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.Square;
 import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
 import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -66,7 +66,7 @@ public class GameSessionFragment extends Fragment {
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Timber.d("onCreateView()");
+		Timber.tag(TAG).d("onCreateView()");
 		View v;
 
 		Activity activity = requireActivity();
@@ -119,7 +119,7 @@ public class GameSessionFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Timber.d("onResume()");
+		Timber.tag(TAG).d("onResume()");
 		try {
 			AppCompatActivity activity = (AppCompatActivity) requireActivity();
 			ActionBar actionBar = activity.getSupportActionBar();
@@ -134,7 +134,7 @@ public class GameSessionFragment extends Fragment {
 				activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 			}
 		} catch (NullPointerException npe) {
-			Timber.e("Could not set subtitle");
+			Timber.tag(TAG).e("Could not set subtitle");
 		}
 
 		playNewGame();
@@ -143,19 +143,19 @@ public class GameSessionFragment extends Fragment {
 	@Override
 	public void onStop() {
 		super.onStop();
-		Timber.d("onStop()");
+		Timber.tag(TAG).d("onStop()");
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		Timber.d("onDestroyView()");
+		Timber.tag(TAG).d("onDestroyView()");
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Timber.d("onDestroy()");
+		Timber.tag(TAG).d("onDestroy()");
 	}
 
 	private void playNewGame() {
@@ -177,7 +177,7 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	public void scheduleAndroidsTurn() {
-		Timber.d("Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
+		Timber.tag(TAG).d("Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
 		mBoard.disableInput();
 		boolean testMode = false;
 		if (!testMode) {
@@ -194,16 +194,16 @@ public class GameSessionFragment extends Fragment {
 
 	private void androidTakesATurn() {
 		int pickedX, pickedY;
-		Timber.d("Thread ID in androidTakesATurn: %s", Thread.currentThread().getId());
+		Timber.tag(TAG).d("Thread ID in androidTakesATurn: %s", Thread.currentThread().getId());
 
 		GameGrid gameGrid = mActiveGame.getGameGrid();
-		ArrayList<Square> emptyBlocks = gameGrid.getEmptySquares();
+		List<Square> emptyBlocks = gameGrid.getEmptySquares();
 		int n = emptyBlocks.size();
 		Random r = new Random();
 		int randomIndex = r.nextInt(n);
 		Square picked = emptyBlocks.get(randomIndex);
 		mActiveGame.play(pickedX = picked.getX(), pickedY = picked.getY());
-		mGameView.placeSymbol(pickedX, pickedY);
+		mGameView.placeSymbol(pickedX);
 		mBoard.enableInput();
 		if (mActiveGame.isActive()) {
 			mGameView.setGameStatus(mActiveGame.getCurrentPlayerName() + " to play.");
@@ -213,10 +213,10 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	void humanTakesATurn(int x, int y) {/* human's turn */
-		Timber.d("Thread ID in humanTakesATurn: %s", Thread.currentThread().getId());
+		Timber.tag(TAG).d("Thread ID in humanTakesATurn: %s", Thread.currentThread().getId());
 		boolean successfulPlay = mActiveGame.play(x, y);
 		if (successfulPlay) {
-			mGameView.placeSymbol(x, y); /* Update the display */
+			mGameView.placeSymbol(x); /* Update the display */
 			if (mActiveGame.isActive()) {
 				mGameView.setGameStatus(mActiveGame.getCurrentPlayerName() + " to play.");
 				scheduleAndroidsTurn();
@@ -259,7 +259,7 @@ public class GameSessionFragment extends Fragment {
 				.setPositiveButton("Yes", (dialog, which) -> {
 					LayoutInflater inflater = LayoutInflater.from(activity);
 					if (mContainer != null) {
-						Timber.d("Calling setupBoard() again");
+						Timber.tag(TAG).d("Calling setupBoard() again");
 						onSaveInstanceState(mSavedInstanceState);
 						activity.recreate();
 						onCreateView(inflater, mContainer, mSavedInstanceState);
@@ -343,7 +343,7 @@ public class GameSessionFragment extends Fragment {
 			callTicTacToeHelp();
 			return true;
 		} else {
-			Timber.e("Invalid menu item selected");
+			Timber.tag(TAG).e("Invalid menu item selected");
 		}
 
 		return false;

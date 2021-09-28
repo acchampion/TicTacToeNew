@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class UserAccountRepository {
 
-	private UserAccountDao mUserAccountDao;
-	private LiveData<List<UserAccount>> mAllUserAccounts;
+	private final UserAccountDao mUserAccountDao;
+	private final LiveData<List<UserAccount>> mAllUserAccounts;
 
 	private final String TAG = getClass().getSimpleName();
 
@@ -27,36 +27,14 @@ public class UserAccountRepository {
 		mAllUserAccounts = mUserAccountDao.getAllUserAccounts();
 	}
 
-	// Room executes all queries on a separate thread.
+	// Room executes all queries on a separ ate thread.
 	// Observed LiveData notify the observer upon data change.
 	LiveData<List<UserAccount>> getAllUserAccounts() {
 		return mAllUserAccounts;
 	}
 
 	LiveData<UserAccount> findUserAccountByName(UserAccount userAccount) {
-		LiveData<UserAccount> theUserAccount = mUserAccountDao.findByName(userAccount.getName(), userAccount.getPassword());
-
-//		try {
-//			Future<LiveData<UserAccount>> future =
-//					(Future<LiveData<UserAccount>>) UserAccountDatabase.databaseWriteExecutor.submit(() -> {
-//						mUserAccountDao.findByName(userAccount.getName(), userAccount.getPassword());
-//					});
-//			while (!future.isDone()) {
-//				Timber.d(TAG, "Waiting for query to complete");
-//				Thread.sleep(100);
-//			}
-//			theUserAccount = future.get(2, TimeUnit.SECONDS);
-//		} catch (ExecutionException e) {
-//			Timber.e(TAG, "Could not find UserAccount by name");
-//			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			Timber.e(TAG, "Database query was interrupted");
-//			e.printStackTrace();
-//		} catch (TimeoutException e) {
-//			Timber.e(TAG, "Query task timed out");
-//			e.printStackTrace();
-//		}
-		return theUserAccount;
+		return mUserAccountDao.findByName(userAccount.getName(), userAccount.getPassword());
 	}
 
 	// You MUST call this on a non-UI thread or the app will throw an exception.

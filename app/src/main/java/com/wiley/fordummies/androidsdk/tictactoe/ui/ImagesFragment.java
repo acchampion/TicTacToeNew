@@ -1,6 +1,5 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -36,31 +34,22 @@ import timber.log.Timber;
 
 public class ImagesFragment extends Fragment implements View.OnClickListener {
 	private ImageView mImageView = null;
-	private final static int IMAGE_CAPTURED = 1;
 	private String mImageFilePath;
 	private final MutableLiveData<Bitmap> mBitmapLiveData = new MutableLiveData<>();
 
 	private final String TAG = getClass().getSimpleName();
 
-	private final Intent mCaptureImageIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
 	ActivityResultLauncher<Void> mCapturePhotoLaunch = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(),
-			new ActivityResultCallback<Bitmap>() {
-				@Override
-				public void onActivityResult(Bitmap result) {
-					mBitmapLiveData.setValue(result);
-					mImageView.setImageBitmap(mBitmapLiveData.getValue());
-				}
+			result -> {
+				mBitmapLiveData.setValue(result);
+				mImageView.setImageBitmap(mBitmapLiveData.getValue());
 			});
 
 	ActivityResultLauncher<String> mPickImageResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
-			new ActivityResultCallback<Uri>() {
-				@Override
-				public void onActivityResult(Uri result) {
-					String uriString = result.toString();
-					Uri imageUri = Uri.parse(uriString);
-					mImageView.setImageURI(imageUri);
-				}
+			result -> {
+				String uriString = result.toString();
+				Uri imageUri = Uri.parse(uriString);
+				mImageView.setImageURI(imageUri);
 			});
 
 	@Override
@@ -96,7 +85,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 				actionBar.setSubtitle(getResources().getString(R.string.images));
 			}
 		} catch (NullPointerException npe) {
-			Timber.e("Could not set subtitle");
+			Timber.tag(TAG).e("Could not set subtitle");
 		}
 	}
 
@@ -121,7 +110,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		} else if (viewId == R.id.buttonImageSelect) {
 			mPickImageResult.launch("image/*");
 		} else {
-			Timber.e("Invalid button click");
+			Timber.tag(TAG).e("Invalid button click");
 		}
 	}
 }

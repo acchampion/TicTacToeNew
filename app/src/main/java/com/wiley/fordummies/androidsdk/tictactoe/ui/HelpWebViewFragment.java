@@ -31,7 +31,7 @@ public class HelpWebViewFragment extends Fragment  {
     private ProgressBar mProgressBar;
 
     private static final String ARG_URI = "url";
-    // private static final String TAG = HelpWebViewFragment.class.getSimpleName();
+    private static final String TAG = HelpWebViewFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class HelpWebViewFragment extends Fragment  {
 		Bundle extras = activity.getIntent().getExtras();
 		if (extras != null) {
 			mUrl = extras.getString(ARG_URI);
-			Timber.d("Loading URL %s", mUrl);
+			Timber.tag(TAG).d("Loading URL %s", mUrl);
 		}
 
 		WebView.setWebContentsDebuggingEnabled(true);
@@ -85,7 +85,7 @@ public class HelpWebViewFragment extends Fragment  {
 			}
 		}
         catch (NullPointerException npe) {
-            Timber.e("Could not set subtitle");
+            Timber.tag(TAG).e("Could not set subtitle");
         }
     }
 }

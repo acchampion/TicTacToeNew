@@ -22,8 +22,8 @@ public class GameView {
         sessionScoresView.setText(scoreStr);
     }
 
-    public void placeSymbol(int x, int y) {
-        gameBoard.placeSymbol(x, y);
-        gameBoard.invalidateBlock(x, y);
+    public void placeSymbol(int x) {
+        gameBoard.placeSymbol();
+        gameBoard.invalidateBlock();
     }
 }

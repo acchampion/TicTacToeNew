@@ -76,7 +76,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 	private String whereAmIString = null;
 
 	private static final String WHERE_AM_I_STRING = "WhereAmIString";
-	// private static final String TAG = MapsActivity.class.getSimpleName();
+	private static final String TAG = MapsActivity.class.getSimpleName();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +138,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 				actionBar.setSubtitle(getResources().getString(R.string.where_am_i));
 			}
 		} catch (NullPointerException npe) {
-			Timber.e("Could not set subtitle");
+			Timber.tag(TAG).e("Could not set subtitle");
 		}
 
 		DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -191,7 +191,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 	}
 
 	private void requestLocation() {
-		Timber.d("requestLocation()");
+		Timber.tag(TAG).d("requestLocation()");
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			if (lacksLocationPermission()) {
 				int PERMISSION_REQUEST_LOCATION = 1;
@@ -245,7 +245,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 
 	@Override
 	public void onExplanationNeeded(List<String> permissionsToExplain) {
-		Timber.d("onExplanationNeeded()");
+		Timber.tag(TAG).d("onExplanationNeeded()");
 	}
 
 	@Override
@@ -256,7 +256,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 			//FragmentManager fragmentManager = getSupportFragmentManager();
 			//LocationDeniedDialogFragment deniedDialogFragment = new LocationDeniedDialogFragment();
 			//deniedDialogFragment.show(fragmentManager, "location_denied");
-			Timber.e("User denied permission to get location");
+			Timber.tag(TAG).e("User denied permission to get location");
 			Toast.makeText(getApplicationContext(), R.string.location_permission_denied, Toast.LENGTH_LONG).show();
 			finish();
 		}
@@ -303,7 +303,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 						.setGeocodingType(GeocodingCriteria.TYPE_ADDRESS)
 						.build();
 
-				mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+				mapboxGeocoding.enqueueCall(new Callback<>() {
 					@Override
 					public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
 						//if (response != null) {
@@ -313,7 +313,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 							if (results != null && results.size() > 0) {
 								// Log the first results position.
 								Position firstResultPos = results.get(0).asPosition();
-								Timber.d("onResponse: %s", firstResultPos.toString());
+								Timber.tag(TAG).d("onResponse: %s", firstResultPos.toString());
 
 
 								if (mMapboxMap != null) {
@@ -327,7 +327,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 								}
 							} else {
 								// No result for your request were found.
-								Timber.d("onResponse: No result found");
+								Timber.tag(TAG).d("onResponse: No result found");
 								Toast.makeText(MapsActivity.this, "No results found.", Toast.LENGTH_SHORT).show();
 							}
 						}
@@ -336,14 +336,14 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 
 					@Override
 					public void onFailure(@NonNull Call<GeocodingResponse> call, @NonNull Throwable throwable) {
-						Timber.e("Error receiving geocoding response");
+						Timber.tag(TAG).e("Error receiving geocoding response");
 						Toast.makeText(MapsActivity.this, "Geocoding error, please try again.",
 								Toast.LENGTH_SHORT).show();
 						throwable.printStackTrace();
 					}
 				});
 			} catch (Exception e) {
-				Timber.e("Could not locate this address");
+				Timber.tag(TAG).e("Could not locate this address");
 				e.printStackTrace();
 			}
 		} else if (viewId == R.id.button_findme) {
@@ -372,7 +372,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 						.setGeocodingType(GeocodingCriteria.TYPE_ADDRESS)
 						.build();
 
-				reverseGeocode.enqueueCall(new Callback<GeocodingResponse>() {
+				reverseGeocode.enqueueCall(new Callback<>() {
 					@Override
 					public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
 						GeocodingResponse responseBody = response.body();
@@ -381,7 +381,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 							if (results.size() > 0) {
 								// Log the first results position.
 								Position firstResultPos = results.get(0).asPosition();
-								Timber.d("onResponse: %s", firstResultPos.toString());
+								Timber.tag(TAG).d("onResponse: %s", firstResultPos.toString());
 
 
 								if (mMapboxMap != null) {
@@ -395,14 +395,14 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 								}
 							} else {
 								// No result for your request were found.
-								Timber.d("onResponse: No result found");
+								Timber.tag(TAG).d("onResponse: No result found");
 							}
 						}
 					}
 
 					@Override
 					public void onFailure(@NonNull Call<GeocodingResponse> call, @NonNull Throwable throwable) {
-						Timber.e("Error receiving geocoding response");
+						Timber.tag(TAG).e("Error receiving geocoding response");
 						throwable.printStackTrace();
 					}
 				});

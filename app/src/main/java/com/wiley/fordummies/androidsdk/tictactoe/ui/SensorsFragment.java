@@ -38,7 +38,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     private final Hashtable<String, float[]> lastSensorValues = new Hashtable<>();
 
 	private static final float TOLERANCE = (float) 10.0;
-
+	private final String TAG = getClass().getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
     @Override
     public void onResume() {
         super.onResume();
-        Timber.d("onResume()");
+        Timber.tag(TAG).d("onResume()");
         try {
             AppCompatActivity activity = (AppCompatActivity) requireActivity();
             ActionBar actionBar = activity.getSupportActionBar();
@@ -71,7 +71,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 				actionBar.setSubtitle(getResources().getString(R.string.sensors));
 			}
 		} catch (NullPointerException npe) {
-            Timber.e("Could not set subtitle");
+            Timber.tag(TAG).e("Could not set subtitle");
         }
 
         // Start listening to sensor updates
@@ -82,13 +82,13 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onPause() {
-        Timber.d("Entering onPause()");
+        Timber.tag(TAG).d("Entering onPause()");
         super.onPause();
         // Stop updates when paused
 		for (Sensor sensor : mSensorList) {
 			mSensorManager.unregisterListener(this, sensor);
 		}
-        Timber.d("Leaving onPause()");
+        Timber.tag(TAG).d("Leaving onPause()");
     }
 
 
@@ -138,11 +138,11 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
             }
 
         }
-        Timber.d("EVENT: Raw Values: %s; Distance Last: %f; Distance This: %f; Change: %f; Percent: %f%%; Last value: %s; %s",
+        Timber.tag(TAG).d("EVENT: Raw Values: %s; Distance Last: %f; Distance This: %f; Change: %f; Percent: %f%%; Last value: %s; %s",
 				sensorName, distanceOfLastValue, distanceOfThisValue, change, percentageChange,
 				lastValueString, sensorEventString);
         if (lastValue == null || percentageChange > TOLERANCE) {
-            Timber.d("--- Event Changed --- : Change: %f; Percent: %f%%; %s",
+            Timber.tag(TAG).d("--- Event Changed --- : Change: %f; Percent: %f%%; %s",
 					change, percentageChange, sensorEventString);
         }
     }
@@ -167,7 +167,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-		Timber.d("onAccuracyChanged(): Accuracy of %s changed to %d", sensor.toString(), i);
+		Timber.tag(TAG).d("onAccuracyChanged(): Accuracy of %s changed to %d", sensor.toString(), i);
     }
 
     private class SensorHolder extends RecyclerView.ViewHolder {

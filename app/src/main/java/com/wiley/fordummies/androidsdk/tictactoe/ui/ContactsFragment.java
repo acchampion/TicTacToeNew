@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +47,7 @@ public class ContactsFragment extends Fragment {
 	private ContactViewModel mContactViewModel;
 
 	private final ActivityResultLauncher<String> mActivityResult = registerForActivityResult(
-			new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+			new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<>() {
 				@Override
 				public void onActivityResult(Boolean result) {
 					if (result) {
@@ -56,7 +55,7 @@ public class ContactsFragment extends Fragment {
 						showContacts();
 					} else {
 						// The user denied permission to read contacts, so show them a message.
-						Timber.e("Error: Permission denied to read contacts");
+						Timber.tag(TAG).e("Error: Permission denied to read contacts");
 
 						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 							if (lacksReadContactPermission()) {
@@ -78,13 +77,10 @@ public class ContactsFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		Activity activity = requireActivity();
 		mContactViewModel = new ContactViewModel(activity.getApplication());
-		mContactViewModel.getAllContacts().observe((LifecycleOwner) activity, new Observer<List<Contact>>() {
-			@Override
-			public void onChanged(List<Contact> contactList) {
-				Timber.d(TAG, "List of contacts changed; %d elements", contactList.size());
-				ContactAdapter contactAdapter = new ContactAdapter(contactList);
-				mContactRecyclerView.swapAdapter(contactAdapter, true);
-			}
+		mContactViewModel.getAllContacts().observe((LifecycleOwner) activity, contactList -> {
+			Timber.tag(TAG).d(TAG, "List of contacts changed; %d elements", contactList.size());
+			ContactAdapter contactAdapter = new ContactAdapter(contactList);
+			mContactRecyclerView.swapAdapter(contactAdapter, true);
 		});
 	}
 
@@ -106,7 +102,7 @@ public class ContactsFragment extends Fragment {
 			}
 			requestContacts();
 		} catch (NullPointerException npe) {
-			Timber.e("Could not set subtitle");
+			Timber.tag(TAG).e("Could not set subtitle");
 		}
 	}
 
@@ -119,7 +115,7 @@ public class ContactsFragment extends Fragment {
 	}
 
 	private void requestContacts() {
-		Timber.d("requestContacts()");
+		Timber.tag(TAG).d("requestContacts()");
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			if (lacksReadContactPermission()) {
 				mActivityResult.launch(Manifest.permission.READ_CONTACTS);
@@ -138,7 +134,7 @@ public class ContactsFragment extends Fragment {
 	}
 
 	private void showContacts() {
-		Timber.d("showContacts()");
+		Timber.tag(TAG).d("showContacts()");
 
 		ContactLiveData allContactsData = mContactViewModel.getAllContacts();
 		mContactList = allContactsData.getValue();

@@ -25,67 +25,68 @@ import timber.log.Timber;
 
 /**
  * Fragment that handles main user navigation in the app.
- *
+ * <p>
  * Created by adamcchampion on 2017/08/05.
  */
 
 public class GameOptionsFragment extends Fragment implements View.OnClickListener {
-    // private final String TAG = getClass().getSimpleName();
+	private final String TAG = getClass().getSimpleName();
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_game_options, container, false);
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_game_options, container, false);
 
-        Button btnNewGame = v.findViewById(R.id.buttonNewGame);
-        btnNewGame.setOnClickListener(this);
-        Button btnAudio = v.findViewById(R.id.buttonAudio);
-        btnAudio.setOnClickListener(this);
-        Button btnVideo = v.findViewById(R.id.buttonVideo);
-        btnVideo.setOnClickListener(this);
-        Button btnImage = v.findViewById(R.id.buttonImages);
-        btnImage.setOnClickListener(this);
-        Button btnMaps = v.findViewById(R.id.buttonMaps);
-        btnMaps.setOnClickListener(this);
-        Button btnSettings = v.findViewById(R.id.buttonSettings);
-        btnSettings.setOnClickListener(this);
-        Button btnHelp = v.findViewById(R.id.buttonHelp);
-        btnHelp.setOnClickListener(this);
-        Button btnTestSensors = v.findViewById(R.id.buttonSensors);
-        btnTestSensors.setOnClickListener(this);
-        Button btnExit = v.findViewById(R.id.buttonExit);
-        btnExit.setOnClickListener(this);
+		Button btnNewGame = v.findViewById(R.id.buttonNewGame);
+		btnNewGame.setOnClickListener(this);
+		Button btnAudio = v.findViewById(R.id.buttonAudio);
+		btnAudio.setOnClickListener(this);
+		Button btnVideo = v.findViewById(R.id.buttonVideo);
+		btnVideo.setOnClickListener(this);
+		Button btnImage = v.findViewById(R.id.buttonImages);
+		btnImage.setOnClickListener(this);
+		Button btnMaps = v.findViewById(R.id.buttonMaps);
+		btnMaps.setOnClickListener(this);
+		Button btnSettings = v.findViewById(R.id.buttonSettings);
+		btnSettings.setOnClickListener(this);
+		Button btnHelp = v.findViewById(R.id.buttonHelp);
+		btnHelp.setOnClickListener(this);
+		Button btnTestSensors = v.findViewById(R.id.buttonSensors);
+		btnTestSensors.setOnClickListener(this);
+		Button btnPhotoGallery = v.findViewById(R.id.buttonPhotoGallery);
+		btnPhotoGallery.setOnClickListener(this);
+		Button btnExit = v.findViewById(R.id.buttonExit);
+		btnExit.setOnClickListener(this);
 
-        setHasOptionsMenu(true);
+		setHasOptionsMenu(true);
 
-        return v;
-    }
+		return v;
+	}
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            AppCompatActivity activity = (AppCompatActivity) requireActivity();
+	@Override
+	public void onResume() {
+		super.onResume();
+		try {
+			AppCompatActivity activity = (AppCompatActivity) requireActivity();
 			ActionBar actionBar = activity.getSupportActionBar();
 			if (actionBar != null) {
 				actionBar.setSubtitle(getResources().getString(R.string.options));
 			}
+		} catch (NullPointerException npe) {
+			Timber.tag(TAG).e("Could not set subtitle");
 		}
-        catch (NullPointerException npe) {
-            Timber.e("Could not set subtitle");
-        }
-    }
+	}
 
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu, menu);
-    }
+	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu, menu);
+	}
 
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        final Activity activity = requireActivity();
-        final Context appContext = activity.getApplicationContext();
-        final int itemId = item.getItemId();
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		final Activity activity = requireActivity();
+		final Context appContext = activity.getApplicationContext();
+		final int itemId = item.getItemId();
 
-        if (itemId == R.id.menu_settings) {
+		if (itemId == R.id.menu_settings) {
 			startActivity(new Intent(appContext, SettingsActivity.class));
 			return true;
 		} else if (itemId == R.id.menu_help) {
@@ -98,18 +99,18 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 			startActivity(new Intent(appContext, ContactsActivity.class));
 			return true;
 		} else {
-        	Timber.e("Invalid menu item selection");
-        	return false;
+			Timber.tag(TAG).e("Invalid menu item selection");
+			return false;
 		}
-    }
+	}
 
 
-    public void onClick(View v) {
-        final Activity activity = requireActivity();
-        final Context appContext = activity.getApplicationContext();
-        final int viewId = v.getId();
+	public void onClick(View v) {
+		final Activity activity = requireActivity();
+		final Context appContext = activity.getApplicationContext();
+		final int viewId = v.getId();
 
-        if (viewId == R.id.buttonNewGame) {
+		if (viewId == R.id.buttonNewGame) {
 			startActivity(new Intent(appContext, GameSessionActivity.class));
 		} else if (viewId == R.id.buttonAudio) {
 			startActivity(new Intent(appContext, AudioActivity.class));
@@ -125,17 +126,19 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 			startActivity(new Intent(appContext, HelpActivity.class));
 		} else if (viewId == R.id.buttonSensors) {
 			startActivity(new Intent(appContext, SensorsActivity.class));
+		} else if (viewId == R.id.buttonPhotoGallery) {
+			startActivity(new Intent(appContext, PhotoGalleryActivity.class));
 		} else if (viewId == R.id.buttonExit) {
 			activity.stopService(new Intent(appContext, MediaPlaybackService.class));
 		} else {
-        	Timber.e("Invalid button selection!");
+			Timber.tag(TAG).e("Invalid button selection!");
 		}
 	}
 
-    private void showQuitAppDialog() {
-        FragmentManager manager = getParentFragmentManager();
-        QuitAppDialogFragment fragment = new QuitAppDialogFragment();
-        fragment.show(manager, "quit_app");
+	private void showQuitAppDialog() {
+		FragmentManager manager = getParentFragmentManager();
+		QuitAppDialogFragment fragment = new QuitAppDialogFragment();
+		fragment.show(manager, "quit_app");
 	}
 
 }

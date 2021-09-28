@@ -30,7 +30,7 @@ import timber.log.Timber;
 public class HelpFragment extends Fragment implements View.OnClickListener {
 
     private final String mUrlStr = "https://en.wikipedia.org/wiki/Tic-tac-toe";
-    // private static final String TAG = HelpFragment.class.getSimpleName();
+    private static final String TAG = HelpFragment.class.getSimpleName();
 
 	@Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 				actionBar.setSubtitle(getResources().getString(R.string.help));
 			}
 		} catch (NullPointerException npe) {
-            Timber.e("Could not set subtitle");
+            Timber.tag(TAG).e("Could not set subtitle");
         }
     }
 
@@ -101,7 +101,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 				noNetworkConnectionNotify();
 			}
 		} else {
-			Timber.e("Invalid button click!");
+			Timber.tag(TAG).e("Invalid button click!");
 		}
     }
 }

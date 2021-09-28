@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.preference.PreferenceManager;
@@ -45,12 +44,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText mPasswordEditText;
     private UserAccountViewModel mUserAccountViewModel;
 
-    // "Old way" variables for querying the database directly for username, password combinations.
-    // private AccountSingleton mAccountSingleton;
-    // private AccountDbHelper mDbHelper;
-
     private final String TAG = getClass().getSimpleName();
-
     private final static String OPT_NAME = "name";
 
     @Override
@@ -60,12 +54,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     	Activity activity = requireActivity();
     	mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
     	// Here's a dummy observer object that indicates when the UserAccounts change in the database.
-		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, new Observer<List<UserAccount>>() {
-			@Override
-			public void onChanged(List<UserAccount> userAccounts) {
-				Timber.d(TAG, "The list of UserAccounts just changed; it has %s elements", userAccounts.size());
-			}
-		});
+		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, userAccounts ->
+				Timber.tag(TAG).d("The list of UserAccounts just changed; it has %s elements", userAccounts.size()));
 	}
 
     @Override
@@ -111,29 +101,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 			Activity activity = requireActivity();
 
-			/*
-			 * This is the "old way" of querying the database directly for a matching Account.
-			 * For the "new way", we would observe changes in the database via the ViewModel,
-			 * then validate if the username/password combination is valid.
-			 */
-			/*if (mAccountSingleton == null) {
-				mAccountSingleton = AccountSingleton.get(activity.getApplicationContext());
-			}
-
-			if (mDbHelper == null) {
-				mDbHelper = new AccountDbHelper(activity.getApplicationContext());
-			}
-
-			List<Account> accountList = mAccountSingleton.getAccounts();
-			boolean hasMatchingAccount = false;
-			for (Account account : accountList) {
-				if (account.getName().equals(username) && account.getPassword().equals(sha256HashStr)) {
-					hasMatchingAccount = true;
-					break;
-				}
-			}
-			*/
-			// if (accountList.size() > 0 && hasMatchingAccount) {
 			UserAccount userAccount = new UserAccount(username, sha256HashStr);
 			LiveData<List<UserAccount>> userAccountListData = mUserAccountViewModel.getAllUserAccounts();
 			List<UserAccount> userAccountList = userAccountListData.getValue();
@@ -180,7 +147,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 						.commit();
 			}
 		} else {
-        	Timber.e("Invalid button click!");
+        	Timber.tag(TAG).e("Invalid button click!");
 		}
 	}
 }

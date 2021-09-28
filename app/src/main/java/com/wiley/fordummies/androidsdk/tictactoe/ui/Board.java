@@ -35,7 +35,7 @@ public class Board extends View {
 
     private static final int INSET = 60;
 
-    // private static final String TAG = Board.class.getSimpleName();
+    private static final String TAG = Board.class.getSimpleName();
 
     public Board(Context context, AttributeSet attributes) {
         super(context, attributes);
@@ -113,7 +113,7 @@ public class Board extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!this.mIsEnabled) {
-            Timber.d("Board.onTouchEvent(): Board not mIsEnabled");
+            Timber.tag(TAG).d("Board.onTouchEvent(): Board not mIsEnabled");
             return false;
         }
 
@@ -124,7 +124,7 @@ public class Board extends View {
         if (action == MotionEvent.ACTION_DOWN) {
             float x = event.getX();
             float y = event.getY();
-            Timber.d("Coordinates: " + x + ", " + y);
+            Timber.tag(TAG).d("Coordinates: " + x + ", " + y);
             if (x > mBlockWidth && x < mBlockWidth * 2) posX = 1;
             if (x > mBlockWidth * 2 && x < mBlockWidth * 3) posX = 2;
 
@@ -137,25 +137,23 @@ public class Board extends View {
         return super.onTouchEvent(event);
     }
 
-    public void placeSymbol(int x, int y) {
-        Timber.d("Thread ID in Board.placeSymbol: %s", Thread.currentThread().getId());
-        invalidateBlock(x, y);
+    public void placeSymbol() {
+        Timber.tag(TAG).d("Thread ID in Board.placeSymbol: %s", Thread.currentThread().getId());
+        invalidateBlock();
     }
 
-    public void invalidateBlock(int x, int y) {
-//        Rect selBlock = new Rect((int) (x * mBlockWidth), (int) (y * mBlockHeight), (int) ((x + 1) * mBlockWidth), (int) ((y + 1) * mBlockHeight));
-//        invalidate(selBlock);
+    public void invalidateBlock() {
         invalidate();
     }
 
     public void disableInput() {
         this.mIsEnabled = false;
-        Timber.d("Board.disableInput(): Board not mIsEnabled");
+        Timber.tag(TAG).d("Board.disableInput(): Board not mIsEnabled");
     }
 
     public void enableInput() {
         this.mIsEnabled = true;
-        Timber.d("Board.enableInput(): Board mIsEnabled");
+        Timber.tag(TAG).d("Board.enableInput(): Board mIsEnabled");
     }
 
     public Bitmap getBitmapForSymbol(Symbol aSymbol) {
@@ -183,7 +181,7 @@ public class Board extends View {
                 oSym.recycle();
                 xSym.recycle();
             } catch (OutOfMemoryError ome) {
-                Timber.d("Ran out of memory decoding bitmaps");
+                Timber.tag(TAG).d("Ran out of memory decoding bitmaps");
                 ome.printStackTrace();
             }
         }

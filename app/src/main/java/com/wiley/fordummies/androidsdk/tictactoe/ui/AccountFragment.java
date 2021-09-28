@@ -26,7 +26,6 @@ import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.StringUtils;
 import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccount;
 import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccountViewModel;
-import com.wiley.fordummies.androidsdk.tictactoe.model.old.AccountSingleton;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -97,7 +96,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 			}
 		}
         catch (NullPointerException npe) {
-            Timber.e("Could not set subtitle");
+            Timber.tag(TAG).e("Could not set subtitle");
         }
     }
 
@@ -120,7 +119,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 			FragmentActivity activity = requireActivity();
 			activity.getSupportFragmentManager().popBackStack();
 		} else {
-			Timber.e("Invalid button click");
+			Timber.tag(TAG).e("Invalid button click");
 		}
     }
 
@@ -131,16 +130,10 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         final String confirm = mEtConfirm.getText().toString();
 		if (password.equals(confirm) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
 
-			// Old way to add account: directly via singleton
-			AccountSingleton singleton = AccountSingleton.get(activity.getApplicationContext());
 			try {
 				MessageDigest digest = MessageDigest.getInstance("SHA-256");
 				byte[] sha256HashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 				String sha256HashStr = StringUtils.bytesToHex(sha256HashBytes);
-
-				// Old way: add account directly
-				// Account account = new Account(username, sha256HashStr);
-				// singleton.addAccount(account);
 
 				// New way: create new UserAccount, then add it to ViewModel
 				UserAccount userAccount = new UserAccount(username, sha256HashStr);
@@ -154,7 +147,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 		} else if ((username.equals("")) || (password.equals("")) || (confirm.equals(""))) {
 			Toast.makeText(activity.getApplicationContext(), "Missing entry", Toast.LENGTH_SHORT).show();
 		} else {
-			Timber.e("An unknown account creation error occurred.");
+			Timber.tag(TAG).e("An unknown account creation error occurred.");
 			FragmentManager manager = getParentFragmentManager();
 			AccountErrorDialogFragment fragment = new AccountErrorDialogFragment();
 			fragment.show(manager, "account_error");
