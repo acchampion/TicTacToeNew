@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion '30.0.3'
+    compileSdkVersion 31
+    buildToolsVersion '32.0.0'
     defaultConfig {
         applicationId "com.wiley.fordummies.androidsdk.tictactoe"
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion 23
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -65,7 +65,9 @@ dependencies {
     implementation "com.mapbox.mapboxsdk:mapbox-android-services:$rootProject.mapbox_java_version"
     implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:$rootProject.mapbox_telemetry_version"
     implementation "com.mapbox.mapboxsdk:mapbox-android-ui:$rootProject.mapbox_java_version"
+
 	implementation "com.jakewharton.timber:timber:$rootProject.timber_version"
+	debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version"
 
 	implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
 	implementation "com.squareup.retrofit2:converter-scalars:$rootProject.retrofit_version"

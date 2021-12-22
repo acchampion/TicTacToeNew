@@ -1,5 +1,9 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,10 +16,6 @@ import com.wiley.fordummies.androidsdk.tictactoe.ui.GameSessionFragment;
 
 import org.junit.Test;
 
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 /**
  * Test that Tic-Tac-Toe's Board UI works.
  * <p>
@@ -25,8 +25,8 @@ import static org.junit.Assert.assertNotNull;
  */
 
 public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivity> {
-    private GameSessionActivity mGameSessionActivity;
-    private GameSessionFragment mGameSessionFragment;
+    private final GameSessionActivity mGameSessionActivity;
+    private final GameSessionFragment mGameSessionFragment;
     private Board mBoard;
 
     private final float[] x = {(float) 56.0, (float) 143.0, (float) 227.0};
@@ -69,28 +69,25 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     public void testUI() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
         getInstrumentation().waitForIdleSync();
-        getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
+        getActivity().runOnUiThread(() -> {
+			System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
 
-				mBoard.requestFocus();
+			mBoard.requestFocus();
 
-				MotionEvent newMotionEvent = MotionEvent.obtain(1,
-						1,
-					MotionEvent.ACTION_DOWN,
-					(float) 53.0,
-					(float) 53.0,
-					0);
-				mBoard.dispatchTouchEvent(newMotionEvent);
-				mGameSessionFragment.scheduleAndroidsTurn();
-				try {
-					Thread.sleep(2000L);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				assertEquals(mGameSessionFragment.getPlayCount(), 1);
+			MotionEvent newMotionEvent = MotionEvent.obtain(1,
+					1,
+				MotionEvent.ACTION_DOWN,
+				(float) 53.0,
+				(float) 53.0,
+				0);
+			mBoard.dispatchTouchEvent(newMotionEvent);
+			mGameSessionFragment.scheduleAndroidsTurn(mBoard.onCheckIsTextEditor());
+			try {
+				Thread.sleep(2000L);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
+			assertEquals(mGameSessionFragment.getPlayCount(), 1);
 		});
     }
 

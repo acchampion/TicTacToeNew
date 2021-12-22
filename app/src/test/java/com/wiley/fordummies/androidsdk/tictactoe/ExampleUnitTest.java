@@ -1,8 +1,9 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -25,5 +26,11 @@ public class ExampleUnitTest {
 	public void isZipCodeValid() throws Exception {
     	String zip = "43210";
     	assert((zip.length() == 5 || zip.length() == 9) && zip.matches("[0-9]+"));
+	}
+
+	@Test
+	public void isMalformedZipCodeInvalid() throws Exception {
+		String zip = "XA2 CB3";
+		assert((zip.length() != 5 && zip.length() != 9) && !zip.matches("[0-9]+"));
 	}
 }

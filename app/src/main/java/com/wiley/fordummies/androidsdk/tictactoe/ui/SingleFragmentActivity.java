@@ -2,12 +2,12 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui;
 
 import android.os.Bundle;
 
-import com.wiley.fordummies.androidsdk.tictactoe.R;
-
 import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
 

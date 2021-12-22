@@ -34,6 +34,7 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Timber.tag(TAG).d( "onCreateView");
 		View v = inflater.inflate(R.layout.fragment_game_options, container, false);
 
 		Button btnNewGame = v.findViewById(R.id.buttonNewGame);

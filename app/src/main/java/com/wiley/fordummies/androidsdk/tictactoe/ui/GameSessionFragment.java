@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.Game;
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
@@ -48,6 +50,7 @@ public class GameSessionFragment extends Fragment {
 	private static final int ANDROID_TIMEOUT_BASE = 500;
 	private static final int ANDROID_TIMEOUT_SEED = 2000;
 
+	private boolean mIsTestMode;
 	private Board mBoard;
 	public Game mActiveGame;
 	private GameView mGameView;
@@ -63,6 +66,14 @@ public class GameSessionFragment extends Fragment {
 	private static final String SCOREPLAYERTWOKEY = "ScorePlayerTwo";
 	private static final String GAMEKEY = "Game";
 	private final String TAG = getClass().getSimpleName();
+
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Context context = requireContext();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+		mIsTestMode = prefs.getBoolean("is_test_mode", false);
+	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,7 +171,9 @@ public class GameSessionFragment extends Fragment {
 
 	private void playNewGame() {
 		// If Android is the first player, give it its turn
-		if (mActiveGame.getCurrentPlayerName().equals("Android")) scheduleAndroidsTurn();
+		if (mActiveGame.getCurrentPlayerName().equals("Android")) {
+			scheduleAndroidsTurn(mIsTestMode);
+		}
 	}
 
 	private void setPlayers(Game theGame) {
@@ -176,11 +189,10 @@ public class GameSessionFragment extends Fragment {
 		theGame.setPlayerNames(mFirstPlayerName, mSecondPlayerName);
 	}
 
-	public void scheduleAndroidsTurn() {
+	public void scheduleAndroidsTurn(boolean isTestMode) {
 		Timber.tag(TAG).d("Thread ID in scheduleAndroidsTurn: %s", Thread.currentThread().getId());
 		mBoard.disableInput();
-		boolean testMode = false;
-		if (!testMode) {
+		if (!isTestMode) {
 			Random randomNumber = new Random();
 			Handler handler = new Handler(Looper.getMainLooper());
 			handler.postDelayed(
@@ -219,7 +231,7 @@ public class GameSessionFragment extends Fragment {
 			mGameView.placeSymbol(x); /* Update the display */
 			if (mActiveGame.isActive()) {
 				mGameView.setGameStatus(mActiveGame.getCurrentPlayerName() + " to play.");
-				scheduleAndroidsTurn();
+				scheduleAndroidsTurn(mIsTestMode);
 			} else {
 				proceedToFinish();
 			}
@@ -302,10 +314,10 @@ public class GameSessionFragment extends Fragment {
 		String smsText = String.format(Locale.US, "Look at my AWESOME Tic-Tac-Toe score! " +
 				"%s score is %d and %s score is %d", mFirstPlayerName, mScorePlayerOne,
 				mSecondPlayerName, mScorePlayerOne);
-		Intent SMSIntent = new Intent(Intent.ACTION_VIEW);
-		SMSIntent.putExtra("sms_body", smsText);
-		SMSIntent.setType("vnd.android-dir/mms-sms");
-		startActivity(SMSIntent);
+		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+		smsIntent.putExtra("sms_body", smsText);
+		smsIntent.setType("vnd.android-dir/mms-sms");
+		startActivity(smsIntent);
 	}
 
 	private void callTicTacToeHelp() {

@@ -1,6 +1,10 @@
 package com.wiley.fordummies.androidsdk.tictactoe.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -8,9 +12,12 @@ import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrApi;
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrResponse;
 import com.wiley.fordummies.androidsdk.tictactoe.api.PhotoResponse;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,6 +69,34 @@ public class FlickrFetchr {
 		});
 
 		return responseLiveData;
+	}
+
+	@WorkerThread
+	public Bitmap fetchPhoto(String url) {
+		Bitmap bitmap = null;
+		InputStream inputStream = null;
+		try {
+			Response<ResponseBody> response = mFlickrApi.fetchUrlBytes(url).execute();
+			ResponseBody body = response.body();
+
+			if (body != null) {
+				inputStream = body.byteStream();
+				bitmap = BitmapFactory.decodeStream(inputStream);
+				Timber.tag(TAG).i("Decoded bitmap " + bitmap + " from Response " + response);
+			}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return bitmap;
 	}
 }
 

@@ -19,8 +19,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
-import java.util.Objects;
-
 import timber.log.Timber;
 
 /**
@@ -63,7 +61,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 		Context ctx = requireContext();
 		ConnectivityManager connectivityManager =
 				(ConnectivityManager) ctx.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-		return Objects.requireNonNull(connectivityManager).isDefaultNetworkActive();
+		return connectivityManager.isDefaultNetworkActive();
     }
 
     private void launchBrowser() {
