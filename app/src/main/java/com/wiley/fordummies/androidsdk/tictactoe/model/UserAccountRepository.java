@@ -21,7 +21,7 @@ public class UserAccountRepository {
 
 	private final String TAG = getClass().getSimpleName();
 
-	UserAccountRepository(Application application) {
+	public UserAccountRepository(Application application) {
 		UserAccountDatabase db = UserAccountDatabase.getDatabase(application);
 		mUserAccountDao = db.getUserAccountDao();
 		mAllUserAccounts = mUserAccountDao.getAllUserAccounts();
@@ -29,17 +29,17 @@ public class UserAccountRepository {
 
 	// Room executes all queries on a separ ate thread.
 	// Observed LiveData notify the observer upon data change.
-	LiveData<List<UserAccount>> getAllUserAccounts() {
+	public LiveData<List<UserAccount>> getAllUserAccounts() {
 		return mAllUserAccounts;
 	}
 
-	LiveData<UserAccount> findUserAccountByName(UserAccount userAccount) {
+	public LiveData<UserAccount> findUserAccountByName(UserAccount userAccount) {
 		return mUserAccountDao.findByName(userAccount.getName(), userAccount.getPassword());
 	}
 
 	// You MUST call this on a non-UI thread or the app will throw an exception.
 	// I'm passing a Runnable object to the database.
-	void insert(UserAccount userAccount) {
+	public void insert(UserAccount userAccount) {
 		UserAccountDatabase.databaseWriteExecutor.execute(() ->
 				mUserAccountDao.insert(userAccount));
 	}

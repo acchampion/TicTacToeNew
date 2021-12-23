@@ -43,7 +43,7 @@
 		</provider>
 
 		<activity
-			android:name=".ui.SplashScreenActivity"
+			android:name=".ui.activity.SplashScreenActivity"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -51,48 +51,48 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".ui.LoginActivity"
+			android:name=".ui.activity.LoginActivity"
 			android:exported="false">
 			<intent-filter>
 				<action android:name="com.wiley.fordummies.androidsdk.tictactoe.Login" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".ui.AccountActivity" />
-		<activity android:name=".ui.GameOptionsActivity" />
+		<activity android:name=".ui.activity.AccountActivity" />
+		<activity android:name=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.PhotoGalleryActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.PhotoGalleryActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.MapsActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.MapsActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.AudioActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.AudioActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.VideoActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.VideoActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.ImagesActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.ImagesActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.SettingsActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.SettingsActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.HelpActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.HelpActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.HelpWebViewActivity"
-			android:parentActivityName=".ui.HelpActivity" />
+			android:name=".ui.activity.HelpWebViewActivity"
+			android:parentActivityName=".ui.activity.HelpActivity" />
 		<activity
-			android:name=".ui.SensorsActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.SensorsActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.ContactsActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.ContactsActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.GameSessionActivity"
-			android:parentActivityName=".ui.GameOptionsActivity" />
+			android:name=".ui.activity.GameSessionActivity"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 
 		<service
 			android:name=".MediaPlaybackService"

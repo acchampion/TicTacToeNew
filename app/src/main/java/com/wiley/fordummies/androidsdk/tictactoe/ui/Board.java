@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
+import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.GameSessionActivity;
 
 import timber.log.Timber;
 
