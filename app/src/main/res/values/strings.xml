@@ -84,5 +84,7 @@
 	<string name="select_picture">Select Picture</string>
 	<string name="select_video">Select Video</string>
     <string name="photo_gallery">Photo Gallery</string>
+    <string name="search">Search</string>
+	<string name="clear_search">Clear Search</string>
 
 </resources>

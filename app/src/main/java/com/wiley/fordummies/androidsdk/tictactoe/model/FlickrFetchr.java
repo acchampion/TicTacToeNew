@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrApi;
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrResponse;
+import com.wiley.fordummies.androidsdk.tictactoe.api.PhotoInterceptor;
 import com.wiley.fordummies.androidsdk.tictactoe.api.PhotoResponse;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,20 +29,29 @@ import timber.log.Timber;
 
 public class FlickrFetchr {
 
+	private PhotoInterceptor mPhotoInterceptor;
+	private OkHttpClient mClient;
 	private FlickrApi mFlickrApi;
 	private Retrofit mRetrofit;
 
 	private final String TAG = getClass().getSimpleName();
 
 	public FlickrFetchr() {
+		mPhotoInterceptor = new PhotoInterceptor();
+		mClient = new OkHttpClient.Builder()
+				.addInterceptor(mPhotoInterceptor)
+				.build();
+
 		mRetrofit = new Retrofit.Builder()
 				.baseUrl("https://api.flickr.com/")
 				.addConverterFactory(GsonConverterFactory.create())
+				.client(mClient)
 				.build();
+
 		mFlickrApi = mRetrofit.create(FlickrApi.class);
 	}
 
-	public LiveData<List<GalleryItem>> fetchPhotos() {
+	public LiveData<List<GalleryItem>> fetchPhotosOld() {
 		MutableLiveData<List<GalleryItem>> responseLiveData = new MutableLiveData<>();
 		Call<FlickrResponse> flickrRequest = mFlickrApi.fetchPhotos();
 
@@ -97,6 +108,43 @@ public class FlickrFetchr {
 		}
 
 		return bitmap;
+	}
+
+	public LiveData<List<GalleryItem>> fetchPhotos() {
+		return fetchPhotoMetadata(mFlickrApi.fetchPhotos());
+	}
+
+	public LiveData<List<GalleryItem>> searchPhotos(String query) {
+		return fetchPhotoMetadata(mFlickrApi.searchPhotos(query));
+	}
+
+	private LiveData<List<GalleryItem>> fetchPhotoMetadata(Call<FlickrResponse> flickrRequest) {
+		MutableLiveData<List<GalleryItem>> responseLiveData = new MutableLiveData<>();
+		flickrRequest.enqueue(new Callback<>() {
+			@Override
+			public void onResponse(@NonNull Call<FlickrResponse> call, @NonNull Response<FlickrResponse> response) {
+				Timber.tag(TAG).d("Response received");
+				FlickrResponse flickrResponse = response.body();
+				if (flickrResponse != null) {
+					PhotoResponse photoResponse = flickrResponse.getPhotos();
+					List<GalleryItem> galleryItems = photoResponse.getGalleryItems();
+					List<GalleryItem> validGalleryItems = new ArrayList<>();
+					for (GalleryItem item: galleryItems) {
+						if (item.getUrl() != null) {
+							validGalleryItems.add(item);
+						}
+					}
+					responseLiveData.setValue(validGalleryItems);
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<FlickrResponse> call, @NonNull Throwable t) {
+				Timber.tag(TAG).e(t, "Failed to fetch photos");
+			}
+		});
+
+		return responseLiveData;
 	}
 }
 

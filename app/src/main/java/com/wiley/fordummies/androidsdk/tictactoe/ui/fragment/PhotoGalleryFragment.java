@@ -6,16 +6,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -23,11 +26,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
-import com.wiley.fordummies.androidsdk.tictactoe.model.viewmodel.PhotoGalleryViewModel;
 import com.wiley.fordummies.androidsdk.tictactoe.model.ThumbnailDownloader;
+import com.wiley.fordummies.androidsdk.tictactoe.model.viewmodel.PhotoGalleryViewModel;
 
 import java.util.List;
 import java.util.Objects;
+
+import timber.log.Timber;
 
 public class PhotoGalleryFragment extends Fragment {
 
@@ -44,6 +49,7 @@ public class PhotoGalleryFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		setRetainInstance(true);
+		setHasOptionsMenu(true);
 
 		Activity activity = requireActivity();
 		mPhotoGalleryViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(PhotoGalleryViewModel.class);
@@ -78,13 +84,10 @@ public class PhotoGalleryFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mPhotoGalleryViewModel.getGalleryItemLiveData().observe(getViewLifecycleOwner(),
-				new Observer<List<GalleryItem>>() {
-					@Override
-					public void onChanged(List<GalleryItem> galleryItems) {
-						PhotoAdapter adapter = new PhotoAdapter(galleryItems);
-						adapter.notifyDataSetChanged();
-						mPhotoRecyclerView.setAdapter(adapter);
-					}
+				galleryItems -> {
+					PhotoAdapter adapter = new PhotoAdapter(galleryItems);
+					adapter.notifyDataSetChanged();
+					mPhotoRecyclerView.setAdapter(adapter);
 				});
 
 	}
@@ -99,6 +102,44 @@ public class PhotoGalleryFragment extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 		mLifecycle.removeObserver(mThumbnailDownloader.mFragmentLifecycleObserver);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_photo_gallery, menu);
+
+		MenuItem searchItem = menu.findItem(R.id.menu_item_search);
+		final SearchView searchView = (SearchView) searchItem.getActionView();
+
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				Timber.tag(TAG).d("QueryTextSubmit: %s", query);
+				mPhotoGalleryViewModel.fetchPhotos(query);
+				return true;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				Timber.tag(TAG).d("QueryTextChange: %s", newText);
+				return false;
+			}
+		});
+
+		searchView.setOnSearchClickListener(v ->
+				searchView.setQuery(mPhotoGalleryViewModel.getSearchTerm(), false));
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+		final int menuItemId = item.getItemId();
+		if (menuItemId == R.id.menu_item_clear) {
+			mPhotoGalleryViewModel.fetchPhotos();
+			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private static class PhotoHolder extends RecyclerView.ViewHolder {

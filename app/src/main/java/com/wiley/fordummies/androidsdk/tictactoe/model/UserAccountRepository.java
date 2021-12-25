@@ -27,7 +27,7 @@ public class UserAccountRepository {
 		mAllUserAccounts = mUserAccountDao.getAllUserAccounts();
 	}
 
-	// Room executes all queries on a separ ate thread.
+	// Room executes all queries on a separate thread.
 	// Observed LiveData notify the observer upon data change.
 	public LiveData<List<UserAccount>> getAllUserAccounts() {
 		return mAllUserAccounts;

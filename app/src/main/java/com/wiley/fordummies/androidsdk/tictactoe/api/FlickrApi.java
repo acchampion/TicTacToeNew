@@ -5,6 +5,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.BuildConfig;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface FlickrApi {
@@ -21,4 +22,7 @@ public interface FlickrApi {
 
 	@GET()
 	public Call<ResponseBody> fetchUrlBytes(@Url String url);
+
+	@GET("services/rest/?method=flickr.photos.search")
+	public Call<FlickrResponse> searchPhotos(@Query("text") String query);
 }
