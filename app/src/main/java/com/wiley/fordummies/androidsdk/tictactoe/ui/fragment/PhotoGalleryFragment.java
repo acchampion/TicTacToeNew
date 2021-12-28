@@ -1,6 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,26 +16,37 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
+import com.wiley.fordummies.androidsdk.tictactoe.VisibleFragment;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
-import com.wiley.fordummies.androidsdk.tictactoe.model.ThumbnailDownloader;
+import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
 import com.wiley.fordummies.androidsdk.tictactoe.model.viewmodel.PhotoGalleryViewModel;
+import com.wiley.fordummies.androidsdk.tictactoe.network.PollWorker;
+import com.wiley.fordummies.androidsdk.tictactoe.network.ThumbnailDownloader;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
-public class PhotoGalleryFragment extends Fragment {
+public class PhotoGalleryFragment extends VisibleFragment {
 
 	private PhotoGalleryViewModel mPhotoGalleryViewModel;
 	private RecyclerView mPhotoRecyclerView;
@@ -43,6 +55,7 @@ public class PhotoGalleryFragment extends Fragment {
 	private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
 
 	private final String TAG = getClass().getSimpleName();
+	private final String POLL_WORK = "POLL_WORK";
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +91,22 @@ public class PhotoGalleryFragment extends Fragment {
 		mLifecycle.addObserver(mThumbnailDownloader.mViewLifecycleObserver);
 
 		return view;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Timber.tag(TAG).d("onResume()");
+		try {
+			AppCompatActivity activity = (AppCompatActivity) requireActivity();
+			ActionBar actionBar = activity.getSupportActionBar();
+
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.photo_gallery));
+			}
+		} catch (NullPointerException npe) {
+			Timber.tag(TAG).e("Could not set subtitle");
+		}
 	}
 
 	@Override
@@ -129,6 +158,17 @@ public class PhotoGalleryFragment extends Fragment {
 
 		searchView.setOnSearchClickListener(v ->
 				searchView.setQuery(mPhotoGalleryViewModel.getSearchTerm(), false));
+
+		MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
+		boolean isPolling = QueryPreferences.isPolling(requireContext());
+		int toggleItemTitle;
+
+		if (isPolling) {
+			toggleItemTitle = R.string.stop_polling;
+		} else {
+			toggleItemTitle = R.string.start_polling;
+		}
+		toggleItem.setTitle(toggleItemTitle);
 	}
 
 	@Override
@@ -137,21 +177,57 @@ public class PhotoGalleryFragment extends Fragment {
 		if (menuItemId == R.id.menu_item_clear) {
 			mPhotoGalleryViewModel.fetchPhotos();
 			return true;
+		} else if (menuItemId == R.id.menu_item_toggle_polling) {
+			boolean isPolling = QueryPreferences.isPolling(requireContext());
+			if (isPolling) {
+				WorkManager.getInstance(requireContext()).cancelUniqueWork(POLL_WORK);
+				QueryPreferences.setPolling(requireContext(), false);
+			} else {
+				Constraints constraints = new Constraints.Builder()
+						.setRequiredNetworkType(NetworkType.UNMETERED)
+						.build();
+				PeriodicWorkRequest periodicRequest =
+						new PeriodicWorkRequest.Builder(PollWorker.class, 15, TimeUnit.MINUTES)
+								.setConstraints(constraints)
+								.build();
+				WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(POLL_WORK,
+						ExistingPeriodicWorkPolicy.KEEP,
+						periodicRequest);
+				QueryPreferences.setPolling(requireContext(), true);
+			}
+			requireActivity().invalidateOptionsMenu();
+			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private static class PhotoHolder extends RecyclerView.ViewHolder {
+	private class PhotoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		private final ImageView mItemImageView;
+		private GalleryItem mGalleryItem;
 
 		public PhotoHolder(LayoutInflater inflater, ViewGroup parent) {
 			super(inflater.inflate(R.layout.list_item_gallery, parent, false));
 			mItemImageView = itemView.findViewById(R.id.photo_info);
+			itemView.setOnClickListener(this);
 		}
 
 		public void bindDrawable(Drawable drawable) {
 			mItemImageView.setImageDrawable(drawable);
+		}
+
+		public void bindGalleryItem(GalleryItem item) {
+			mGalleryItem = item;
+		}
+
+		@Override
+		public void onClick(View v) {
+			Context context = requireContext();
+			CustomTabsIntent intent = new CustomTabsIntent.Builder()
+					.setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
+					.setShowTitle(true)
+					.build();
+			intent.launchUrl(context, mGalleryItem.getPhotoPageUri());
 		}
 	}
 
@@ -172,6 +248,7 @@ public class PhotoGalleryFragment extends Fragment {
 		@Override
 		public void onBindViewHolder(@NonNull PhotoHolder holder, int position) {
 			GalleryItem galleryItem = mGalleryItems.get(position);
+			holder.bindGalleryItem(galleryItem);
 			Drawable placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder);
 			holder.bindDrawable(placeholder);
 			mThumbnailDownloader.queueThumbnail(holder, galleryItem.getUrl());

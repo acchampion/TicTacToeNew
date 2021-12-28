@@ -44,11 +44,13 @@ ext {
 	// AndroidX Jetpack components
 	activity_version = "1.4.0"
 	appcompat_version = "1.4.0"
+	browser_version = "1.4.0"
 	constraint_version = "2.1.2"
 	lifecycle_version = "2.4.0"
 	recyclerview_version = "1.2.1"
 	preference_version = "1.1.1"
 	room_version = "2.4.0"
+	work_version = "2.7.1"
 	test_version = "1.4.0"
 
 	// Timber and LeakCanary versions

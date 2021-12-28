@@ -1,4 +1,4 @@
-package com.wiley.fordummies.androidsdk.tictactoe.model;
+package com.wiley.fordummies.androidsdk.tictactoe.network;
 
 import android.graphics.Bitmap;
 import android.os.Handler;

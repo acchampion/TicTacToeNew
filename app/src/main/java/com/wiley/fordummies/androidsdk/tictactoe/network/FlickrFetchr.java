@@ -1,4 +1,4 @@
-package com.wiley.fordummies.androidsdk.tictactoe.model;
+package com.wiley.fordummies.androidsdk.tictactoe.network;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +12,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrApi;
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrResponse;
 import com.wiley.fordummies.androidsdk.tictactoe.api.PhotoInterceptor;
 import com.wiley.fordummies.androidsdk.tictactoe.api.PhotoResponse;
+import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,10 +30,10 @@ import timber.log.Timber;
 
 public class FlickrFetchr {
 
-	private PhotoInterceptor mPhotoInterceptor;
-	private OkHttpClient mClient;
-	private FlickrApi mFlickrApi;
-	private Retrofit mRetrofit;
+	private final PhotoInterceptor mPhotoInterceptor;
+	private final OkHttpClient mClient;
+	private final FlickrApi mFlickrApi;
+	private final Retrofit mRetrofit;
 
 	private final String TAG = getClass().getSimpleName();
 
@@ -49,6 +50,10 @@ public class FlickrFetchr {
 				.build();
 
 		mFlickrApi = mRetrofit.create(FlickrApi.class);
+	}
+
+	public Call<FlickrResponse> fetchPhotosRequest() {
+		return mFlickrApi.fetchPhotos();
 	}
 
 	public LiveData<List<GalleryItem>> fetchPhotosOld() {
@@ -111,11 +116,17 @@ public class FlickrFetchr {
 	}
 
 	public LiveData<List<GalleryItem>> fetchPhotos() {
-		return fetchPhotoMetadata(mFlickrApi.fetchPhotos());
+		// return fetchPhotoMetadata(mFlickrApi.fetchPhotos());
+		return fetchPhotoMetadata(fetchPhotosRequest());
+	}
+
+	public Call<FlickrResponse> searchPhotosRequest(String query) {
+		return mFlickrApi.searchPhotos(query);
 	}
 
 	public LiveData<List<GalleryItem>> searchPhotos(String query) {
-		return fetchPhotoMetadata(mFlickrApi.searchPhotos(query));
+		// return fetchPhotoMetadata(mFlickrApi.searchPhotos(query));
+		return fetchPhotoMetadata(searchPhotosRequest(query));
 	}
 
 	private LiveData<List<GalleryItem>> fetchPhotoMetadata(Call<FlickrResponse> flickrRequest) {

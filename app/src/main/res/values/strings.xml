@@ -3,6 +3,7 @@
     <string name="about_tictactoe_wikipedia">About Tic-Tac-Toe (Wikipedia)</string>
     <string name="help_text">"Tic-Tac-Toe is a two-player game. Each player claims one of two symbols – “O” or “X” – and attempts to alternately place their symbol in empty locations in a 3×3 grid, so as to get three of the same symbol adjacent to each other in a straight line – either in a row or column, or across a diagonal. "</string>
     <string name="permission_launch_activity">"This permission allows launching an activity in this application "</string>
+	<string name="permission_show_notification">This permission allows notifications about new photos.</string>
 
     <!-- UI Text -->
     <string name="sources_title">Sources</string>
@@ -84,7 +85,13 @@
 	<string name="select_picture">Select Picture</string>
 	<string name="select_video">Select Video</string>
     <string name="photo_gallery">Photo Gallery</string>
+
     <string name="search">Search</string>
 	<string name="clear_search">Clear Search</string>
+    <string name="notification_channel_name">FlickrFetchr</string>
+	<string name="new_pictures_title">New PhotoGallery Pictures</string>
+	<string name="new_pictures_text">You have new pictures in PhotoGallery.</string>
+	<string name="start_polling">Start polling</string>
+	<string name="stop_polling">Stop polling</string>
 
 </resources>

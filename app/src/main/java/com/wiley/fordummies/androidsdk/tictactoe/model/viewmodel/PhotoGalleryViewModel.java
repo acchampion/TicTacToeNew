@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.wiley.fordummies.androidsdk.tictactoe.model.FlickrFetchr;
+import com.wiley.fordummies.androidsdk.tictactoe.network.FlickrFetchr;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
 import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
 

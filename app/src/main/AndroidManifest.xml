@@ -8,11 +8,18 @@
 		android:description="@string/permission_launch_activity"
 		android:label="Launch Tic-Tac-Toe Activity"
 		android:protectionLevel="normal" />
+	<permission
+		android:name="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE"
+		android:description="@string/permission_show_notification"
+		android:label="New Photo Notification"
+		android:protectionLevel="signature" />
 
 	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.LAUNCHACTIVITY" />
+	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE" />
 	<uses-permission android:name="android.permission.READ_CONTACTS" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 	<uses-permission android:name="android.permission.CALL_PHONE" />
@@ -41,6 +48,14 @@
 				android:name="android.support.FILE_PROVIDER_PATHS"
 				android:resource="@xml/provider_paths" />
 		</provider>
+
+		<!-- If you want to disable android.startup completely. -->
+		<provider
+			android:name="androidx.startup.InitializationProvider"
+			android:authorities="${applicationId}.androidx-startup"
+			tools:node="remove">
+		</provider>
+
 
 		<activity
 			android:name=".ui.activity.SplashScreenActivity"
@@ -101,6 +116,14 @@
 		<service
 			android:name="com.mapbox.android.telemetry.MapboxTelemetryService"
 			android:exported="false" />
+
+		<receiver android:name=".NotificationReceiver"
+			android:permission="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE"
+			android:exported="false">
+			<intent-filter android:priority="-999">
+				<action android:name="com.wiley.fordummies.androidsdk.tictactoe.SHOW_NOTIFICATION" />
+			</intent-filter>
+		</receiver>
 	</application>
 
 </manifest>

@@ -1,5 +1,9 @@
 package com.wiley.fordummies.androidsdk.tictactoe.model;
 
+import android.net.Uri;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
@@ -14,12 +18,19 @@ public class GalleryItem {
 	@SerializedName("url_s")
 	private String mUrl = "";
 
-	public GalleryItem(String title, String id, String url) {
+	@SerializedName("owner")
+	private String mOwner = "";
+
+	public GalleryItem(String title, String id, String url, String owner) {
 		mTitle = title;
 		mId = id;
 
 		if (url != null) {
-			mUrl = null;
+			mUrl = url;
+		}
+
+		if (owner != null) {
+			mOwner = owner;
 		}
 	}
 
@@ -47,6 +58,18 @@ public class GalleryItem {
 		this.mUrl = url;
 	}
 
+	public String getOwner() { return mOwner; }
+
+	public void setOwner(String owner) { this.mOwner = owner; }
+
+	public Uri getPhotoPageUri() {
+		return Uri.parse("https://www.flickr.com/photos/")
+				.buildUpon()
+				.appendPath(mOwner)
+				.appendPath(mId)
+				.build();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -61,6 +84,7 @@ public class GalleryItem {
 	}
 
 	@Override
+	@NonNull
 	public String toString() {
 		return "GalleryItem{" +
 				"mTitle='" + mTitle + '\'' +
