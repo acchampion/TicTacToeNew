@@ -94,10 +94,7 @@ public class GameSessionFragment extends Fragment {
 		mContainer = container;
 		setRetainInstance(true);
 
-		if (savedInstanceState != null) {
-			mScorePlayerOne = savedInstanceState.getInt(SCOREPLAYERONEKEY);
-			mScorePlayerTwo = savedInstanceState.getInt(SCOREPLAYERTWOKEY);
-		}
+		loadGameFromPrefs();
 
 		setupBoard(v);
 
@@ -248,6 +245,30 @@ public class GameSessionFragment extends Fragment {
 		abandonGameDialogFragment.show(fm, "abandon_game");
 	}
 
+	private void loadGameFromPrefs() {
+		Context appCtx = requireContext().getApplicationContext();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appCtx);
+		mScorePlayerOne = prefs.getInt(SCOREPLAYERONEKEY, 0);
+		mScorePlayerTwo = prefs.getInt(SCOREPLAYERTWOKEY, 0);
+	}
+
+	private void saveScoresToPrefs() {
+		Context appCtx = requireContext().getApplicationContext();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appCtx);
+		SharedPreferences.Editor editor = prefs.edit();
+		String gameStr;
+		if (mActiveGame == null) {
+			gameStr = "";
+		} else {
+			gameStr = mActiveGame.toString();
+		}
+
+		editor.putInt(SCOREPLAYERONEKEY, mScorePlayerOne);
+		editor.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo);
+		editor.putString(GAMEKEY, gameStr);
+		editor.apply();
+	}
+
 	private void proceedToFinish() {
 		String winningPlayerName;
 		String alertMessage;
@@ -256,6 +277,7 @@ public class GameSessionFragment extends Fragment {
 			alertMessage = winningPlayerName + " Wins!";
 			mGameView.setGameStatus(alertMessage);
 			accumulateScores(winningPlayerName);
+			saveScoresToPrefs();
 
 			mGameView.showScores(mFirstPlayerName, mScorePlayerOne, mSecondPlayerName, mScorePlayerTwo);
 
@@ -272,6 +294,7 @@ public class GameSessionFragment extends Fragment {
 				.setMessage("Play another game?")
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setPositiveButton("Yes", (dialog, which) -> {
+					saveScoresToPrefs();
 					LayoutInflater inflater = LayoutInflater.from(activity);
 					if (mContainer != null) {
 						Timber.tag(TAG).d("Calling setupBoard() again");
@@ -290,7 +313,13 @@ public class GameSessionFragment extends Fragment {
 					}
 					playNewGame();
 				})
-				.setNegativeButton("No", (dialog, which) -> activity.finish())
+				.setNegativeButton("No", (dialog, which) -> {
+					mScorePlayerOne = 0;
+					mScorePlayerTwo = 0;
+					mActiveGame = null;
+					saveScoresToPrefs();
+					activity.finish();
+				})
 				.show();
 
 	}
@@ -367,14 +396,12 @@ public class GameSessionFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
-		Bundle instanceState;
-
-		instanceState = outState;
-		// Save session score
-		instanceState.putInt(SCOREPLAYERONEKEY, mScorePlayerOne);
-		instanceState.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo);
-		// Save turn
-		instanceState.putString(GAMEKEY, mActiveGame.toString());
+		/*if (outState != null) {
+			outState.putInt(SCOREPLAYERONEKEY, mScorePlayerOne);
+			outState.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo);
+			// Save turn
+			outState.putString(GAMEKEY, mActiveGame.toString());
+		}*/
 		//Save board
 	}
 
