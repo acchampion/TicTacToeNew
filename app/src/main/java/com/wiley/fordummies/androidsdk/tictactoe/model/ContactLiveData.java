@@ -12,12 +12,14 @@ import androidx.lifecycle.LiveData;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * LiveData class that encapsulates the results of fetching contacts' names.
  *
  *
  *
- * Created by accc on 2021/08/09.
+ * Created by acc on 2021/08/09.
  */
 public class ContactLiveData extends LiveData<List<Contact>> {
 	private final Context mContext;
@@ -33,10 +35,11 @@ public class ContactLiveData extends LiveData<List<Contact>> {
 	 * Defines an array that contains column names to move from
 	 * the Cursor to the ListView.
 	 */
-	private final static String[] FROM_COLUMNS = {
+	/*private final static String[] FROM_COLUMNS = {
 			ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
-	};
+	};*/
 
+	private final String TAG = getClass().getSimpleName();
 
 	public ContactLiveData(Context context) {
 		mContext = context;
@@ -65,11 +68,16 @@ public class ContactLiveData extends LiveData<List<Contact>> {
 						int position = cursor.getPosition();
 						while (position < count) {
 							if (cursor.getColumnCount() > 1) {
-								String contactName = cursor.getString(cursor.getColumnIndex("display_name"));
-								Contact contact = new Contact(contactName);
-								contactList.add(contact);
-								cursor.moveToNext();
-								position = cursor.getPosition();
+								int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+								if (nameIndex >= 0) {
+									String contactName = cursor.getString(nameIndex);
+									Contact contact = new Contact(contactName);
+									contactList.add(contact);
+									cursor.moveToNext();
+									position = cursor.getPosition();
+								} else {
+									Timber.tag(TAG).e("Invalid column index");
+								}
 							}
 						}
 					}
