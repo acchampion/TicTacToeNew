@@ -43,7 +43,7 @@ public class UserAccountViewModel extends AndroidViewModel {
 		return mRepository.findUserAccountByName(userAccount);
 	}
 
-	public LiveData<List<UserAccount>> getAllUserAccounts() { return mAllUserAccounts; }
+	public LiveData<List<UserAccount>> getAllUserAccounts() { return mRepository.getAllUserAccounts(); }
 
 	public void insert(UserAccount userAccount) {
 		mRepository.insert(userAccount);
