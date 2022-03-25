@@ -93,7 +93,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener {
 
 
     private String getSensorDescription(Sensor sensor) {
-		return String.format(Locale.getDefault(), "Sensor: %s; Version: %d; Range: %f; Power: %f; Res: %f",
+		return String.format(Locale.getDefault(), "Sensor: %s \n Version: %d \n Range: %f \n Power: %f \n Res: %f",
 				sensor.getName(), sensor.getVersion(), sensor.getMaximumRange(),
 				sensor.getPower(), sensor.getResolution());
     }

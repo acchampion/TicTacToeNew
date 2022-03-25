@@ -25,7 +25,6 @@ import androidx.fragment.app.Fragment;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
-import java.util.Objects;
 
 import timber.log.Timber;
 
@@ -97,7 +96,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 		final String videoFilePath = videoDir.getPath() + File.separator + "sample_video.mp4";
 		File videoFile = new File(videoFilePath);
 
-		if (Objects.requireNonNull(videoFile).exists()) {
+		if (videoFile.exists()) {
 			mVideoFileUri = Uri.fromFile(videoFile);
 		} else {
 			// Video file doesn't exist, so load sample video from resources.

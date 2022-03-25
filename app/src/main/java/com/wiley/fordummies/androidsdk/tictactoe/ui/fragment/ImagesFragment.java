@@ -42,7 +42,9 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	ActivityResultLauncher<Void> mCapturePhotoLaunch = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(),
 			result -> {
 				mBitmapLiveData.setValue(result);
-				mImageView.setImageBitmap(mBitmapLiveData.getValue());
+				Runnable runnable = () -> mImageView.setImageBitmap(mBitmapLiveData.getValue());
+				runnable.run();
+				//mImageView.setImageBitmap(mBitmapLiveData.getValue());
 			});
 
 	ActivityResultLauncher<String> mPickImageResult = registerForActivityResult(new ActivityResultContracts.GetContent(),

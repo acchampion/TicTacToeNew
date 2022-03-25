@@ -1,6 +1,5 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -48,8 +47,8 @@ public class SplashScreenFragment extends Fragment implements View.OnTouchListen
                 } catch (InterruptedException e) {
                     // do nothing
                 } finally {
-                    Activity activity = requireActivity();
-					activity.finish();
+                    // Activity activity = requireActivity();
+					// activity.finish();
 					startActivity(new Intent("com.wiley.fordummies.androidsdk.tictactoe.Login"));
                 }
             }

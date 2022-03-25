@@ -17,7 +17,8 @@ public class TicTacToeApplication extends Application implements Configuration.P
 	public void onCreate() {
 		super.onCreate();
 		if (BuildConfig.DEBUG) {
-			Timber.plant(new Timber.DebugTree());
+			Timber.DebugTree debugTree = new Timber.DebugTree();
+			Timber.plant(debugTree);
 		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

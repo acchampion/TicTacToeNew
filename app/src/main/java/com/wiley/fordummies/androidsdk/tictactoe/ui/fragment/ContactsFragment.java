@@ -57,14 +57,12 @@ public class ContactsFragment extends Fragment {
 						// The user denied permission to read contacts, so show them a message.
 						Timber.tag(TAG).e("Error: Permission denied to read contacts");
 
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-							if (lacksReadContactPermission()) {
-								AppCompatActivity activity = (AppCompatActivity) requireActivity();
-								FragmentManager fm = activity.getSupportFragmentManager();
-								ContactPermissionDeniedDialogFragment dialogFragment =
-										new ContactPermissionDeniedDialogFragment();
-								dialogFragment.show(fm, "contact_perm_denied");
-							}
+						if (lacksReadContactPermission()) {
+							AppCompatActivity activity = (AppCompatActivity) requireActivity();
+							FragmentManager fm = activity.getSupportFragmentManager();
+							ContactPermissionDeniedDialogFragment dialogFragment =
+									new ContactPermissionDeniedDialogFragment();
+							dialogFragment.show(fm, "contact_perm_denied");
 						}
 					}
 				}
@@ -116,12 +114,8 @@ public class ContactsFragment extends Fragment {
 
 	private void requestContacts() {
 		Timber.tag(TAG).d("requestContacts()");
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			if (lacksReadContactPermission()) {
-				mActivityResult.launch(Manifest.permission.READ_CONTACTS);
-			} else {
-				showContacts();
-			}
+		if (lacksReadContactPermission()) {
+			mActivityResult.launch(Manifest.permission.READ_CONTACTS);
 		} else {
 			showContacts();
 		}

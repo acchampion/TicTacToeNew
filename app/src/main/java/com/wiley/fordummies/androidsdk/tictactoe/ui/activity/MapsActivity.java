@@ -192,14 +192,10 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 
 	private void requestLocation() {
 		Timber.tag(TAG).d("requestLocation()");
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			if (lacksLocationPermission()) {
-				int PERMISSION_REQUEST_LOCATION = 1;
-				requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-						PERMISSION_REQUEST_LOCATION);
-			} else {
-				doRequestLocation();
-			}
+		if (lacksLocationPermission()) {
+			int PERMISSION_REQUEST_LOCATION = 1;
+			requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+					PERMISSION_REQUEST_LOCATION);
 		} else {
 			doRequestLocation();
 		}
@@ -218,9 +214,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 	}
 
 	private void doRequestLocation() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			mLocationEngine = initializeLocationEngine();
-		}
+		mLocationEngine = initializeLocationEngine();
 	}
 
 	@SuppressLint("MissingPermission")
@@ -273,7 +267,7 @@ public class MapsActivity extends AppCompatActivity implements LocationEngineCal
 			final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			if (manager != null) {
 				if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-					Toast.makeText(getApplicationContext(), "Please turn on GPS in the Settings app", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "Please enable your location in the Settings app", Toast.LENGTH_LONG).show();
 					Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 					startActivityForResult(intent, ENABLE_GPS_REQUEST_CODE);
 				}

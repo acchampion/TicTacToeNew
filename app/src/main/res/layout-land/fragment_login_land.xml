@@ -5,13 +5,18 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:baselineAligned="false"
-              tools:ignore="MissingDefaultResource">
+	tools:ignore="MissingDefaultResource">
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="300dp"
         android:layout_height="match_parent">
+<!--		<androidx.fragment.app.FragmentContainerView-->
+<!--			android:layout_width="300dp"-->
+<!--			android:layout_height="match_parent"-->
+<!--			android:layout_margin="8dp"-->
+<!--			tools:layout="@layout/fragment_login" />-->
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -65,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+
     </ScrollView>
 
 	<ScrollView

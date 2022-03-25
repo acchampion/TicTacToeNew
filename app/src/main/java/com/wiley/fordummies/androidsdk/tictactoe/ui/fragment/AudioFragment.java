@@ -5,7 +5,6 @@ import static android.app.Activity.RESULT_OK;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -45,7 +44,8 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 	private final Intent mRecordAudioIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
 	private Button mButtonStart, mButtonStop;
 
-	ActivityResultLauncher<Intent> mRecordAudioResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+	ActivityResultLauncher<Intent> mRecordAudioResult = registerForActivityResult(
+			new ActivityResultContracts.StartActivityForResult(),
 			new ActivityResultCallback<>() {
 				@Override
 				public void onActivityResult(ActivityResult result) {
@@ -59,7 +59,8 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 				}
 			});
 
-	ActivityResultLauncher<String> mPickAudioResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
+	ActivityResultLauncher<String> mPickAudioResult = registerForActivityResult(
+			new ActivityResultContracts.GetContent(),
 			new ActivityResultCallback<>() {
 				@Override
 				public void onActivityResult(Uri result) {
@@ -84,11 +85,11 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 		buttonSelect.setOnClickListener(this);
 
 		// Guard against no audio recorder app (disable the "record" button).
-		final Activity activity = requireActivity();
+		/* final Activity activity = requireActivity();
 		PackageManager packageManager = activity.getPackageManager();
 		if (packageManager.resolveActivity(mRecordAudioIntent, PackageManager.MATCH_DEFAULT_ONLY) == null) {
 			buttonRecord.setEnabled(false);
-		}
+		} */
 
 		return v;
 	}

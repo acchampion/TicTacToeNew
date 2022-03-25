@@ -106,8 +106,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 			LiveData<List<UserAccount>> userAccountListData = mUserAccountViewModel.getAllUserAccounts();
 			List<UserAccount> userAccountList = userAccountListData.getValue();
 
-
-
 			if (Objects.requireNonNull(userAccountList).contains(userAccount)) {
 				// Save username as the name of the player
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
