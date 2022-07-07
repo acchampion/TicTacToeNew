@@ -13,7 +13,7 @@ public class Game {
 
     private String PlayerOneName = null, PlayerTwoName = null;
 
-    private GameGrid gameGrid;
+    private final GameGrid gameGrid;
 
     private int playCount = 0;
 

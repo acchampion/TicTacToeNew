@@ -298,7 +298,6 @@ public class GameSessionFragment extends Fragment {
 					LayoutInflater inflater = LayoutInflater.from(activity);
 					if (mContainer != null) {
 						Timber.tag(TAG).d("Calling setupBoard() again");
-						onSaveInstanceState(mSavedInstanceState);
 						activity.recreate();
 						onCreateView(inflater, mContainer, mSavedInstanceState);
 					}
@@ -396,13 +395,6 @@ public class GameSessionFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
-		/*if (outState != null) {
-			outState.putInt(SCOREPLAYERONEKEY, mScorePlayerOne);
-			outState.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo);
-			// Save turn
-			outState.putString(GAMEKEY, mActiveGame.toString());
-		}*/
-		//Save board
 	}
 
 	public int getPlayCount() {

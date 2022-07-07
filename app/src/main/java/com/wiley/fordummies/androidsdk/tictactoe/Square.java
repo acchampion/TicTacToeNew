@@ -1,8 +1,8 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
 public class Square {
-    private int mX;
-    private int mY;
+    private final int mX;
+    private final int mY;
 
     public Square(int x, int y) {
         this.mX = x;

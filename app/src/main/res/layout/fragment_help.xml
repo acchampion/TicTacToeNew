@@ -51,7 +51,7 @@
             android:text="@string/sources_text"/>
 
         <Button
-            android:id="@+id/button_lookup_wikipedia"
+            android:id="@+id/button_wikipedia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -60,7 +60,7 @@
             android:text="@string/tictactoe_wikipedia" />
 
         <Button
-            android:id="@+id/button_lookup_wikipedia_in_web_view"
+            android:id="@+id/button_wikipedia_webview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"

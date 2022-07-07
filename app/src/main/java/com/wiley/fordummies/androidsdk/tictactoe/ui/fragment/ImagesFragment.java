@@ -1,10 +1,12 @@
 package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
 
 import timber.log.Timber;
 
@@ -41,17 +45,24 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 
 	ActivityResultLauncher<Void> mCapturePhotoLaunch = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(),
 			result -> {
-				mBitmapLiveData.setValue(result);
-				Runnable runnable = () -> mImageView.setImageBitmap(mBitmapLiveData.getValue());
+				Runnable runnable = () -> {
+					mBitmapLiveData.postValue(result);
+					Bitmap bitmap = mBitmapLiveData.getValue();
+					mImageView.setImageBitmap(bitmap);
+				};
 				runnable.run();
-				//mImageView.setImageBitmap(mBitmapLiveData.getValue());
 			});
 
 	ActivityResultLauncher<String> mPickImageResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
 			result -> {
-				String uriString = result.toString();
-				Uri imageUri = Uri.parse(uriString);
-				mImageView.setImageURI(imageUri);
+				final String uriString = result.toString();
+				final Uri imageUri = Uri.parse(uriString);
+				Runnable runnable = () -> {
+					Bitmap bitmap = uriToBitmap(imageUri);
+					mBitmapLiveData.postValue(bitmap);
+					mImageView.setImageURI(imageUri);
+				};
+				runnable.run();
 			});
 
 	@Override
@@ -91,6 +102,12 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		}
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		mBitmapLiveData.setValue(null);
+		mImageView = null;
+	}
 
 	@Override
 	public void onClick(View view) {
@@ -114,5 +131,21 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		} else {
 			Timber.tag(TAG).e("Invalid button click");
 		}
+	}
+
+	private Bitmap uriToBitmap(Uri selectedFileUri) {
+		Bitmap image = null;
+		try {
+			Activity activity = requireActivity();
+			ParcelFileDescriptor parcelFileDescriptor =
+					activity.getContentResolver().openFileDescriptor(selectedFileUri, "r");
+			FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+			image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+
+			parcelFileDescriptor.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return image;
 	}
 }

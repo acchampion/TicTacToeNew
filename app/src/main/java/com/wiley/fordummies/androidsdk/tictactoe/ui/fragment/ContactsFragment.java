@@ -3,7 +3,6 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -121,7 +119,6 @@ public class ContactsFragment extends Fragment {
 		}
 	}
 
-	@RequiresApi(api = Build.VERSION_CODES.M)
 	private boolean lacksReadContactPermission() {
 		Activity activity = requireActivity();
 		return activity.checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED;

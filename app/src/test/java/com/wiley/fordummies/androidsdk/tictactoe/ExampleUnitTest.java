@@ -28,6 +28,7 @@ public class ExampleUnitTest {
     	assert((zip.length() == 5 || zip.length() == 9) && zip.matches("[0-9]+"));
 	}
 
+
 	@Test
 	public void isMalformedZipCodeInvalid() throws Exception {
 		String zip = "XA2 CB3";

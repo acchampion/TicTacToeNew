@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
@@ -106,7 +107,24 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         super.onDetach();
     }
 
-    @Override
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		Timber.tag(TAG).d("onDestroyView()");
+		mEtUsername = null;
+		mEtPassword = null;
+		mEtConfirm = null;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Timber.tag(TAG).d("onDestroy()");
+		final Activity activity = requireActivity();
+		mUserAccountViewModel.getAllUserAccounts().removeObservers((LifecycleOwner) activity);
+	}
+
+	@Override
     public void onClick(View view) {
     	final int viewId = view.getId();
     	if (viewId == R.id.done_button) {

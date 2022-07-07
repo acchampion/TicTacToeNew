@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="com.wiley.fordummies.androidsdk.tictactoe">
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<permission
 		android:name="com.wiley.fordummies.androidsdk.tictactoe.LAUNCHACTIVITY"
@@ -31,9 +30,9 @@
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
-		android:roundIcon="@mipmap/ic_launcher_round"
+		android:roundIcon="@mipmap/ic_launcher"
 		android:supportsRtl="true"
-		android:theme="@style/AppTheme"
+		android:theme="@style/Theme.Splash"
 		tools:node="replace">
 		<uses-library
 			android:name="android.test.runner"
@@ -53,60 +52,69 @@
 		<provider
 			android:name="androidx.startup.InitializationProvider"
 			android:authorities="${applicationId}.androidx-startup"
-			tools:node="remove">
-		</provider>
-
+			tools:node="remove" />
 
 		<activity
-			android:name=".ui.activity.SplashScreenActivity"
-			android:exported="true">
+			android:name=".ui.activity.LoginActivity"
+			android:exported="true"
+			android:theme="@style/Theme.Splash">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activity.LoginActivity"
-			android:exported="false">
 			<intent-filter>
 				<action android:name="com.wiley.fordummies.androidsdk.tictactoe.Login" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".ui.activity.AccountActivity" />
-		<activity android:name=".ui.activity.GameOptionsActivity" />
+		<activity
+			android:name=".ui.activity.AccountActivity"
+			android:theme="@style/AppTheme" />
+		<activity android:name=".ui.activity.GameOptionsActivity"
+			android:theme="@style/AppTheme"/>
 		<activity
 			android:name=".ui.activity.PhotoGalleryActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.MapsActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.AudioActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.VideoActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.ImagesActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.SettingsActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.HelpActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.HelpWebViewActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.HelpActivity" />
 		<activity
 			android:name=".ui.activity.SensorsActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.ContactsActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
 			android:name=".ui.activity.GameSessionActivity"
+			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 
 		<service
@@ -117,9 +125,10 @@
 			android:name="com.mapbox.android.telemetry.MapboxTelemetryService"
 			android:exported="false" />
 
-		<receiver android:name=".NotificationReceiver"
-			android:permission="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE"
-			android:exported="false">
+		<receiver
+			android:name=".NotificationReceiver"
+			android:exported="false"
+			android:permission="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE">
 			<intent-filter android:priority="-999">
 				<action android:name="com.wiley.fordummies.androidsdk.tictactoe.SHOW_NOTIFICATION" />
 			</intent-filter>

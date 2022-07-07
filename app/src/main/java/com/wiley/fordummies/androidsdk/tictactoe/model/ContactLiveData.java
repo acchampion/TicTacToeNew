@@ -30,15 +30,6 @@ public class ContactLiveData extends LiveData<List<Contact>> {
 			ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
 	};
 
-
-	/*
-	 * Defines an array that contains column names to move from
-	 * the Cursor to the ListView.
-	 */
-	/*private final static String[] FROM_COLUMNS = {
-			ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
-	};*/
-
 	private final String TAG = getClass().getSimpleName();
 
 	public ContactLiveData(Context context) {

@@ -69,7 +69,7 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     public void testUI() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
         getInstrumentation().waitForIdleSync();
-        getActivity().runOnUiThread(() -> {
+        mGameSessionActivity.runOnUiThread(() -> {
 			System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
 
 			mBoard.requestFocus();
@@ -81,7 +81,7 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
 				(float) 53.0,
 				0);
 			mBoard.dispatchTouchEvent(newMotionEvent);
-			mGameSessionFragment.scheduleAndroidsTurn(mBoard.onCheckIsTextEditor());
+			mGameSessionFragment.scheduleAndroidsTurn(true);
 			try {
 				Thread.sleep(2000L);
 			} catch (InterruptedException e) {
@@ -95,6 +95,7 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     @Test
     public void testUIThreadTest() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
+		getInstrumentation().waitForIdleSync();
         mBoard.requestFocus();
         int i;
         for (i = 0; i < 3; i++) {
@@ -105,6 +106,7 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
                     y[i],
                     0);
             mBoard.dispatchTouchEvent(newMotionEvent);
+			mGameSessionFragment.scheduleAndroidsTurn(true);
         }
         assertEquals(mGameSessionFragment.getPlayCount(), 1);
     }

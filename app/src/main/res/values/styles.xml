@@ -8,5 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
+	<style name="Theme.Splash" parent="Theme.SplashScreen">
+		<item name="postSplashScreenTheme">@style/AppTheme</item>
+		<item name="windowSplashScreenBackground">@color/background</item>
+		<item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+		<!-- Required for animated icons -->
+		<item name="windowSplashScreenAnimationDuration">200</item>
+	</style>
 
 </resources>

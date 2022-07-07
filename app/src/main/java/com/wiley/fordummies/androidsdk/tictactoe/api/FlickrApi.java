@@ -11,18 +11,18 @@ import retrofit2.http.Url;
 public interface FlickrApi {
 
 	@GET("/")
-	public Call<String> fetchContents();
+	Call<String> fetchContents();
 
 	@GET("services/rest/?method=flickr.interestingness.getList" +
 		"&api_key=" + BuildConfig.FlickrAccessToken +
 	    "&format=json" +
 	    "&nojsoncallback=1" +
 	    "&extras=url_s")
-	public Call<FlickrResponse> fetchPhotos();
+	Call<FlickrResponse> fetchPhotos();
 
 	@GET()
-	public Call<ResponseBody> fetchUrlBytes(@Url String url);
+	Call<ResponseBody> fetchUrlBytes(@Url String url);
 
 	@GET("services/rest/?method=flickr.photos.search")
-	public Call<FlickrResponse> searchPhotos(@Query("text") String query);
+	Call<FlickrResponse> searchPhotos(@Query("text") String query);
 }

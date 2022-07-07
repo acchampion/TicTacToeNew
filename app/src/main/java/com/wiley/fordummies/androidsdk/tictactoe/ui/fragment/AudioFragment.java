@@ -127,6 +127,13 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 		}
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		Timber.tag(TAG).d("onDestroyView()");
+		mButtonStart = null;
+		mButtonStop = null;
+	}
 
 	@Override
 	public void onClick(View view) {

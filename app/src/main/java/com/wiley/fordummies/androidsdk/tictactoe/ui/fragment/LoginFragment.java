@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.preference.PreferenceManager;
@@ -30,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import timber.log.Timber;
 
@@ -44,6 +43,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText mUsernameEditText;
     private EditText mPasswordEditText;
     private UserAccountViewModel mUserAccountViewModel;
+	private final List<UserAccount> mUserAccountList = new CopyOnWriteArrayList<>();
 
     private final String TAG = getClass().getSimpleName();
     private final static String OPT_NAME = "name";
@@ -55,8 +55,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     	Activity activity = requireActivity();
     	mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
     	// Here's a dummy observer object that indicates when the UserAccounts change in the database.
-		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, userAccounts ->
-				Timber.tag(TAG).d("The list of UserAccounts just changed; it has %s elements", userAccounts.size()));
+		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, userAccounts -> {
+			Timber.tag(TAG).d("The list of UserAccounts just changed; it has %s elements", userAccounts.size());
+			mUserAccountList.clear();
+			mUserAccountList.addAll(userAccounts);
+		});
 	}
 
     @Override
@@ -90,7 +93,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
-    private void checkLogin() {
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		Timber.tag(TAG).d("onDestroyView()");
+		mUsernameEditText = null;
+		mPasswordEditText = null;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		final Activity activity = requireActivity();
+		mUserAccountViewModel.getAllUserAccounts().removeObservers((LifecycleOwner) activity);
+	}
+
+	private void checkLogin() {
         final String username = mUsernameEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
 
@@ -103,10 +121,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 			Activity activity = requireActivity();
 
 			UserAccount userAccount = new UserAccount(username, sha256HashStr);
-			LiveData<List<UserAccount>> userAccountListData = mUserAccountViewModel.getAllUserAccounts();
-			List<UserAccount> userAccountList = userAccountListData.getValue();
 
-			if (Objects.requireNonNull(userAccountList).contains(userAccount)) {
+			if (mUserAccountList.contains(userAccount)) {
 				// Save username as the name of the player
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
 				SharedPreferences.Editor editor = settings.edit();
@@ -117,13 +133,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 				startActivity(new Intent(activity, GameOptionsActivity.class));
 				activity.finish();
 			} else {
-				FragmentManager manager = getParentFragmentManager();
-				LoginErrorDialogFragment fragment = new LoginErrorDialogFragment();
-				fragment.show(manager, "login_error");
+				showLoginErrorFragment();
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void showLoginErrorFragment() {
+		FragmentManager manager = getParentFragmentManager();
+		LoginErrorDialogFragment fragment = new LoginErrorDialogFragment();
+		fragment.show(manager, "login_error");
 	}
 
     @Override

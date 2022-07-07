@@ -1,5 +1,7 @@
 package com.wiley.fordummies.androidsdk.tictactoe.api;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
 
@@ -40,7 +42,7 @@ public class PhotoResponse {
 		return Objects.hash(mGalleryItems);
 	}
 
-	@Override
+	@Override @NonNull
 	public String toString() {
 		return "PhotoResponse{" +
 				"mGalleryItems=" + mGalleryItems +

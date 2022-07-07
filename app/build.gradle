@@ -38,6 +38,7 @@ android {
 	buildFeatures {
 		viewBinding true
 	}
+	namespace 'com.wiley.fordummies.androidsdk.tictactoe'
 }
 
 dependencies {
@@ -58,11 +59,14 @@ dependencies {
 
 	implementation "androidx.browser:browser:$rootProject.browser_version"
 
+	implementation "androidx.core:core:$rootProject.core_version"
+	implementation "androidx.core:core-splashscreen:$rootProject.splash_version"
+
 	implementation "androidx.room:room-runtime:$rootProject.room_version"
 	annotationProcessor "androidx.room:room-compiler:$rootProject.room_version"
 
 	implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraint_version"
-	implementation "androidx.work:work-runtime:$work_version"
+	implementation "androidx.work:work-runtime:$rootProject.work_version"
 
 	implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$rootProject.mapbox_sdk_version"
 	implementation "com.mapbox.mapboxsdk:mapbox-android-core:$rootProject.mapbox_core_version"

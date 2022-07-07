@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,9 +36,9 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_help, container, false);
 
-        Button wikipedia = v.findViewById(R.id.button_lookup_wikipedia);
+        Button wikipedia = v.findViewById(R.id.button_wikipedia);
         wikipedia.setOnClickListener(this);
-        Button wikipediaWebView = v.findViewById(R.id.button_lookup_wikipedia_in_web_view);
+        Button wikipediaWebView = v.findViewById(R.id.button_wikipedia_webview);
         wikipediaWebView.setOnClickListener(this);
 
         return v;
@@ -60,9 +61,9 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 
 	private boolean hasNetworkConnection() {
 		Context ctx = requireContext();
-		ConnectivityManager connectivityManager =
-				(ConnectivityManager) ctx.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-		return connectivityManager.isDefaultNetworkActive();
+		ConnectivityManager connMgr = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		return (connMgr.isDefaultNetworkActive() && networkInfo != null && networkInfo.isConnected());
     }
 
     private void launchBrowser() {
@@ -78,7 +79,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 		startActivity(launchWebViewIntent);
 	}
 
-    private void noNetworkConnectionNotify() {
+    private void notifyNoNetworkConnection() {
         FragmentManager manager = getParentFragmentManager();
         NoNetworkConnectionDialogFragment fragment = new NoNetworkConnectionDialogFragment();
 		fragment.show(manager, "no_net_conn");
@@ -87,17 +88,17 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 		final int viewId = view.getId();
-		if (viewId == R.id.button_lookup_wikipedia) {
+		if (viewId == R.id.button_wikipedia) {
 			if (hasNetworkConnection()) {
 				launchBrowser();
 			} else {
-				noNetworkConnectionNotify();
+				notifyNoNetworkConnection();
 			}
-		} else if (viewId == R.id.button_lookup_wikipedia_in_web_view) {
+		} else if (viewId == R.id.button_wikipedia_webview) {
 			if (hasNetworkConnection()) {
 				launchWebView();
 			} else {
-				noNetworkConnectionNotify();
+				notifyNoNetworkConnection();
 			}
 		} else {
 			Timber.tag(TAG).e("Invalid button click!");

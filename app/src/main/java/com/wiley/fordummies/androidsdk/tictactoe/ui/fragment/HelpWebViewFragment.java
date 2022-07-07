@@ -50,7 +50,6 @@ public class HelpWebViewFragment extends Fragment  {
 		}
 
 		WebView.setWebContentsDebuggingEnabled(true);
-        // helpInWebView.getSettings().setJavaScriptEnabled(true);
         helpInWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return false;
@@ -88,4 +87,10 @@ public class HelpWebViewFragment extends Fragment  {
             Timber.tag(TAG).e("Could not set subtitle");
         }
     }
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		mProgressBar = null;
+	}
 }

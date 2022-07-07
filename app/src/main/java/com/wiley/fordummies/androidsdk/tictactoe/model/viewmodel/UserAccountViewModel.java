@@ -17,8 +17,8 @@ import java.util.Objects;
  */
 public class UserAccountViewModel extends AndroidViewModel {
 
-	private UserAccountRepository mRepository;
-	private final LiveData<List<UserAccount>> mAllUserAccounts;
+	private final UserAccountRepository mRepository;
+	private LiveData<List<UserAccount>> mAllUserAccounts;
 
 	public UserAccountViewModel(@NonNull Application application) {
 		super(application);
@@ -31,7 +31,9 @@ public class UserAccountViewModel extends AndroidViewModel {
 
 		LiveData<UserAccount> userAccountLiveData = mRepository.findUserAccountByName(userAccount);
 		UserAccount theUserAccount = userAccountLiveData.getValue();
-		if (Objects.requireNonNull(theUserAccount).getName().equals(userAccount.getName()) &&
+		if (theUserAccount == null) {
+			return accountInList;
+		} else if (Objects.requireNonNull(theUserAccount).getName().equals(userAccount.getName()) &&
 				Objects.requireNonNull(theUserAccount).getPassword().equals(userAccount.getPassword())) {
 			accountInList = true;
 		}
@@ -47,5 +49,6 @@ public class UserAccountViewModel extends AndroidViewModel {
 
 	public void insert(UserAccount userAccount) {
 		mRepository.insert(userAccount);
+		mAllUserAccounts = mRepository.getAllUserAccounts();
 	}
 }

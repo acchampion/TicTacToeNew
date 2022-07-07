@@ -7,9 +7,9 @@ import android.os.Looper;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.LifecycleOwner;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,12 +23,12 @@ public class ThumbnailDownloader<T> extends HandlerThread implements LifecycleOb
 	private final String TAG = ThumbnailDownloader.class.getSimpleName();
 
 	private boolean mHasQuit = false;
-	private Looper mLooper;
-	private Handler mRequestHandler, mResponseHandler;
+	private Handler mRequestHandler;
+	private final Handler mResponseHandler;
 	public LifecycleObserver mFragmentLifecycleObserver, mViewLifecycleObserver;
 	private ThumbnailDownloadListener<T> mThumbnailDownloadListener;
-	private ConcurrentMap<T, String> mRequestMap = new ConcurrentHashMap<>();
-	private FlickrFetchr mFlickrFetchr = new FlickrFetchr();
+	private final ConcurrentMap<T, String> mRequestMap = new ConcurrentHashMap<>();
+	private final FlickrFetchr mFlickrFetchr = new FlickrFetchr();
 
 	public interface ThumbnailDownloadListener<T> {
 		void onThumbnailDownloaded(T holder, Bitmap bitmap);
@@ -38,26 +38,29 @@ public class ThumbnailDownloader<T> extends HandlerThread implements LifecycleOb
 		super("ThumbnailDownloader");
 		mResponseHandler = responseHandler;
 
-		mFragmentLifecycleObserver = new LifecycleObserver() {
-			@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-			public void setup() {
+		mFragmentLifecycleObserver = new DefaultLifecycleObserver() {
+			@Override
+			public void onCreate(@NonNull LifecycleOwner owner) {
+				DefaultLifecycleObserver.super.onCreate(owner);
 				Timber.tag(TAG).i("Starting background thread");
 				if (!isAlive()) {
 					start();
 				}
-				mLooper = getLooper();
+				getLooper();
 			}
 
-			@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-			public void tearDown() {
+			@Override
+			public void onDestroy(@NonNull LifecycleOwner owner) {
+				DefaultLifecycleObserver.super.onDestroy(owner);
 				Timber.tag(TAG).i("Destroying background thread");
 				quit();
 			}
 		};
 
-		mViewLifecycleObserver = new LifecycleObserver() {
-			@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-			private void clearQueue() {
+		mViewLifecycleObserver = new DefaultLifecycleObserver() {
+			@Override
+			public void onDestroy(@NonNull LifecycleOwner owner) {
+				DefaultLifecycleObserver.super.onDestroy(owner);
 				Timber.tag(TAG).i("Clearing all requests from queue");
 				mRequestHandler.removeMessages(MESSAGE_DOWNLOAD);
 				mRequestMap.clear();
@@ -110,4 +113,5 @@ public class ThumbnailDownloader<T> extends HandlerThread implements LifecycleOb
 			mThumbnailDownloadListener.onThumbnailDownloaded(target, bitmap);
 		});
 	}
+
 }

@@ -6,6 +6,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Process;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,7 +53,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 	private PhotoGalleryViewModel mPhotoGalleryViewModel;
 	private RecyclerView mPhotoRecyclerView;
 	private Lifecycle mLifecycle;
-	private Handler mResponseHandler;
+	private final Handler mResponseHandler = new Handler(Looper.getMainLooper());
 	private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
 
 	private final String TAG = getClass().getSimpleName();
@@ -67,10 +69,8 @@ public class PhotoGalleryFragment extends VisibleFragment {
 		Activity activity = requireActivity();
 		mPhotoGalleryViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(PhotoGalleryViewModel.class);
 
-		mLifecycle = getLifecycle();
-
-		mResponseHandler = new Handler();
 		mThumbnailDownloader = new ThumbnailDownloader<>(mResponseHandler);
+		mThumbnailDownloader.setPriority(Process.THREAD_PRIORITY_DISPLAY);
 		mThumbnailDownloader.setThumbnailDownloadListener((holder, bitmap) -> {
 			Drawable drawable = new BitmapDrawable(getResources(), bitmap);
 			holder.bindDrawable(drawable);
@@ -78,6 +78,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 		mThumbnailDownloader.start();
 		mThumbnailDownloader.getLooper();
 
+		mLifecycle = getLifecycle();
 		mLifecycle.addObserver(mThumbnailDownloader.mFragmentLifecycleObserver);
 	}
 

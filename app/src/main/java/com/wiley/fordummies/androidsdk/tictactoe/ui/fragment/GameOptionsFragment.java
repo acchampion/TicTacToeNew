@@ -44,7 +44,7 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Timber.tag(TAG).d( "onCreateView");
+		Timber.tag(TAG).d("onCreateView");
 		View v = inflater.inflate(R.layout.fragment_game_options, container, false);
 
 		Button btnNewGame = v.findViewById(R.id.buttonNewGame);
@@ -141,15 +141,29 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 			startActivity(new Intent(appContext, PhotoGalleryActivity.class));
 		} else if (viewId == R.id.buttonExit) {
 			activity.stopService(new Intent(appContext, MediaPlaybackService.class));
+			showQuitAppDialog();
 		} else {
 			Timber.tag(TAG).e("Invalid button selection!");
 		}
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		Activity activity = requireActivity();
+		Context appContext = activity.getApplicationContext();
+		activity.stopService(new Intent(appContext, MediaPlaybackService.class));
+	}
+
 	private void showQuitAppDialog() {
-		FragmentManager manager = getParentFragmentManager();
-		QuitAppDialogFragment fragment = new QuitAppDialogFragment();
-		fragment.show(manager, "quit_app");
+		if (isAdded()) {
+			FragmentManager manager = getParentFragmentManager();
+			QuitAppDialogFragment fragment = new QuitAppDialogFragment();
+			fragment.show(manager, "quit_app");
+		} else {
+			Timber.tag(TAG).d(TAG, "Fragment not added, quitting!");
+			System.exit(0);
+		}
 	}
 
 }
