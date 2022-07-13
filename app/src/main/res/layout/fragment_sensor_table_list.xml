@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<TableLayout
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_margin="8dp"
+		android:stretchColumns="*">
+
+		<TableRow
+			android:layout_width="0dp">
+
+			<TextView
+				android:layout_weight="1"
+				android:layout_column="1"
+				android:layout_gravity="start"
+				android:paddingStart="0dp"
+				android:paddingEnd="8dp"
+				android:text="Sensor"
+				android:layout_width="200sp"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:layout_weight="1"
+				android:layout_column="2"
+				android:layout_gravity="start"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
+				android:text="Version"
+				android:layout_width="50sp"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:layout_weight="1"
+				android:layout_column="3"
+				android:layout_gravity="start"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
+				android:text="Range"
+				android:layout_width="30sp"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:layout_column="4"
+				android:layout_gravity="start"
+				android:padding="8dp"
+				android:text="Power"
+				android:layout_width="50sp"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:layout_weight="1"
+				android:layout_column="5"
+				android:layout_gravity="start"
+				android:paddingStart="8dp"
+				android:paddingEnd="0dp"
+				android:text="Resolution"
+				android:layout_width="50sp"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+		</TableRow>
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/sensor_recyclerview_table"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" />
+
+	</TableLayout>
+</HorizontalScrollView>

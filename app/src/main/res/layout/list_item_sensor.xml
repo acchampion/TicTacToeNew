@@ -1,17 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_margin="8dp">
+	<TableLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:stretchColumns="*">
 
-    <TextView
-        android:id="@+id/sensor_data"
-        android:text="Sensor Data"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"/>
+		<TableRow
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:layout_width="0dp">
 
-</LinearLayout>
+			<TextView
+				android:id="@+id/sensor_name"
+				android:layout_column="1"
+				android:layout_gravity="start"
+				android:layout_weight="1"
+				android:paddingStart="0dp"
+				android:paddingEnd="8dp"
+				android:text="Sensor Name"
+				android:textSize="16sp" />
+
+			<TextView
+				android:id="@+id/sensor_version"
+				android:layout_column="2"
+				android:layout_gravity="start"
+				android:layout_weight="1"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
+				android:text="Version"
+				android:textSize="16sp" />
+
+			<TextView
+				android:id="@+id/sensor_range"
+				android:layout_column="3"
+				android:layout_gravity="start"
+				android:layout_weight="1"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
+				android:text="Range"
+				android:textSize="16sp" />
+
+			<TextView
+				android:id="@+id/sensor_power"
+				android:layout_column="4"
+				android:layout_gravity="start"
+				android:layout_weight="1"
+				android:paddingStart="8dp"
+				android:paddingEnd="8dp"
+				android:text="Power"
+				android:textSize="16sp" />
+
+			<TextView
+				android:id="@+id/sensor_res"
+				android:layout_column="5"
+				android:layout_gravity="start"
+				android:layout_weight="1"
+				android:paddingStart="8dp"
+				android:paddingEnd="0dp"
+				android:text="Resolution"
+				android:textSize="16sp" />
+		</TableRow>
+	</TableLayout>
