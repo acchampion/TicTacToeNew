@@ -19,6 +19,7 @@ public class ContactViewModel extends AndroidViewModel {
 
 	public ContactViewModel(Application application) {
 		super(application);
+		//mAllContacts = new ContactLiveDataOld(application);
 		mAllContacts = new ContactLiveData(application);
 	}
 

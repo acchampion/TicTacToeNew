@@ -1,34 +1,20 @@
 package com.wiley.fordummies.androidsdk.tictactoe.model;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.provider.ContactsContract;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.ArrayList;
+import com.wiley.fordummies.androidsdk.tictactoe.concurrency.ExecutorRunner;
+
 import java.util.List;
 
 import timber.log.Timber;
 
-/**
- * LiveData class that encapsulates the results of fetching contacts' names.
- *
- *
- *
- * Created by acc on 2021/08/09.
- */
 public class ContactLiveData extends LiveData<List<Contact>> {
-	private final Context mContext;
 
-	private static final String[] PROJECTION = {
-			ContactsContract.Contacts._ID,
-			ContactsContract.Contacts.LOOKUP_KEY,
-			ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
-	};
+	private final Context mContext;
+	private final ExecutorRunner mRunner = new ExecutorRunner();
 
 	private final String TAG = getClass().getSimpleName();
 
@@ -37,53 +23,24 @@ public class ContactLiveData extends LiveData<List<Contact>> {
 		loadContacts();
 	}
 
-	@SuppressLint("StaticFieldLeak, Deprecated")
 	private void loadContacts() {
+		ContentResolver resolver = mContext.getContentResolver();
 
-		new AsyncTask<Void, Void, List<Contact>>() {
+		mRunner.execute(new ContactQueryCallable(resolver), new ExecutorRunner.Callback<>() {
 			@Override
-			protected List<Contact> doInBackground(Void... voids) {
-				List<Contact> contactList = new ArrayList<>();
-
-				ContentResolver resolver = mContext.getContentResolver();
-				Cursor cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI,
-						PROJECTION,
-						null,
-						null,
-						ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
-
-				try {
-					if (cursor != null) {
-						cursor.moveToFirst();
-						int count = cursor.getCount();
-						int position = cursor.getPosition();
-						while (position < count) {
-							if (cursor.getColumnCount() > 1) {
-								int nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-								if (nameIndex >= 0) {
-									String contactName = cursor.getString(nameIndex);
-									Contact contact = new Contact(contactName);
-									contactList.add(contact);
-									cursor.moveToNext();
-									position = cursor.getPosition();
-								} else {
-									Timber.tag(TAG).e("Invalid column index");
-								}
-							}
-						}
-					}
-				} finally {
-					if (cursor != null && cursor.getCount() > 0) {
-						cursor.close();
-					}
-				}
-				return contactList;
+			public void onComplete(List<Contact> contactList) {
+				Timber.tag(TAG).d("Got contact list with %d contacts", contactList.size());
+				// As this is a background thread, we need to call postValue() to set the
+				// value of the LiveData. If we were running on the UI thread, we'd call getValue().
+				postValue(contactList);
 			}
 
 			@Override
-			protected void onPostExecute(List<Contact> contactList) {
-				setValue(contactList);
+			public void onError(Exception e) {
+				Timber.tag(TAG).d("Error retrieving contact list");
+				e.printStackTrace();
 			}
-		}.execute();
+		});
+
 	}
 }
