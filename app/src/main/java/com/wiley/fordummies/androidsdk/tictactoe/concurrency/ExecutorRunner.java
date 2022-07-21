@@ -3,6 +3,9 @@ package com.wiley.fordummies.androidsdk.tictactoe.concurrency;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.wiley.fordummies.androidsdk.tictactoe.model.Contact;
+
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -25,6 +28,7 @@ public class ExecutorRunner {
 	private final Executor mExecutor = Executors.newSingleThreadExecutor();
 	// Handler for updating the UI thread
 	private final Handler mHandler = new Handler(Looper.getMainLooper());
+	private List<Contact> mResult;
 
 	private final String TAG = getClass().getSimpleName();
 

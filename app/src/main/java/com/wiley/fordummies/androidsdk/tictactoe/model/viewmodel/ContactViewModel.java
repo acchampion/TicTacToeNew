@@ -4,7 +4,11 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
+import com.wiley.fordummies.androidsdk.tictactoe.model.Contact;
 import com.wiley.fordummies.androidsdk.tictactoe.model.ContactLiveData;
+import com.wiley.fordummies.androidsdk.tictactoe.model.ContactRepository;
+
+import java.util.List;
 
 /**
  * View model class for Contacts, displayed as Strings.
@@ -15,14 +19,24 @@ import com.wiley.fordummies.androidsdk.tictactoe.model.ContactLiveData;
  */
 public class ContactViewModel extends AndroidViewModel {
 
-	private final ContactLiveData mAllContacts;
+	private final ContactRepository mRepository;
+	private final ContactLiveData mAllContactsData;
+	private List<Contact> mAllContactsList;
 
 	public ContactViewModel(Application application) {
 		super(application);
 		//mAllContacts = new ContactLiveDataOld(application);
-		mAllContacts = new ContactLiveData(application);
+		mRepository = new ContactRepository(application);
+		mAllContactsData = new ContactLiveData(application);
 	}
 
-	public ContactLiveData getAllContacts() { return mAllContacts; }
+	public ContactLiveData getAllContacts() {
+		mAllContactsList = mRepository.getAllContacts();
+		mAllContactsData.setValue(mAllContactsList);
+
+		assert (mAllContactsData.getValue() != null);
+
+		return mAllContactsData;
+	}
 
 }

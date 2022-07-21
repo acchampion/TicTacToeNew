@@ -1,8 +1,10 @@
-package com.wiley.fordummies.androidsdk.tictactoe.model;
+package com.wiley.fordummies.androidsdk.tictactoe.concurrency;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+
+import com.wiley.fordummies.androidsdk.tictactoe.model.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.concurrent.Callable;
 
 import timber.log.Timber;
 
-public class ContactQueryCallable implements Callable<List<Contact>> {
+public class ContactQueryAllCallable implements Callable<List<Contact>> {
 
 	private final ContentResolver mResolver;
 	private static final String[] PROJECTION = {
@@ -21,7 +23,7 @@ public class ContactQueryCallable implements Callable<List<Contact>> {
 
 	private final String TAG = getClass().getSimpleName();
 
-	public ContactQueryCallable(ContentResolver resolver) {
+	public ContactQueryAllCallable(ContentResolver resolver) {
 		mResolver = resolver;
 	}
 
