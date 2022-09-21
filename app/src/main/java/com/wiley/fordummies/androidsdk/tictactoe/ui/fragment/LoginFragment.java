@@ -53,7 +53,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     	super.onCreate(icicle);
 
     	Activity activity = requireActivity();
-    	mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
+		mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
     	// Here's a dummy observer object that indicates when the UserAccounts change in the database.
 		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, userAccounts -> {
 			Timber.tag(TAG).d("The list of UserAccounts just changed; it has %s elements", userAccounts.size());

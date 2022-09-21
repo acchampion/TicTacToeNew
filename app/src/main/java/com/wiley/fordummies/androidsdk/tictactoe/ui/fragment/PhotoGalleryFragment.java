@@ -2,12 +2,8 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Process;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -34,16 +29,15 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.bumptech.glide.Glide;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.VisibleFragment;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
 import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
 import com.wiley.fordummies.androidsdk.tictactoe.model.viewmodel.PhotoGalleryViewModel;
 import com.wiley.fordummies.androidsdk.tictactoe.network.PollWorker;
-import com.wiley.fordummies.androidsdk.tictactoe.network.ThumbnailDownloader;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
@@ -52,9 +46,6 @@ public class PhotoGalleryFragment extends VisibleFragment {
 
 	private PhotoGalleryViewModel mPhotoGalleryViewModel;
 	private RecyclerView mPhotoRecyclerView;
-	private Lifecycle mLifecycle;
-	private final Handler mResponseHandler = new Handler(Looper.getMainLooper());
-	private ThumbnailDownloader<PhotoHolder> mThumbnailDownloader;
 
 	private final String TAG = getClass().getSimpleName();
 	private final String POLL_WORK = "POLL_WORK";
@@ -68,18 +59,6 @@ public class PhotoGalleryFragment extends VisibleFragment {
 
 		Activity activity = requireActivity();
 		mPhotoGalleryViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(PhotoGalleryViewModel.class);
-
-		mThumbnailDownloader = new ThumbnailDownloader<>(mResponseHandler);
-		mThumbnailDownloader.setPriority(Process.THREAD_PRIORITY_DISPLAY);
-		mThumbnailDownloader.setThumbnailDownloadListener((holder, bitmap) -> {
-			Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-			holder.bindDrawable(drawable);
-		});
-		mThumbnailDownloader.start();
-		mThumbnailDownloader.getLooper();
-
-		mLifecycle = getLifecycle();
-		mLifecycle.addObserver(mThumbnailDownloader.mFragmentLifecycleObserver);
 	}
 
 	@Nullable
@@ -89,7 +68,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 
 		mPhotoRecyclerView = view.findViewById(R.id.photo_recycler_view);
 		mPhotoRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
-		mLifecycle.addObserver(mThumbnailDownloader.mViewLifecycleObserver);
+		// mLifecycle.addObserver(mThumbnailDownloader.mViewLifecycleObserver);
 
 		return view;
 	}
@@ -125,13 +104,11 @@ public class PhotoGalleryFragment extends VisibleFragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		Objects.requireNonNull(mLifecycle).removeObserver(mThumbnailDownloader.mViewLifecycleObserver);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		mLifecycle.removeObserver(mThumbnailDownloader.mFragmentLifecycleObserver);
 	}
 
 	@Override
@@ -221,6 +198,10 @@ public class PhotoGalleryFragment extends VisibleFragment {
 			mGalleryItem = item;
 		}
 
+		public ImageView getImageView() {
+			return mItemImageView;
+		}
+
 		@Override
 		public void onClick(View v) {
 			Context context = requireContext();
@@ -249,10 +230,14 @@ public class PhotoGalleryFragment extends VisibleFragment {
 		@Override
 		public void onBindViewHolder(@NonNull PhotoHolder holder, int position) {
 			GalleryItem galleryItem = mGalleryItems.get(position);
-			holder.bindGalleryItem(galleryItem);
+			// holder.bindGalleryItem(galleryItem);
 			Drawable placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder);
-			holder.bindDrawable(placeholder);
-			mThumbnailDownloader.queueThumbnail(holder, galleryItem.getUrl());
+			// holder.bindDrawable(placeholder);
+			Glide.with(requireContext())
+					.load(galleryItem.getUrl())
+					.placeholder(placeholder)
+					.into(holder.getImageView());
+			//mThumbnailDownloader.queueThumbnail(holder, galleryItem.getUrl());
 		}
 
 		@Override
