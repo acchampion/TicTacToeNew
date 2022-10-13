@@ -74,6 +74,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 		btnAdd.setOnClickListener(this);
 		Button btnCancel = v.findViewById(R.id.cancel_button);
 		btnCancel.setOnClickListener(this);
+
 		Button btnExit = v.findViewById(R.id.exit_button);
 		if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
 			btnExit.setOnClickListener(this);

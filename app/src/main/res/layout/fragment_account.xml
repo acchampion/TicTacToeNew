@@ -36,7 +36,8 @@
 		android:inputType="textPassword"
 		android:maxLines="1"
 		android:minHeight="48dp"
-		android:textColorHint="#546E7A" />
+		android:textColorHint="#546E7A"
+		android:autofillHints="username"/>
 
 	<TextView
 		android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
 		android:inputType="textPassword"
 		android:maxLines="1"
 		android:minHeight="48dp"
-		android:textColorHint="#546E7A" />
+		android:textColorHint="#546E7A"
+		android:autofillHints="password"/>
 
 	<TextView
 		android:layout_width="wrap_content"
@@ -82,7 +84,8 @@
 		android:inputType="textPassword"
 		android:maxLines="1"
 		android:minHeight="48dp"
-		android:textColorHint="#546E7A" />
+		android:textColorHint="#546E7A"
+		android:autofillHints="password"/>
 
 	<Button
 		android:id="@+id/cancel_button"

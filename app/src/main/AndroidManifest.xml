@@ -13,6 +13,8 @@
 		android:label="New Photo Notification"
 		android:protectionLevel="signature" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.LAUNCHACTIVITY" />
 	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE" />
 	<uses-permission android:name="android.permission.READ_CONTACTS" />

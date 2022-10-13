@@ -230,7 +230,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 		@Override
 		public void onBindViewHolder(@NonNull PhotoHolder holder, int position) {
 			GalleryItem galleryItem = mGalleryItems.get(position);
-			// holder.bindGalleryItem(galleryItem);
+			holder.bindGalleryItem(galleryItem);
 			Drawable placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder);
 			// holder.bindDrawable(placeholder);
 			Glide.with(requireContext())

@@ -16,7 +16,7 @@ public class ContactRepository {
 
 	private final Context mContext;
 	private final ExecutorRunner mRunner;
-	private List<Contact> mContactList = new CopyOnWriteArrayList<>();
+	private final List<Contact> mContactList = new CopyOnWriteArrayList<>();
 
 	private final String TAG = getClass().getSimpleName();
 

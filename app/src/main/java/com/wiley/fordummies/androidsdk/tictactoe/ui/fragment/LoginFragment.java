@@ -51,6 +51,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
 	public void onCreate(Bundle icicle) {
     	super.onCreate(icicle);
+		Timber.tag(TAG).d("onCreate()");
 
     	Activity activity = requireActivity();
 		mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
@@ -65,9 +66,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v;
+		Timber.tag(TAG).d("onCreateView()");
         Activity activity = requireActivity();
 
 		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+
 		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
 			v = inflater.inflate(R.layout.fragment_login_land, container, false);
 		} else {
@@ -85,9 +88,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         if (cancelButton != null) {
             cancelButton.setOnClickListener(this);
         }
-        final Button newUserButton = v.findViewById(R.id.new_user_button);
+
+		final Button newUserButton = v.findViewById(R.id.new_user_button);
         if (newUserButton != null) {
-            newUserButton.setOnClickListener(this);
+			if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
+				newUserButton.setOnClickListener(this);
+			}
+			else {
+				newUserButton.setVisibility(View.GONE);
+				newUserButton.invalidate();
+			}
         }
 
         return v;
@@ -104,6 +114,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		Timber.tag(TAG).d("onDestroy()");
 		final Activity activity = requireActivity();
 		mUserAccountViewModel.getAllUserAccounts().removeObservers((LifecycleOwner) activity);
 	}

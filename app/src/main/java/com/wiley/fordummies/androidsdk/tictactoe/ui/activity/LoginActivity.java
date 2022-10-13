@@ -19,15 +19,15 @@ import com.wiley.fordummies.androidsdk.tictactoe.ui.fragment.LoginFragment;
 
 /**
  * Activity for user login.
- *
+ * <p>
  * Created by adamcchampion on 2017/08/03.
  */
 
 public class LoginActivity extends AppCompatActivity {
 
-    protected Fragment createFragment() {
-        return new LoginFragment();
-    }
+	protected Fragment createFragment() {
+		return new LoginFragment();
+	}
 
 	@LayoutRes
 	protected int getLayoutResId() {
@@ -37,31 +37,32 @@ public class LoginActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-		SplashScreen.installSplashScreen(this).setOnExitAnimationListener(splashScreenView -> {
-					final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-							splashScreenView,
-							String.valueOf(View.TRANSLATION_Y),
-							0f,
-							splashScreenView.getIconView().getHeight()
-					);
-					slideUp.setInterpolator(new AnticipateInterpolator());
-					slideUp.setDuration(200L);
+			SplashScreen.installSplashScreen(this).setOnExitAnimationListener(splashScreenView -> {
+						final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+								splashScreenView,
+								String.valueOf(View.TRANSLATION_Y),
+								0f,
+								splashScreenView.getIconView().getHeight()
+						);
+						slideUp.setInterpolator(new AnticipateInterpolator());
+						slideUp.setDuration(200L);
 
-					// Call SplashScreenView.remove at the end of your custom animation.
-					slideUp.addListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							splashScreenView.remove();
-						}
-					});
+						// Call SplashScreenView.remove at the end of your custom animation.
+						slideUp.addListener(new AnimatorListenerAdapter() {
+							@Override
+							public void onAnimationEnd(Animator animation) {
+								splashScreenView.remove();
+							}
+						});
 
-					// Run your animation.
-					slideUp.start();
-				}
+						// Run your animation.
+						slideUp.start();
+					}
 			);
 		}
 		super.onCreate(savedInstanceState);
-		setContentView(getLayoutResId());
+
+		setContentView(R.layout.activity_fragment);
 
 		FragmentManager fm = getSupportFragmentManager();
 		Fragment fragment = fm.findFragmentById(R.id.fragment_container);
