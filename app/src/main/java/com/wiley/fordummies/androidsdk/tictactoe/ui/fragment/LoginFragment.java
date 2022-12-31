@@ -35,27 +35,27 @@ import timber.log.Timber;
 
 /**
  * Fragment for login screen.
- *
+ * <p>
  * Created by adamcchampion on 2017/08/03. Modified on 2020/08/06 by acc.
  */
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
-    private EditText mUsernameEditText;
-    private EditText mPasswordEditText;
-    private UserAccountViewModel mUserAccountViewModel;
+	private EditText mUsernameEditText;
+	private EditText mPasswordEditText;
+	private UserAccountViewModel mUserAccountViewModel;
 	private final List<UserAccount> mUserAccountList = new CopyOnWriteArrayList<>();
 
-    private final String TAG = getClass().getSimpleName();
-    private final static String OPT_NAME = "name";
+	private final String TAG = getClass().getSimpleName();
+	private final static String OPT_NAME = "name";
 
-    @Override
+	@Override
 	public void onCreate(Bundle icicle) {
-    	super.onCreate(icicle);
+		super.onCreate(icicle);
 		Timber.tag(TAG).d("onCreate()");
 
-    	Activity activity = requireActivity();
+		Activity activity = requireActivity();
 		mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
-    	// Here's a dummy observer object that indicates when the UserAccounts change in the database.
+		// Here's a dummy observer object that indicates when the UserAccounts change in the database.
 		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, userAccounts -> {
 			Timber.tag(TAG).d("The list of UserAccounts just changed; it has %s elements", userAccounts.size());
 			mUserAccountList.clear();
@@ -63,11 +63,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		});
 	}
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v;
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v;
 		Timber.tag(TAG).d("onCreateView()");
-        Activity activity = requireActivity();
+		Activity activity = requireActivity();
 
 		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 
@@ -78,30 +78,29 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		}
 
 		mUsernameEditText = v.findViewById(R.id.username_text);
-        mPasswordEditText = v.findViewById(R.id.password_text);
+		mPasswordEditText = v.findViewById(R.id.password_text);
 
-        final Button loginButton = v.findViewById(R.id.login_button);
-        if (loginButton != null) {
-            loginButton.setOnClickListener(this);
-        }
-        final Button cancelButton = v.findViewById(R.id.cancel_button);
-        if (cancelButton != null) {
-            cancelButton.setOnClickListener(this);
-        }
+		final Button loginButton = v.findViewById(R.id.login_button);
+		if (loginButton != null) {
+			loginButton.setOnClickListener(this);
+		}
+		final Button cancelButton = v.findViewById(R.id.cancel_button);
+		if (cancelButton != null) {
+			cancelButton.setOnClickListener(this);
+		}
 
 		final Button newUserButton = v.findViewById(R.id.new_user_button);
-        if (newUserButton != null) {
+		if (newUserButton != null) {
 			if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
 				newUserButton.setOnClickListener(this);
-			}
-			else {
+			} else {
 				newUserButton.setVisibility(View.GONE);
 				newUserButton.invalidate();
 			}
-        }
+		}
 
-        return v;
-    }
+		return v;
+	}
 
 	@Override
 	public void onDestroyView() {
@@ -120,8 +119,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 	}
 
 	private void checkLogin() {
-        final String username = mUsernameEditText.getText().toString();
-        final String password = mPasswordEditText.getText().toString();
+		final String username = mUsernameEditText.getText().toString();
+		final String password = mPasswordEditText.getText().toString();
 
 		MessageDigest digest;
 		try {
@@ -157,12 +156,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		fragment.show(manager, "login_error");
 	}
 
-    @Override
-    public void onClick(View view) {
-        final Activity activity = requireActivity();
-        final int viewId = view.getId();
+	@Override
+	public void onClick(View view) {
+		final Activity activity = requireActivity();
+		final int viewId = view.getId();
 
-        if (viewId == R.id.login_button) {
+		if (viewId == R.id.login_button) {
 			checkLogin();
 		} else if (viewId == R.id.cancel_button) {
 			activity.finish();
@@ -177,7 +176,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 						.commit();
 			}
 		} else {
-        	Timber.tag(TAG).e("Invalid button click!");
+			Timber.tag(TAG).e("Invalid button click!");
 		}
 	}
 }

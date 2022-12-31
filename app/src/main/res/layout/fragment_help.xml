@@ -20,15 +20,17 @@
             android:textAlignment="center"
             android:textSize="30sp"/>
 
-        <TextView
-            android:id="@+id/help_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:text="@string/help_text"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"/>
+		<TextView
+			android:id="@+id/help_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginBottom="8dp"
+			android:scrollbarAlwaysDrawVerticalTrack="true"
+			android:text="@string/help_text"
+			android:textColor="#546E7A"
+			android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/sources_title"
@@ -39,16 +41,18 @@
             android:layout_marginRight="16dp"
             android:text="@string/sources_title"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+			android:textSize="15sp"/>
 
-        <TextView
-            android:id="@+id/sources_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/sources_text"/>
+		<TextView
+			android:id="@+id/sources_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginBottom="8dp"
+			android:text="@string/sources_text"
+			android:textColor="#546E7A" />
 
         <Button
             android:id="@+id/button_wikipedia"

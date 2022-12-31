@@ -86,12 +86,25 @@ dependencies {
 	// Skip this if you don't want to use integration libraries or configure Glide.
 	annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide_version"
 
-	// Testing
+	// Testing - JUnit
 	testImplementation "junit:junit:$rootProject.junit_version"
-    androidTestImplementation "androidx.test:core:$rootProject.test_version"
-    androidTestImplementation "androidx.test:rules:$rootProject.test_version"
-    androidTestImplementation "androidx.test:runner:$rootProject.test_version"
+	androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+
+	// Core library
+	androidTestImplementation "androidx.test:core:1.5.0"
+
+	// AndroidJUnitRunner and JUnit Rules
+	androidTestImplementation "androidx.test:runner:$rootProject.runner_version"
+	androidTestImplementation "androidx.test:rules:$rootProject.rules_version"
+
+	// Espresso and dependencies
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso_version"
+	// Espresso dependencies
+	androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espresso_version"
+	androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espresso_version"
+	androidTestImplementation "androidx.test.espresso:espresso-accessibility:$rootProject.espresso_version"
+	androidTestImplementation "androidx.test.espresso:espresso-web:$rootProject.espresso_version"
+	androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$rootProject.espresso_version"
 
 }
 

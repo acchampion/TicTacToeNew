@@ -13,13 +13,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dip"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/login_title"
             android:textAlignment="center"
-            android:textSize="24sp"/>
+			android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
 
 		<TextView
 			android:layout_width="match_parent"
@@ -30,7 +30,7 @@
 			android:layout_marginBottom="8dp"
 			android:labelFor="@+id/username_text"
 			android:text="@string/username"
-			android:textColor="#546E7A" />
+			android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 		<EditText
 			android:id="@+id/username_text"
@@ -53,7 +53,7 @@
 			android:layout_marginRight="16dp"
 			android:labelFor="@+id/password_text"
 			android:text="@string/password"
-			android:textColor="#546E7A" />
+			android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 		<EditText
 			android:id="@+id/password_text"

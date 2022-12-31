@@ -200,6 +200,7 @@ public class GameSessionFragment extends Fragment {
 					ANDROID_TIMEOUT_BASE + randomNumber.nextInt(ANDROID_TIMEOUT_SEED)
 			);
 		} else {
+			Timber.tag(TAG).d("In else() block, scheduleAndroidsTurn()");
 			androidTakesATurn();
 		}
 	}

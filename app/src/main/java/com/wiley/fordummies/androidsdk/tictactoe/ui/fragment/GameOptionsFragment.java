@@ -25,7 +25,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.ContactsActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.GameSessionActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.HelpActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.ImagesActivity;
-import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.MapsActivity;
+import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.MapsActivityOld;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.PhotoGalleryActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.SensorsActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.SettingsActivity;
@@ -130,7 +130,7 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 		} else if (viewId == R.id.buttonImages) {
 			startActivity(new Intent(appContext, ImagesActivity.class));
 		} else if (viewId == R.id.buttonMaps) {
-			startActivity(new Intent(appContext, MapsActivity.class));
+			startActivity(new Intent(appContext, MapsActivityOld.class));
 		} else if (viewId == R.id.buttonSettings) {
 			startActivity(new Intent(appContext, SettingsActivity.class));
 		} else if (viewId == R.id.buttonHelp) {

@@ -30,11 +30,13 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_margin="8dp"
+				android:autofillHints="@string/enter_address"
 				android:hint="@string/enter_address"
 				android:inputType="text"
 				android:minWidth="250dp"
+				android:minHeight="48dp"
 				android:textColor="#FFFFFF"
-				android:autofillHints="@string/enter_address" />
+				android:textColorHint="#546E7A" />
 
             <Button
                 android:id="@+id/button_locate"

@@ -46,6 +46,7 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
             View fragmentView = mGameSessionFragment.getView();
             if (fragmentView != null) {
                 mBoard = fragmentView.findViewById(R.id.board);
+				mBoard.setEnabled(true);
                 mGameSessionFragment.mActiveGame = new Game();
             }
         }
@@ -69,7 +70,8 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     public void testUI() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
         getInstrumentation().waitForIdleSync();
-        mGameSessionActivity.runOnUiThread(() -> {
+
+		mGameSessionActivity.runOnUiThread(() -> {
 			System.out.println("Thread ID in TestUI.run:" + Thread.currentThread().getId());
 
 			mBoard.requestFocus();
@@ -87,12 +89,11 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			assertEquals(mGameSessionFragment.getPlayCount(), 1);
+			assertEquals(mGameSessionFragment.getPlayCount(), 2);
 		});
     }
 
-    @UiThreadTest
-    @Test
+    @UiThreadTest @Test
     public void testUIThreadTest() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
 		getInstrumentation().waitForIdleSync();

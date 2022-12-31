@@ -14,7 +14,6 @@
 		android:protectionLevel="signature" />
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.LAUNCHACTIVITY" />
 	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE" />
 	<uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -79,7 +78,7 @@
 			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.activity.MapsActivity"
+			android:name=".ui.activity.MapsActivityOld"
 			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
