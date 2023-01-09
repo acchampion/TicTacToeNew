@@ -56,7 +56,7 @@ import timber.log.Timber;
 /**
  * Activity showing user's location on Mapbox Map.
  * <p>
- * Source: Mapbox, https://github.com/mapbox/mapbox-android-demo (LocationPluginActivity)
+ * Source: Mapbox, <a href="https://github.com/mapbox/mapbox-android-demo">...</a> (LocationPluginActivity)
  * <p>
  * Created by adamcchampion on 2017/08/17.
  */

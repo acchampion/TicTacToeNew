@@ -93,12 +93,12 @@ public class FlickrFetchr {
 		InputStream inputStream = null;
 		try {
 			Response<ResponseBody> response = mFlickrApi.fetchUrlBytes(url).execute();
-			ResponseBody body = response.body();
-
-			if (body != null) {
-				inputStream = body.byteStream();
-				bitmap = BitmapFactory.decodeStream(inputStream);
-				Timber.tag(TAG).i("Decoded bitmap " + bitmap + " from Response " + response);
+			try (ResponseBody body = response.body()) {
+				if (body != null) {
+					inputStream = body.byteStream();
+					bitmap = BitmapFactory.decodeStream(inputStream);
+					Timber.tag(TAG).i("Decoded bitmap " + bitmap + " from Response " + response);
+				}
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

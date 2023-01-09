@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * View model class for Contacts, displayed as Strings.
  *
- * Source: https://medium.com/androiddevelopers/lifecycle-aware-data-loading-with-android-architecture-components-f95484159de4
+ * Source: <a href="https://medium.com/androiddevelopers/lifecycle-aware-data-loading-with-android-architecture-components-f95484159de4">...</a>
  *
  * Created by acc on 2021/08/03.
  */
@@ -21,7 +21,6 @@ public class ContactViewModel extends AndroidViewModel {
 
 	private final ContactRepository mRepository;
 	private final ContactLiveData mAllContactsData;
-	private List<Contact> mAllContactsList;
 
 	public ContactViewModel(Application application) {
 		super(application);
@@ -31,7 +30,7 @@ public class ContactViewModel extends AndroidViewModel {
 	}
 
 	public ContactLiveData getAllContacts() {
-		mAllContactsList = mRepository.getAllContacts();
+		List<Contact> mAllContactsList = mRepository.getAllContacts();
 		mAllContactsData.setValue(mAllContactsList);
 
 		assert (mAllContactsData.getValue() != null);

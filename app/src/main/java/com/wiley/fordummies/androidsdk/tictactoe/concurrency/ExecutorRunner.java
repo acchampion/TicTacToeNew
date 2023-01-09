@@ -19,7 +19,7 @@ import timber.log.Timber;
  *
  * If we were using Kotlin, we'd use coroutines and dispatchers.
  *
- * Source: https://tedblob.com/asynctask-deprecated-alternative-android
+ * Source: <a href="https://tedblob.com/asynctask-deprecated-alternative-android">...</a>
  *
  * @author acc
  */

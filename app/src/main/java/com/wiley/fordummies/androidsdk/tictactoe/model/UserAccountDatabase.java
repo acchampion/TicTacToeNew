@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 /**
  * Database class for UserAccount processing with Room.
  *
- * Source: https://developer.android.com/codelabs/android-room-with-a-view
+ * Source: <a href="https://developer.android.com/codelabs/android-room-with-a-view">...</a>
  *
  * Created by acc on 2021/08/04.
  */

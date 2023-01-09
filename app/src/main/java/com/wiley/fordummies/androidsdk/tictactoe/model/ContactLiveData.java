@@ -4,19 +4,16 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.wiley.fordummies.androidsdk.tictactoe.concurrency.ExecutorRunner;
-
 import java.util.List;
 
-public class ContactLiveData extends MutableLiveData<List<Contact>> {
+import timber.log.Timber;
 
-	private final Context mContext;
-	private final ExecutorRunner mRunner = new ExecutorRunner();
+public class ContactLiveData extends MutableLiveData<List<Contact>> {
 
 	private final String TAG = getClass().getSimpleName();
 
 	public ContactLiveData(Context context) {
-		mContext = context;
+		Timber.tag(TAG).d("In ContactLiveData() constructor");
 	}
 
 }

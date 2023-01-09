@@ -9,4 +9,5 @@
 	android:layout_marginBottom="16dp"
 	android:layout_marginLeft="8dp"
 	android:layout_marginRight="8dp"
-	android:id="@+id/photo_info" />
+	android:id="@+id/photo_info"
+	android:contentDescription="@string/image_from_flickr" />

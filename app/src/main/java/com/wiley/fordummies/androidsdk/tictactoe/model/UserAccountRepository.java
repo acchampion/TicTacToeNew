@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Single point of accessing UserAccount data in the app.
  *
- * Source: https://developer.android.com/codelabs/android-room-with-a-view
+ * Source: <a href="https://developer.android.com/codelabs/android-room-with-a-view">...</a>
  *
  * Created by acc on 2021/08/04.
  */

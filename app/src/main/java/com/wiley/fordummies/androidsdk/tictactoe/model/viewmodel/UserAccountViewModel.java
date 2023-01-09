@@ -32,7 +32,7 @@ public class UserAccountViewModel extends AndroidViewModel {
 		LiveData<UserAccount> userAccountLiveData = mRepository.findUserAccountByName(userAccount);
 		UserAccount theUserAccount = userAccountLiveData.getValue();
 		if (theUserAccount == null) {
-			return accountInList;
+			return false;
 		} else if (Objects.requireNonNull(theUserAccount).getName().equals(userAccount.getName()) &&
 				Objects.requireNonNull(theUserAccount).getPassword().equals(userAccount.getPassword())) {
 			accountInList = true;

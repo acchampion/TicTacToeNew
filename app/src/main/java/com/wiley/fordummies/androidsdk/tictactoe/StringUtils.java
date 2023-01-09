@@ -5,7 +5,7 @@ public class StringUtils {
 	private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
 	/**
-	 * Source: https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java
+	 * Source: <a href="https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java">...</a>
 	 *
 	 * Input: Byte array
 	 * Output: Hexadecimal string corresponding to input (with leading zeroes)
