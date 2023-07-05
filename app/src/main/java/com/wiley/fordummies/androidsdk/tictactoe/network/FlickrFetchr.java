@@ -60,7 +60,7 @@ public class FlickrFetchr {
 		MutableLiveData<List<GalleryItem>> responseLiveData = new MutableLiveData<>();
 		Call<FlickrResponse> flickrRequest = mFlickrApi.fetchPhotos();
 
-		flickrRequest.enqueue(new Callback<>() {
+		flickrRequest.enqueue(new Callback<FlickrResponse>() {
 			@Override
 			public void onResponse(@NonNull Call<FlickrResponse> call, @NonNull Response<FlickrResponse> response) {
 				Timber.tag(TAG).d("Response received");
@@ -131,7 +131,7 @@ public class FlickrFetchr {
 
 	private LiveData<List<GalleryItem>> fetchPhotoMetadata(Call<FlickrResponse> flickrRequest) {
 		MutableLiveData<List<GalleryItem>> responseLiveData = new MutableLiveData<>();
-		flickrRequest.enqueue(new Callback<>() {
+		flickrRequest.enqueue(new Callback<FlickrResponse>() {
 			@Override
 			public void onResponse(@NonNull Call<FlickrResponse> call, @NonNull Response<FlickrResponse> response) {
 				Timber.tag(TAG).d("Response received");

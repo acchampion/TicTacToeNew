@@ -40,8 +40,9 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 
 	private static final String TAG = VideoFragment.class.getSimpleName();
 
-	ActivityResultLauncher<Intent> mCaptureVideoResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-			new ActivityResultCallback<>() {
+	ActivityResultLauncher<Intent> mCaptureVideoResult = registerForActivityResult(
+			new ActivityResultContracts.StartActivityForResult(),
+			new ActivityResultCallback<ActivityResult>() {
 				@Override
 				public void onActivityResult(ActivityResult result) {
 					if (result.getResultCode() == Activity.RESULT_OK) {
@@ -56,7 +57,7 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 			});
 
 	ActivityResultLauncher<String> mPickVideoResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
-			new ActivityResultCallback<>() {
+			new ActivityResultCallback<Uri>() {
 				@Override
 				public void onActivityResult(Uri result) {
 					String uriString = result.toString();

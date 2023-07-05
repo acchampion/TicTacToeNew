@@ -28,6 +28,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 		int requestCode = intent.getIntExtra(PollWorker.REQUEST_CODE, 0);
 		Notification notification = intent.getParcelableExtra(PollWorker.NOTIFICATION);
 		NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
 		notificationManager.notify(requestCode, notification);
 	}
+
 }

@@ -6,7 +6,10 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.startup.AppInitializer;
 import androidx.work.Configuration;
+
+import com.mapbox.maps.loader.MapboxMapsInitializer;
 
 import timber.log.Timber;
 
@@ -28,6 +31,9 @@ public class TicTacToeApplication extends Application implements Configuration.P
 			NotificationManager notificationManager = getSystemService(NotificationManager.class);
 			notificationManager.createNotificationChannel(channel);
 		}
+
+		AppInitializer.getInstance(this)
+				.initializeComponent(MapboxMapsInitializer.class);
 	}
 
 	@NonNull

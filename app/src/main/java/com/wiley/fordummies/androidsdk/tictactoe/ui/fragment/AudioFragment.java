@@ -46,7 +46,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 
 	ActivityResultLauncher<Intent> mRecordAudioResult = registerForActivityResult(
 			new ActivityResultContracts.StartActivityForResult(),
-			new ActivityResultCallback<>() {
+			new ActivityResultCallback<ActivityResult>() {
 				@Override
 				public void onActivityResult(ActivityResult result) {
 					if (result.getResultCode() == RESULT_OK) {
@@ -61,7 +61,7 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 
 	ActivityResultLauncher<String> mPickAudioResult = registerForActivityResult(
 			new ActivityResultContracts.GetContent(),
-			new ActivityResultCallback<>() {
+			new ActivityResultCallback<Uri>() {
 				@Override
 				public void onActivityResult(Uri result) {
 					String uriString = result.toString();

@@ -49,13 +49,21 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp" />
             <Button
-                android:id="@+id/buttonMaps"
-                android:text="@string/where_am_i"
+                android:id="@+id/buttonMapsLocation"
+                android:text="@string/maps_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp" />
+			<Button
+				android:id="@+id/buttonMapsSearch"
+				android:text="@string/maps_search"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
+				android:layout_marginBottom="8dp" />
             <Button
                 android:id="@+id/buttonSettings"
                 android:text="@string/settings"

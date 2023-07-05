@@ -33,7 +33,7 @@ public class ContactRepository {
 	private void loadContacts() {
 		ContentResolver resolver = mContext.getContentResolver();
 
-		mRunner.execute(new ContactQueryAllCallable(resolver), new ExecutorRunner.Callback<>() {
+		mRunner.execute(new ContactQueryAllCallable(resolver), new ExecutorRunner.Callback<List<Contact>>() {
 			@Override
 			public void onComplete(List<Contact> contactList) {
 				Timber.tag(TAG).d("Got contact list with %d contacts", contactList.size());

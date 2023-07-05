@@ -45,7 +45,7 @@ public class ContactsFragment extends Fragment {
 	private ContactViewModel mContactViewModel;
 
 	private final ActivityResultLauncher<String> mActivityResult = registerForActivityResult(
-			new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<>() {
+			new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
 				@Override
 				public void onActivityResult(Boolean result) {
 					if (result) {

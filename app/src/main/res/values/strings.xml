@@ -94,5 +94,15 @@
 	<string name="start_polling">Start polling</string>
 	<string name="stop_polling">Stop polling</string>
     <string name="image_from_flickr">Image from Flickr</string>
+    <string name="show_location">Show Current Location</string>
+    <string name="maps_location">Maps (Location)</string>
+	<string name="maps_search">Maps (Search; Disabled)</string>
 
+	<string name="mapbox_access_token">pk.eyJ1IjoiYWNjaGFtcGlvbiIsImEiOiJjajZneDMwZDgwMGxjMnd0ZXFpeG1iZDVxIn0.yCuFPMo0P6hS8U9_OS5etQ</string>
+	<string name="address_autofill_query_hint">Enter the address here...</string>
+	<string name="address_autofill_address_city_hint">City</string>
+	<string name="address_autofill_address_zip_hint">Zip Code</string>
+	<string name="address_autofill_address_apt_hint">Apt., suite, etc. (optional)</string>
+	<string name="address_autofill_pin_correction_note">Drag map to correct pin position</string>
+	<string name="address_autofill_address_state_hint">State</string>
 </resources>

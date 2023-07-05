@@ -21,8 +21,8 @@ android {
 		}
     }
     compileOptions {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
     }
     buildTypes {
 		debug {
@@ -42,9 +42,17 @@ android {
 }
 
 dependencies {
-
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+	constraints {
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+			because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+		}
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+			because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+		}
+	}
+
     implementation "androidx.appcompat:appcompat:$rootProject.appcompat_version"
 
 	// Lifecycle
@@ -68,12 +76,9 @@ dependencies {
 	implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraint_version"
 	implementation "androidx.work:work-runtime:$rootProject.work_version"
 
-	implementation "com.mapbox.mapboxsdk:mapbox-android-sdk:$rootProject.mapbox_sdk_version"
-	implementation "com.mapbox.mapboxsdk:mapbox-android-core:$rootProject.mapbox_core_version"
-	implementation "com.mapbox.mapboxsdk:mapbox-java-geojson:$rootProject.mapbox_java_version"
-    implementation "com.mapbox.mapboxsdk:mapbox-android-services:$rootProject.mapbox_java_version"
-    implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:$rootProject.mapbox_telemetry_version"
-    implementation "com.mapbox.mapboxsdk:mapbox-android-ui:$rootProject.mapbox_java_version"
+	// Mapbox dependencies for maps
+	implementation "com.mapbox.maps:android:$rootProject.mapbox_sdk_version"
+	implementation "com.mapbox.search:mapbox-search-android-ui:$rootProject.mapbox_search_version"
 
 	implementation "com.jakewharton.timber:timber:$rootProject.timber_version"
 	debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version"
@@ -83,6 +88,7 @@ dependencies {
 	implementation "com.google.code.gson:gson:$rootProject.gson_version"
 	implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
 	implementation "com.github.bumptech.glide:glide:$rootProject.glide_version"
+
 	// Skip this if you don't want to use integration libraries or configure Glide.
 	annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide_version"
 

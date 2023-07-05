@@ -13,7 +13,11 @@
 		android:label="New Photo Notification"
 		android:protectionLevel="signature" />
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<uses-feature
+		android:name="android.hardware.telephony"
+		android:required="false" />
+
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.LAUNCHACTIVITY" />
 	<uses-permission android:name="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE" />
 	<uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -23,6 +27,7 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 	<uses-permission android:name="android.permission.CALL_PHONE" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
@@ -78,9 +83,13 @@
 			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
 		<activity
-			android:name=".ui.activity.MapsActivityOld"
+			android:name=".ui.activity.MapsLocationActivity"
 			android:theme="@style/AppTheme"
 			android:parentActivityName=".ui.activity.GameOptionsActivity" />
+<!--		<activity
+			android:name=".ui.activity.MapsSearchActivity"
+			android:theme="@style/AppTheme"
+			android:parentActivityName=".ui.activity.GameOptionsActivity" /> -->
 		<activity
 			android:name=".ui.activity.AudioActivity"
 			android:theme="@style/AppTheme"
@@ -121,9 +130,6 @@
 		<service
 			android:name=".MediaPlaybackService"
 			android:enabled="true"
-			android:exported="false" />
-		<service
-			android:name="com.mapbox.android.telemetry.MapboxTelemetryService"
 			android:exported="false" />
 
 		<receiver

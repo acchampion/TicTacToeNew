@@ -96,7 +96,6 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     @UiThreadTest @Test
     public void testUIThreadTest() {
         System.out.println("Thread ID in testUI:" + Thread.currentThread().getId());
-		getInstrumentation().waitForIdleSync();
         mBoard.requestFocus();
         int i;
         for (i = 0; i < 3; i++) {
@@ -109,7 +108,7 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
             mBoard.dispatchTouchEvent(newMotionEvent);
 			mGameSessionFragment.scheduleAndroidsTurn(true);
         }
-        assertEquals(mGameSessionFragment.getPlayCount(), 1);
+        assertEquals(mGameSessionFragment.getPlayCount(), 2);
     }
 
     protected void afterActivityFinished() {

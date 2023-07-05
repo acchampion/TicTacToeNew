@@ -25,7 +25,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.ContactsActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.GameSessionActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.HelpActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.ImagesActivity;
-import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.MapsActivityOld;
+import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.MapsLocationActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.PhotoGalleryActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.SensorsActivity;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.SettingsActivity;
@@ -44,7 +44,6 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Timber.tag(TAG).d("onCreateView");
 		View v = inflater.inflate(R.layout.fragment_game_options, container, false);
 
 		Button btnNewGame = v.findViewById(R.id.buttonNewGame);
@@ -55,8 +54,10 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 		btnVideo.setOnClickListener(this);
 		Button btnImage = v.findViewById(R.id.buttonImages);
 		btnImage.setOnClickListener(this);
-		Button btnMaps = v.findViewById(R.id.buttonMaps);
-		btnMaps.setOnClickListener(this);
+		Button btnMapsLocation = v.findViewById(R.id.buttonMapsLocation);
+		btnMapsLocation.setOnClickListener(this);
+		Button btnMapsSearch = v.findViewById(R.id.buttonMapsSearch);
+		btnMapsSearch.setEnabled(false);
 		Button btnSettings = v.findViewById(R.id.buttonSettings);
 		btnSettings.setOnClickListener(this);
 		Button btnHelp = v.findViewById(R.id.buttonHelp);
@@ -129,8 +130,11 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 			startActivity(new Intent(appContext, VideoActivity.class));
 		} else if (viewId == R.id.buttonImages) {
 			startActivity(new Intent(appContext, ImagesActivity.class));
-		} else if (viewId == R.id.buttonMaps) {
-			startActivity(new Intent(appContext, MapsActivityOld.class));
+		} else if (viewId == R.id.buttonMapsLocation) {
+			startActivity(new Intent(appContext, MapsLocationActivity.class));
+		} else if (viewId == R.id.buttonMapsSearch) {
+			/* Start the Maps Search Activity, which relies on Kotlin-exclusive features,
+			 * namely coroutines. This is only in the Kotlin app code. */
 		} else if (viewId == R.id.buttonSettings) {
 			startActivity(new Intent(appContext, SettingsActivity.class));
 		} else if (viewId == R.id.buttonHelp) {

@@ -44,7 +44,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	private final String TAG = getClass().getSimpleName();
 
 	ActivityResultLauncher<Void> mCapturePhotoLaunch = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(),
-			result -> {
+			(Bitmap result) -> {
 				Runnable runnable = () -> {
 					mBitmapLiveData.postValue(result);
 					Bitmap bitmap = mBitmapLiveData.getValue();
@@ -54,7 +54,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 			});
 
 	ActivityResultLauncher<String> mPickImageResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
-			result -> {
+			(Uri result) -> {
 				final String uriString = result.toString();
 				final Uri imageUri = Uri.parse(uriString);
 				Runnable runnable = () -> {
