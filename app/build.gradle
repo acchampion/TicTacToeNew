@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion '33.0.1'
+    compileSdkVersion(33)
+    buildToolsVersion("34.0.0")
     defaultConfig {
-        applicationId "com.wiley.fordummies.androidsdk.tictactoe"
-        minSdkVersion 24
-        targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId("com.wiley.fordummies.androidsdk.tictactoe")
+        minSdkVersion(24)
+        targetSdkVersion(33)
+        versionCode(1)
+        versionName("1.0")
+        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
         vectorDrawables.useSupportLibrary = true
 
 		javaCompileOptions {
@@ -21,8 +21,8 @@ android {
 		}
     }
     compileOptions {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildTypes {
 		debug {
@@ -32,17 +32,17 @@ android {
         release {
 			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
 			buildConfigField 'String', "FlickrAccessToken", FLICKR_ACCESS_TOKEN
-            minifyEnabled false
+            minifyEnabled = false
         }
     }
 	buildFeatures {
-		viewBinding true
+		viewBinding = true
 	}
-	namespace 'com.wiley.fordummies.androidsdk.tictactoe'
+	namespace("com.wiley.fordummies.androidsdk.tictactoe")
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation(fileTree(include: ["*.jar"], dir: "libs"))
 
 	constraints {
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
@@ -53,64 +53,64 @@ dependencies {
 		}
 	}
 
-    implementation "androidx.appcompat:appcompat:$rootProject.appcompat_version"
+    implementation("androidx.appcompat:appcompat:$rootProject.appcompat_version")
 
 	// Lifecycle
-	implementation "androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycle_version"
-	implementation "androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycle_version"
-	implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycle_version"
-	implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_version"
+	implementation("androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycle_version")
+	implementation("androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycle_version")
+	implementation("androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycle_version")
+	implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_version")
 
-	implementation "androidx.activity:activity:$rootProject.activity_version"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerview_version"
-    implementation "androidx.preference:preference:$rootProject.preference_version"
+	implementation("androidx.activity:activity:$rootProject.activity_version")
+    implementation("androidx.recyclerview:recyclerview:$rootProject.recyclerview_version")
+    implementation("androidx.preference:preference:$rootProject.preference_version")
 
-	implementation "androidx.browser:browser:$rootProject.browser_version"
+	implementation("androidx.browser:browser:$rootProject.browser_version")
 
-	implementation "androidx.core:core:$rootProject.core_version"
-	implementation "androidx.core:core-splashscreen:$rootProject.splash_version"
+	implementation("androidx.core:core:$rootProject.core_version")
+	implementation("androidx.core:core-splashscreen:$rootProject.splash_version")
 
-	implementation "androidx.room:room-runtime:$rootProject.room_version"
-	annotationProcessor "androidx.room:room-compiler:$rootProject.room_version"
+	implementation("androidx.room:room-runtime:$rootProject.room_version")
+	annotationProcessor("androidx.room:room-compiler:$rootProject.room_version")
 
-	implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraint_version"
-	implementation "androidx.work:work-runtime:$rootProject.work_version"
+	implementation("androidx.constraintlayout:constraintlayout:$rootProject.constraint_version")
+	implementation("androidx.work:work-runtime:$rootProject.work_version")
 
 	// Mapbox dependencies for maps
-	implementation "com.mapbox.maps:android:$rootProject.mapbox_sdk_version"
-	implementation "com.mapbox.search:mapbox-search-android-ui:$rootProject.mapbox_search_version"
+	implementation("com.mapbox.maps:android:$rootProject.mapbox_sdk_version")
+	implementation("com.mapbox.search:mapbox-search-android-ui:$rootProject.mapbox_search_version")
 
-	implementation "com.jakewharton.timber:timber:$rootProject.timber_version"
-	debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version"
+	implementation("com.jakewharton.timber:timber:$rootProject.timber_version")
+	debugImplementation("com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version")
 
-	implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit_version"
-	implementation "com.squareup.retrofit2:converter-scalars:$rootProject.retrofit_version"
-	implementation "com.google.code.gson:gson:$rootProject.gson_version"
-	implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version"
-	implementation "com.github.bumptech.glide:glide:$rootProject.glide_version"
+	implementation("com.squareup.retrofit2:retrofit:$rootProject.retrofit_version")
+	implementation("com.squareup.retrofit2:converter-scalars:$rootProject.retrofit_version")
+	implementation("com.google.code.gson:gson:$rootProject.gson_version")
+	implementation("com.squareup.retrofit2:converter-gson:$rootProject.retrofit_version")
+	implementation("com.github.bumptech.glide:glide:$rootProject.glide_version")
 
 	// Skip this if you don't want to use integration libraries or configure Glide.
-	annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glide_version"
+	annotationProcessor("com.github.bumptech.glide:compiler:$rootProject.glide_version")
 
 	// Testing - JUnit
-	testImplementation "junit:junit:$rootProject.junit_version"
-	androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+	testImplementation("junit:junit:$rootProject.junit_version")
+	androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
 	// Core library
-	androidTestImplementation "androidx.test:core:1.5.0"
+	androidTestImplementation("androidx.test:core:1.5.0")
 
 	// AndroidJUnitRunner and JUnit Rules
-	androidTestImplementation "androidx.test:runner:$rootProject.runner_version"
-	androidTestImplementation "androidx.test:rules:$rootProject.rules_version"
+	androidTestImplementation("androidx.test:runner:$rootProject.runner_version")
+	androidTestImplementation("androidx.test:rules:$rootProject.rules_version")
 
 	// Espresso and dependencies
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espresso_version"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$rootProject.espresso_version")
 	// Espresso dependencies
-	androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.espresso_version"
-	androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espresso_version"
-	androidTestImplementation "androidx.test.espresso:espresso-accessibility:$rootProject.espresso_version"
-	androidTestImplementation "androidx.test.espresso:espresso-web:$rootProject.espresso_version"
-	androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$rootProject.espresso_version"
+	androidTestImplementation("androidx.test.espresso:espresso-contrib:$rootProject.espresso_version")
+	androidTestImplementation("androidx.test.espresso:espresso-intents:$rootProject.espresso_version")
+	androidTestImplementation("androidx.test.espresso:espresso-accessibility:$rootProject.espresso_version")
+	androidTestImplementation("androidx.test.espresso:espresso-web:$rootProject.espresso_version")
+	androidTestImplementation("androidx.test.espresso.idling:idling-concurrent:$rootProject.espresso_version")
 
 }
 
