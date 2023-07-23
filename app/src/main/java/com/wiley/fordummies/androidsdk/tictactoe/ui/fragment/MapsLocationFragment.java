@@ -141,8 +141,8 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 		final Activity activity = requireActivity();
 		if (mLocationPuck == null) {
 			mLocationPuck = new LocationPuck2D();
-			mLocationPuck.setBearingImage(AppCompatResources.getDrawable(activity, R.drawable.mapbox_user_puck_icon));
-			mLocationPuck.setShadowImage(AppCompatResources.getDrawable(activity, R.drawable.mapbox_user_icon_shadow));
+			mLocationPuck.setBearingImage(AppCompatResources.getDrawable(activity, com.mapbox.navigation.dropin.R.drawable.mapbox_navigation_puck_icon2));
+			mLocationPuck.setShadowImage(AppCompatResources.getDrawable(activity, com.mapbox.navigation.ui.base.R.drawable.mapbox_ic_navigation));
 		}
 
 		mLocationPlugin = mMapView.getPlugin(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID);

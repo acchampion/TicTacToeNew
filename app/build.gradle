@@ -1,4 +1,6 @@
-apply plugin: 'com.android.application'
+plugins {
+	id 'com.android.application'
+}
 
 android {
     compileSdkVersion(33)
@@ -78,6 +80,7 @@ dependencies {
 
 	// Mapbox dependencies for maps
 	implementation("com.mapbox.maps:android:$rootProject.mapbox_sdk_version")
+	implementation("com.mapbox.navigation:ui-dropin:$rootProject.mapbox_nav_version")
 	implementation("com.mapbox.search:mapbox-search-android-ui:$rootProject.mapbox_search_version")
 
 	implementation("com.jakewharton.timber:timber:$rootProject.timber_version")

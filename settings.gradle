@@ -29,3 +29,17 @@ dependencyResolutionManagement {
 
 rootProject.name = "TicTacToeNew"
 include(":app")
+
+// Enable Gradle's build cache so that subsequent builds are faster.
+// Cached information is removed after one week. If you need to delete the cached data,
+// go to your home directory, the ".gradle" subdirectory, and delete the directory
+// "caches". (Example: 'rm -rf ~/.gradle/caches' on Macs and Linux systems)
+// Source: CircleCI,
+//   https://circleci.com/blog/turbocharging-your-android-gradle-builds-using-build-cache/
+buildCache {
+	local {
+		enabled = true
+		directory = new File(rootDir, 'build-cache')
+		removeUnusedEntriesAfterDays = 7
+	}
+}

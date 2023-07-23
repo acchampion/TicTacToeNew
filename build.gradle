@@ -1,14 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:8.0.2")
-    }
+plugins {
+	id 'com.android.application' version '8.0.2' apply false
+	id 'com.android.library' version '8.0.2' apply false
 }
 
 allprojects {
@@ -45,6 +39,7 @@ ext {
 
 	// Mapbox versions
 	mapbox_sdk_version = "10.14.1"
+	mapbox_nav_version = "2.14.1"
 	mapbox_search_version = "1.0.0-rc.6"
 	mapbox_core_version = "4.0.0"
 	mapbox_java_version = "2.2.10"
