@@ -2,15 +2,17 @@ package com.wiley.fordummies.androidsdk.tictactoe.api;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonClass;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@JsonClass(generateAdapter = false)
 public class PhotoResponse {
-	@SerializedName("photo")
+	@Json(name = "photo")
 	private List<GalleryItem> mGalleryItems;
 
 	public PhotoResponse() {

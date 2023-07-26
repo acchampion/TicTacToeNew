@@ -4,21 +4,23 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonClass;
 
 import java.util.Objects;
 
+@JsonClass(generateAdapter = false)
 public class GalleryItem {
-	@SerializedName("title")
+	@Json(name = "title")
 	private String mTitle = "";
 
-	@SerializedName("id")
+	@Json(name = "id")
 	private String mId = "";
 
-	@SerializedName("url_s")
+	@Json(name = "url_s")
 	private String mUrl = "";
 
-	@SerializedName("owner")
+	@Json(name = "owner")
 	private String mOwner = "";
 
 	public GalleryItem(String title, String id, String url, String owner) {

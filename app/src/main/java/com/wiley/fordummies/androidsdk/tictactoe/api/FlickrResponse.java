@@ -2,13 +2,15 @@ package com.wiley.fordummies.androidsdk.tictactoe.api;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
+import com.squareup.moshi.Json;
+import com.squareup.moshi.JsonClass;
 
 import java.util.Objects;
 
+@JsonClass(generateAdapter = false)
 public class FlickrResponse {
 
-	@SerializedName("photos")
+	@Json(name = "photos")
 	public PhotoResponse mPhotos;
 
 	public FlickrResponse() {

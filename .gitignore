@@ -44,3 +44,4 @@ out
 /captures
 .externalNativeBuild
 app/src/main/res/values/developer_config.xml
+build-cache
