@@ -64,8 +64,10 @@ public class AudioFragment extends Fragment implements View.OnClickListener {
 			new ActivityResultCallback<Uri>() {
 				@Override
 				public void onActivityResult(Uri result) {
-					String uriString = result.toString();
-					mAudioFileUri = Uri.parse(uriString);
+					if (result != null) {
+						String uriString = result.toString();
+						mAudioFileUri = Uri.parse(uriString);
+					}
 				}
 			});
 
