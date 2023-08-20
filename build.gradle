@@ -39,18 +39,18 @@ ext {
 
 	// Timber and LeakCanary versions
 	timber_version = "5.0.1"
-	leakcanary_version = "2.11"
+	leakcanary_version = '2.12'
 
 	// Mapbox versions
-	mapbox_sdk_version = "10.14.1"
+	mapbox_sdk_version = "10.15.0"
 	mapbox_nav_version = "2.14.1"
-	mapbox_search_version = "1.0.0-rc.6"
+	mapbox_search_version = "1.0.0-rc.7"
 	mapbox_core_version = "4.0.0"
 	mapbox_java_version = "2.2.10"
 	mapbox_telemetry_version = "7.0.0"
 
 	// Retrofit, Gson, Moshi, and Glide
-	moshi_version = "1.14.0"
+	moshi_version = '1.15.0'
 	retrofit_version = "2.9.0"
 	glide_version = "4.15.1"
 
