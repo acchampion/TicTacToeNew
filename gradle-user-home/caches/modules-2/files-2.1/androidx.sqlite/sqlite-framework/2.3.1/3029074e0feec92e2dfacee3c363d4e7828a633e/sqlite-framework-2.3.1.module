@@ -1,0 +1,117 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "androidx.sqlite",
+    "module": "sqlite-framework",
+    "version": "2.3.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "androidx.sqlite",
+          "module": "sqlite",
+          "version": {
+            "requires": "2.3.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sqlite-framework-2.3.1.aar",
+          "url": "sqlite-framework-2.3.1.aar",
+          "size": 32176,
+          "sha512": "7d2b72d8faee5033bf6d7e8d9b48a209f4b2a1334180bba236a76c317b5dad034376845ad6b128d2d2f3747e463719427d175d016a2b56d69c8cccbd7fb2609f",
+          "sha256": "827875a565704925f922de847e02f752b45f64e155909b1db25b23527ee5c25c",
+          "sha1": "b29b2eeafaf79ccfd6aa5304df2336ee7f96927e",
+          "md5": "330a931a82901b337fe27e7a61cb2f80"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "androidx.sqlite",
+          "module": "sqlite",
+          "version": {
+            "requires": "2.3.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.7.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "sqlite-framework-2.3.1.aar",
+          "url": "sqlite-framework-2.3.1.aar",
+          "size": 32176,
+          "sha512": "7d2b72d8faee5033bf6d7e8d9b48a209f4b2a1334180bba236a76c317b5dad034376845ad6b128d2d2f3747e463719427d175d016a2b56d69c8cccbd7fb2609f",
+          "sha256": "827875a565704925f922de847e02f752b45f64e155909b1db25b23527ee5c25c",
+          "sha1": "b29b2eeafaf79ccfd6aa5304df2336ee7f96927e",
+          "md5": "330a931a82901b337fe27e7a61cb2f80"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "sqlite-framework-2.3.1-sources.jar",
+          "url": "sqlite-framework-2.3.1-sources.jar",
+          "size": 11377,
+          "sha512": "b6a260d0fbabca2d23b7d02559cc51f3e5db5cd577e2aff72e2cfad739786e1a2b964ffbb49e256e06b2d4d4719e199a423e27be3182c058652d39d5d26e4293",
+          "sha256": "9ad5c3094c812c23a965d1da728318c052d5d6903ed4c32d3c4c48f4be5fbb24",
+          "sha1": "69279d76a2112c43166aa49ba59084328d9c952a",
+          "md5": "a865c46b39b771588d5318229324f33f"
+        }
+      ]
+    }
+  ]
+}

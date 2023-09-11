@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.bumptech.glide</groupId>
+  <artifactId>glide</artifactId>
+  <version>4.15.1</version>
+  <packaging>aar</packaging>
+  <name>Glide</name>
+  <description>A fast and efficient image loading library for Android focused on smooth scrolling.</description>
+  <url>https://github.com/bumptech/glide</url>
+  <licenses>
+    <license>
+      <name>Simplified BSD License</name>
+      <url>http://www.opensource.org/licenses/bsd-license</url>
+      <distribution>repo</distribution>
+    </license>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>sjudd</id>
+      <name>Sam Judd</name>
+      <email>judds@google.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:bumptech/glide.git</connection>
+    <developerConnection>scm:git@github.com:bumptech/glide.git</developerConnection>
+    <url>https://github.com/bumptech/glide</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.bumptech.glide</groupId>
+      <artifactId>gifdecoder</artifactId>
+      <version>4.15.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.bumptech.glide</groupId>
+      <artifactId>disklrucache</artifactId>
+      <version>4.15.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.bumptech.glide</groupId>
+      <artifactId>annotations</artifactId>
+      <version>4.15.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>androidx.fragment</groupId>
+      <artifactId>fragment</artifactId>
+      <version>1.3.6</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>androidx.vectordrawable</groupId>
+      <artifactId>vectordrawable-animated</artifactId>
+      <version>1.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>androidx.exifinterface</groupId>
+      <artifactId>exifinterface</artifactId>
+      <version>1.3.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>androidx.tracing</groupId>
+      <artifactId>tracing</artifactId>
+      <version>1.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -8,6 +8,8 @@ import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.rxjava3.RxDataStore;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -16,6 +18,8 @@ import com.wiley.fordummies.androidsdk.tictactoe.TicTacToeApplication;
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrResponse;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
 import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.PhotoGalleryActivity;
 
 import java.io.IOException;
@@ -25,6 +29,9 @@ import java.util.List;
 import timber.log.Timber;
 
 public class PollWorker extends Worker {
+
+	private final SettingsDataStoreSingleton mDataStoreSingleton;
+	private final SettingsDataStoreHelper mDataStoreHelper;
 
 	private final Context mContext;
 	public static final String ACTION_SHOW_NOTIFICATION = "com.wiley.fordummies.androidsdk.tictactoe.SHOW_NOTIFICATION";
@@ -37,14 +44,17 @@ public class PollWorker extends Worker {
 	public PollWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
 		super(context, workerParams);
 		mContext = context;
+		mDataStoreSingleton = SettingsDataStoreSingleton.getInstance(mContext.getApplicationContext());
+		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
+		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
 	}
 
 	@NonNull
 	@Override
 	public Result doWork() {
 		Timber.tag(TAG).i("Work request triggered");
-		String query = QueryPreferences.getStoredQuery(mContext);
-		String lastResultId = QueryPreferences.getLastResultId(mContext);
+		String query = mDataStoreHelper.getString(QueryPreferences.PREF_SEARCH_QUERY, "");
+		String lastResultId = mDataStoreHelper.getString(QueryPreferences.PREF_LAST_RESULT_ID, "");
 		FlickrFetchr mFlickrFetchr = new FlickrFetchr();
 		List<GalleryItem> itemList = Collections.emptyList();
 
@@ -71,7 +81,11 @@ public class PollWorker extends Worker {
 			Timber.tag(TAG).i("Got an old result: %s", resultId);
 		} else {
 			Timber.tag(TAG).i("Got a new result: %s", resultId);
-			QueryPreferences.setLastResultId(mContext, resultId);
+			if (mDataStoreHelper.putString(QueryPreferences.PREF_LAST_RESULT_ID, resultId)) {
+				Timber.tag(TAG).i("Set last result to %s", resultId);
+			} else {
+				Timber.tag(TAG).e("Error setting last result to %s", resultId);
+			}
 
 			Intent intent = PhotoGalleryActivity.newIntent(mContext);
 			PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0,

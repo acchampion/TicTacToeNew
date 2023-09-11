@@ -1,0 +1,20 @@
+scenario,clean_build_2gb_4workers,clean_build_G1GC_4gb,clean_build_parallelGC
+version,Gradle 8.3,Gradle 8.3,Gradle 8.3
+tasks,:app:assembleDebug,:app:assembleDebug,:app:assembleDebug
+value,total execution time,total execution time,total execution time
+warm-up build #1,21520.65,10595.06,66279.28
+warm-up build #2,6411.78,4974.51,26298.74
+warm-up build #3,5430.38,3905.24,22825.94
+warm-up build #4,5128.49,4251.35,22122.69
+warm-up build #5,4556.94,4679.50,21921.72
+warm-up build #6,4287.66,5023.86,21754.83
+measured build #1,4078.64,6153.71,22857.23
+measured build #2,4003.71,7784.09,23859.25
+measured build #3,3687.49,14090.23,22057.67
+measured build #4,3542.31,21671.39,21238.62
+measured build #5,3433.89,21555.01,23077.02
+measured build #6,3334.26,22139.11,21692.87
+measured build #7,3289.48,21771.87,21436.84
+measured build #8,3148.69,21454.83,20970.65
+measured build #9,3238.04,22075.44,21068.59
+measured build #10,3020.52,22356.47,20803.85

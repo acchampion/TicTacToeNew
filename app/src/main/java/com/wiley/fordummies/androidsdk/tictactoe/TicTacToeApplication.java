@@ -11,6 +11,7 @@ import androidx.work.Configuration;
 
 import com.mapbox.maps.loader.MapboxMapsInitializer;
 
+import rxdogtag2.RxDogTag;
 import timber.log.Timber;
 
 public class TicTacToeApplication extends Application implements Configuration.Provider {
@@ -34,6 +35,8 @@ public class TicTacToeApplication extends Application implements Configuration.P
 
 		AppInitializer.getInstance(this)
 				.initializeComponent(MapboxMapsInitializer.class);
+
+		RxDogTag.install();
 	}
 
 	@NonNull

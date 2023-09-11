@@ -1,0 +1,138 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "androidx.room",
+    "module": "room-runtime",
+    "version": "2.5.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.room",
+          "module": "room-common",
+          "version": {
+            "requires": "2.5.2"
+          }
+        },
+        {
+          "group": "androidx.sqlite",
+          "module": "sqlite",
+          "version": {
+            "requires": "2.3.1"
+          }
+        },
+        {
+          "group": "androidx.sqlite",
+          "module": "sqlite-framework",
+          "version": {
+            "requires": "2.3.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room-runtime-2.5.2.aar",
+          "url": "room-runtime-2.5.2.aar",
+          "size": 237078,
+          "sha512": "20dda7ca8906bac78bf05ce55749a5863962d46f482c7d4da9963ba9d3bbf62dfad8de1c14cd1473a646e48a50b043285b2578881d780287bc712c031f501100",
+          "sha256": "3520d6f38ebac3f461e587d759a052d98a515f0139cbeb0b68c6791ff7c2de5c",
+          "sha1": "b8c4f4f8f8efa8d6714a3d769b2933982c1cc854",
+          "md5": "b383a5c87e5b10fe4a260360977c175e"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation-experimental",
+          "version": {
+            "requires": "1.1.0"
+          }
+        },
+        {
+          "group": "androidx.arch.core",
+          "module": "core-runtime",
+          "version": {
+            "requires": "2.0.1"
+          }
+        },
+        {
+          "group": "androidx.room",
+          "module": "room-common",
+          "version": {
+            "requires": "2.5.2"
+          }
+        },
+        {
+          "group": "androidx.sqlite",
+          "module": "sqlite",
+          "version": {
+            "requires": "2.3.1"
+          }
+        },
+        {
+          "group": "androidx.sqlite",
+          "module": "sqlite-framework",
+          "version": {
+            "requires": "2.3.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "room-runtime-2.5.2.aar",
+          "url": "room-runtime-2.5.2.aar",
+          "size": 237078,
+          "sha512": "20dda7ca8906bac78bf05ce55749a5863962d46f482c7d4da9963ba9d3bbf62dfad8de1c14cd1473a646e48a50b043285b2578881d780287bc712c031f501100",
+          "sha256": "3520d6f38ebac3f461e587d759a052d98a515f0139cbeb0b68c6791ff7c2de5c",
+          "sha1": "b8c4f4f8f8efa8d6714a3d769b2933982c1cc854",
+          "md5": "b383a5c87e5b10fe4a260360977c175e"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "room-runtime-2.5.2-sources.jar",
+          "url": "room-runtime-2.5.2-sources.jar",
+          "size": 88693,
+          "sha512": "afb0167eb4c6b359950a68dd47f651a4c4088ca279878baa400d5926800332460ff43674048c37c1256cc6100edecb487a5a1c57917b58d6b3354814f2c54fd4",
+          "sha256": "4276bea54a6d39508da07e89cf4961129a963dc7d4ef96ecf84ba418b9fb6b59",
+          "sha1": "2e20b98d709a05c45be940f28d393ec4accaa2dc",
+          "md5": "f75a0734a597d6d47f16ffb7ea39faec"
+        }
+      ]
+    }
+  ]
+}

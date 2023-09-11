@@ -1,0 +1,18 @@
+clean_build_2gb_4workers {
+    tasks = [":app:assembleDebug"]
+    gradle-args = ["--max-workers=4"]
+    jvm-args = ["-Xmx2048m"]
+    cleanup-tasks = ["clean"]
+}
+clean_build_parallelGC {
+    tasks = [":app:assembleDebug"]
+    jvm-args = ["-XX:+UseParallelGC"]
+    cleanup-tasks = ["clean"]
+}
+
+clean_build_G1GC_4gb {
+    tasks = [":app:assembleDebug"]
+    jvm-args = ["-Xmx4096m", "-XX:+UseG1GC"]
+    cleanup-tasks = ["clean"]
+}
+

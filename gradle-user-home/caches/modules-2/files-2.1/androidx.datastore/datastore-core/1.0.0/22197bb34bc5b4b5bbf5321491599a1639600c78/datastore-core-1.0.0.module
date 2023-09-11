@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "androidx.datastore",
+    "module": "datastore-core",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.5.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "datastore-core-1.0.0.jar",
+          "url": "datastore-core-1.0.0.jar",
+          "size": 77171,
+          "sha512": "b31e582483bafa98ad46f25d8a21926cd400b087d3f4b7865a081cc5c23f3c3ab3ec206874bcbe2c6913bc8100cfc3d2d8a2f52d601a4af900447598888e5918",
+          "sha256": "c810505542001593075199355b19d98b855edc36d9575bd764180321e20a92bc",
+          "sha1": "91b04fb657294e2906d95dce6a9e5a851f6125c1",
+          "md5": "385ee9663540660b0e583bee02cf786e"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.5.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "datastore-core-1.0.0.jar",
+          "url": "datastore-core-1.0.0.jar",
+          "size": 77171,
+          "sha512": "b31e582483bafa98ad46f25d8a21926cd400b087d3f4b7865a081cc5c23f3c3ab3ec206874bcbe2c6913bc8100cfc3d2d8a2f52d601a4af900447598888e5918",
+          "sha256": "c810505542001593075199355b19d98b855edc36d9575bd764180321e20a92bc",
+          "sha1": "91b04fb657294e2906d95dce6a9e5a851f6125c1",
+          "md5": "385ee9663540660b0e583bee02cf786e"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "datastore-core-1.0.0-sources.jar",
+          "url": "datastore-core-1.0.0-sources.jar",
+          "size": 18602,
+          "sha512": "c191a4152f1c13e1b1fb88b6bfef41f5d133e24c045aaa0d190a625b676651043983a634f2b0b298aa342eff2f3f8ce8de6997863816c25f0cad82e246923adb",
+          "sha256": "1b948c4d25ba74de6024ef82d7fb841200b3f6812e61ff08c098f2ab6cfdedfb",
+          "sha1": "126a72fe6d720b1cffa19b46dffcdb6e77593207",
+          "md5": "c253f5663b9c48530ef34464d621ee06"
+        }
+      ]
+    }
+  ]
+}
