@@ -47,3 +47,7 @@ app/src/main/res/values/developer_config.xml
 
 # Build cache
 build-cache/
+
+# Profiling
+profile*/
+gradle-user-home
