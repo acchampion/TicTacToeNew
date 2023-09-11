@@ -1,0 +1,132 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "org.jetbrains.kotlinx",
+    "module": "kotlinx-coroutines-reactive",
+    "version": "1.6.4",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.4.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.6.4"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-bom",
+          "version": {
+            "requires": "1.6.4"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.reactivestreams",
+          "module": "reactive-streams",
+          "version": {
+            "requires": "1.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.6.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlinx-coroutines-reactive-1.6.4.jar",
+          "url": "kotlinx-coroutines-reactive-1.6.4.jar",
+          "size": 68889,
+          "sha512": "b44e604dde3c72bb8866e933908fef850ab0f293ca1c2176eede8f4baefd6c2bf389c8ceb5cc08a66362e3a5a5409302168e36d0ba0b0e421763be594cd2bc73",
+          "sha256": "887e107fa9c04e4cad2b3212d720214723b1efab0b72f1e1af23d6f0b0fd7978",
+          "sha1": "e35b77a7cb75319cc59d4a174c58739887c4aafc",
+          "md5": "f1689beaa6b2ae549337849fa08b0e39"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.6.4"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-bom",
+          "version": {
+            "requires": "1.6.4"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "org.reactivestreams",
+          "module": "reactive-streams",
+          "version": {
+            "requires": "1.0.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.6.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kotlinx-coroutines-reactive-1.6.4.jar",
+          "url": "kotlinx-coroutines-reactive-1.6.4.jar",
+          "size": 68889,
+          "sha512": "b44e604dde3c72bb8866e933908fef850ab0f293ca1c2176eede8f4baefd6c2bf389c8ceb5cc08a66362e3a5a5409302168e36d0ba0b0e421763be594cd2bc73",
+          "sha256": "887e107fa9c04e4cad2b3212d720214723b1efab0b72f1e1af23d6f0b0fd7978",
+          "sha1": "e35b77a7cb75319cc59d4a174c58739887c4aafc",
+          "md5": "f1689beaa6b2ae549337849fa08b0e39"
+        }
+      ]
+    }
+  ]
+}

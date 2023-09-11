@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.rxjava3.RxDataStore;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -34,6 +36,8 @@ import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.VisibleFragment;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
 import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.model.viewmodel.PhotoGalleryViewModel;
 import com.wiley.fordummies.androidsdk.tictactoe.network.PollWorker;
 
@@ -47,6 +51,9 @@ public class PhotoGalleryFragment extends VisibleFragment {
 	private PhotoGalleryViewModel mPhotoGalleryViewModel;
 	private RecyclerView mPhotoRecyclerView;
 
+	private SettingsDataStoreSingleton mDataStoreSingleton;
+	private SettingsDataStoreHelper mDataStoreHelper;
+
 	private final String TAG = getClass().getSimpleName();
 	private final String POLL_WORK = "POLL_WORK";
 
@@ -54,6 +61,9 @@ public class PhotoGalleryFragment extends VisibleFragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		mDataStoreSingleton = SettingsDataStoreSingleton.getInstance(requireContext().getApplicationContext());
+		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
+		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
@@ -138,7 +148,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 				searchView.setQuery(mPhotoGalleryViewModel.getSearchTerm(), false));
 
 		MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
-		boolean isPolling = QueryPreferences.isPolling(requireContext());
+		boolean isPolling = mDataStoreHelper.getBoolean(QueryPreferences.PREF_IS_POLLING, false);
 		int toggleItemTitle;
 
 		if (isPolling) {
@@ -156,10 +166,14 @@ public class PhotoGalleryFragment extends VisibleFragment {
 			mPhotoGalleryViewModel.fetchPhotos();
 			return true;
 		} else if (menuItemId == R.id.menu_item_toggle_polling) {
-			boolean isPolling = QueryPreferences.isPolling(requireContext());
+			boolean isPolling = mDataStoreHelper.getBoolean(QueryPreferences.PREF_IS_POLLING, false);
 			if (isPolling) {
 				WorkManager.getInstance(requireContext()).cancelUniqueWork(POLL_WORK);
-				QueryPreferences.setPolling(requireContext(), false);
+				if (mDataStoreHelper.putBoolean(QueryPreferences.PREF_IS_POLLING, false)) {
+					Timber.tag(TAG).i("Set polling to false in DataStore");
+				} else {
+					Timber.tag(TAG).e("Error setting polling to false in DataStore");
+				}
 			} else {
 				Constraints constraints = new Constraints.Builder()
 						.setRequiredNetworkType(NetworkType.UNMETERED)
@@ -171,7 +185,11 @@ public class PhotoGalleryFragment extends VisibleFragment {
 				WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(POLL_WORK,
 						ExistingPeriodicWorkPolicy.KEEP,
 						periodicRequest);
-				QueryPreferences.setPolling(requireContext(), true);
+				if (mDataStoreHelper.putBoolean(QueryPreferences.PREF_IS_POLLING, true)) {
+					Timber.tag(TAG).i("Set polling to true in DataStore");
+				} else {
+					Timber.tag(TAG).e("Error setting polling to true in DataStore");
+				}
 			}
 			requireActivity().invalidateOptionsMenu();
 			return true;

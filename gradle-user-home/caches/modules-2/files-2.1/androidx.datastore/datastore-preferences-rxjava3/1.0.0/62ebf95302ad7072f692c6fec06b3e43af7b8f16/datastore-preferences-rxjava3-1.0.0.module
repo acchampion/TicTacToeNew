@@ -1,0 +1,187 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "androidx.datastore",
+    "module": "datastore-preferences-rxjava3",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.5.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.1.0"
+          }
+        },
+        {
+          "group": "io.reactivex.rxjava3",
+          "module": "rxjava",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-rxjava3",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-preferences",
+          "version": {
+            "requires": "1.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "datastore-preferences-rxjava3-1.0.0.aar",
+          "url": "datastore-preferences-rxjava3-1.0.0.aar",
+          "size": 14275,
+          "sha512": "4b541d8dfc6fd454dba4fe37ec2ebc95205470380092515f6f080297fc3f469b624ba5062690aa31119d0a05847982273811324e16bd5933f7594c80db3ee467",
+          "sha256": "0a2ded3fe0f42a75e7aca5df4d146cb11e51032167d0b722dbbe8aa55fb54e7b",
+          "sha1": "ad5489f523340c15b9f7501ef7a4c44b4d74b31a",
+          "md5": "5abb8751e7d2f7b787266bed1435ba85"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.5.10"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.5.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.1.0"
+          }
+        },
+        {
+          "group": "io.reactivex.rxjava3",
+          "module": "rxjava",
+          "version": {
+            "requires": "3.0.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-rxjava3",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "androidx.datastore",
+          "module": "datastore-preferences",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-rx3",
+          "version": {
+            "requires": "1.5.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "datastore-preferences-rxjava3-1.0.0.aar",
+          "url": "datastore-preferences-rxjava3-1.0.0.aar",
+          "size": 14275,
+          "sha512": "4b541d8dfc6fd454dba4fe37ec2ebc95205470380092515f6f080297fc3f469b624ba5062690aa31119d0a05847982273811324e16bd5933f7594c80db3ee467",
+          "sha256": "0a2ded3fe0f42a75e7aca5df4d146cb11e51032167d0b722dbbe8aa55fb54e7b",
+          "sha1": "ad5489f523340c15b9f7501ef7a4c44b4d74b31a",
+          "md5": "5abb8751e7d2f7b787266bed1435ba85"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "datastore-preferences-rxjava3-1.0.0-sources.jar",
+          "url": "datastore-preferences-rxjava3-1.0.0-sources.jar",
+          "size": 5021,
+          "sha512": "fc41cfa721f9e82281c7af64d51aa4b46b7561c82e35129f7116d05831ce063724a79836de1e5e7fa5deeb6fd705e604240f4d5abf24fe934526c01a23a05e39",
+          "sha256": "a42fe7a579627ddad83bd773f3646fc449195d3534394bd95b7963d1fb842bf7",
+          "sha1": "b49378a8921d6fc006d3b44cedf106399be61305",
+          "md5": "d2d14997f1146ec82f6a3f663429a67a"
+        }
+      ]
+    }
+  ]
+}

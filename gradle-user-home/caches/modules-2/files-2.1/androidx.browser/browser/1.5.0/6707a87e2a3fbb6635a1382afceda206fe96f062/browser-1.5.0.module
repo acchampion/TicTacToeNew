@@ -1,0 +1,145 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "androidx.browser",
+    "module": "browser",
+    "version": "1.5.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0-rc-1"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core",
+          "version": {
+            "requires": "1.1.0"
+          }
+        },
+        {
+          "group": "com.google.guava",
+          "module": "listenablefuture",
+          "version": {
+            "requires": "1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "browser-1.5.0.aar",
+          "url": "browser-1.5.0.aar",
+          "size": 205250,
+          "sha512": "9520cbce5797eb1ae12b955a646f980ba46bd7f1ff861c593db3ebbc69764b3b40253dc736543afa556cd459a9704178023dd90f34f0f5ec5c2a1db5f46a91a0",
+          "sha256": "94f24e272b3a269ff9a5ba21da5e652615dc59ac3fa2ba2d7a5ae30d1c4df748",
+          "sha1": "b4711c191d2fc48e67a8757988f8e2801f9209b9",
+          "md5": "6f312f71b7ae84c28c6b9b322ddadbcc"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "androidx.collection",
+          "module": "collection",
+          "version": {
+            "requires": "1.1.0"
+          }
+        },
+        {
+          "group": "androidx.concurrent",
+          "module": "concurrent-futures",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core",
+          "version": {
+            "requires": "1.1.0"
+          }
+        },
+        {
+          "group": "androidx.interpolator",
+          "module": "interpolator",
+          "version": {
+            "requires": "1.0.0"
+          }
+        },
+        {
+          "group": "com.google.guava",
+          "module": "listenablefuture",
+          "version": {
+            "requires": "1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "browser-1.5.0.aar",
+          "url": "browser-1.5.0.aar",
+          "size": 205250,
+          "sha512": "9520cbce5797eb1ae12b955a646f980ba46bd7f1ff861c593db3ebbc69764b3b40253dc736543afa556cd459a9704178023dd90f34f0f5ec5c2a1db5f46a91a0",
+          "sha256": "94f24e272b3a269ff9a5ba21da5e652615dc59ac3fa2ba2d7a5ae30d1c4df748",
+          "sha1": "b4711c191d2fc48e67a8757988f8e2801f9209b9",
+          "md5": "6f312f71b7ae84c28c6b9b322ddadbcc"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "browser-1.5.0-sources.jar",
+          "url": "browser-1.5.0-sources.jar",
+          "size": 98627,
+          "sha512": "7b928ca0f50027dd587168c8f831bc43dda05e4c065ce7cfe2166d324e26b7758b80a235d33a84435fdc2ab907ac0ee4a0a671db334ea99c560a4d16be13fb1d",
+          "sha256": "aa4a4e3d3c73a3718cef24d67fd99fc2127fe72415f74ce469dc3e7004d61ff7",
+          "sha1": "8c230ec3518c9099031c68398cf3b653c0694dcd",
+          "md5": "46836bef40f2c0d0bdd53b2877d929b3"
+        }
+      ]
+    }
+  ]
+}

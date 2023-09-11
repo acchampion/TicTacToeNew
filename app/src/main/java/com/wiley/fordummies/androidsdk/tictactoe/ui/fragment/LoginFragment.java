@@ -2,7 +2,6 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -12,15 +11,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.rxjava3.RxDataStore;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
-import androidx.preference.PreferenceManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.StringUtils;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccount;
 import com.wiley.fordummies.androidsdk.tictactoe.model.viewmodel.UserAccountViewModel;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.GameOptionsActivity;
@@ -45,6 +47,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 	private UserAccountViewModel mUserAccountViewModel;
 	private final List<UserAccount> mUserAccountList = new CopyOnWriteArrayList<>();
 
+	private SettingsDataStoreSingleton mDataStoreSingleton;
+	private SettingsDataStoreHelper mDataStoreHelper;
+
 	private final String TAG = getClass().getSimpleName();
 	private final static String OPT_NAME = "name";
 
@@ -54,6 +59,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		Timber.tag(TAG).d("onCreate()");
 
 		Activity activity = requireActivity();
+		mDataStoreSingleton = SettingsDataStoreSingleton.getInstance(requireContext().getApplicationContext());
 		mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
 		// Here's a dummy observer object that indicates when the UserAccounts change in the database.
 		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, userAccounts -> {
@@ -61,6 +67,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 			mUserAccountList.clear();
 			mUserAccountList.addAll(userAccounts);
 		});
+
+		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
+		/* if (mDataStore == null) {
+			mDataStore = new RxPreferenceDataStoreBuilder(activity.getApplicationContext(), Settings.NAME).build();
+		} */
+		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
 	}
 
 	@Override
@@ -133,11 +145,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 			UserAccount userAccount = new UserAccount(username, sha256HashStr);
 
 			if (mUserAccountList.contains(userAccount)) {
-				// Save username as the name of the player
-				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
-				SharedPreferences.Editor editor = settings.edit();
-				editor.putString(OPT_NAME, username);
-				editor.apply();
+				String accountName = mDataStoreHelper.getString(OPT_NAME, "");
+				if (accountName.equals("")) {
+					// Save username as the name of the player (if it's not there already)
+					if (mDataStoreHelper.putString(OPT_NAME, username)) {
+						Timber.tag(TAG).d("Wrote username successfully to DataStore");
+					} else {
+						Timber.tag(TAG).e("Error writing username to DataStore");
+					}
+				}
 
 				// Bring up the GameOptions screen
 				startActivity(new Intent(activity, GameOptionsActivity.class));

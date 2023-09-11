@@ -1,0 +1,103 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "androidx.core",
+    "module": "core-splashscreen",
+    "version": "1.0.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5-20220421031748+0000"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.6.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "core-splashscreen-1.0.1.aar",
+          "url": "core-splashscreen-1.0.1.aar",
+          "size": 35829,
+          "sha512": "cc5727f9668af30825060e4c16e277f97ceb1921fe75bcc06aa5d5478def1e9abad1924b483bac04bd64f7e1132faf719062eb3feaae1ffd25afc75bc0073b98",
+          "sha256": "25c813ae7795c99dd20628527043f8d0425eb2e826e6c42cb77acbb6c01dde68",
+          "sha1": "fadbb3c79d38f185997886b932b93278a4d8c2c1",
+          "md5": "14277d7864dfa7550166beb8c39acb7e"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.6.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "core-splashscreen-1.0.1.aar",
+          "url": "core-splashscreen-1.0.1.aar",
+          "size": 35829,
+          "sha512": "cc5727f9668af30825060e4c16e277f97ceb1921fe75bcc06aa5d5478def1e9abad1924b483bac04bd64f7e1132faf719062eb3feaae1ffd25afc75bc0073b98",
+          "sha256": "25c813ae7795c99dd20628527043f8d0425eb2e826e6c42cb77acbb6c01dde68",
+          "sha1": "fadbb3c79d38f185997886b932b93278a4d8c2c1",
+          "md5": "14277d7864dfa7550166beb8c39acb7e"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "core-splashscreen-1.0.1-sources.jar",
+          "url": "core-splashscreen-1.0.1-sources.jar",
+          "size": 11458,
+          "sha512": "758509ae4c596c8e9262c0bc930bf186b98778dc0a50f575e2e124920eaae5c4f38e66aaf79198cc3ef2021e7f9cc1bf2cb20227e8c9d8e9cdf46efcc9e7a576",
+          "sha256": "f8c16e2b159971feed61d4c12b0fbf53da91f99f855cb893e5a8f2b67772907f",
+          "sha1": "e033216357e9111d8d520996527bbd098bd81a66",
+          "md5": "f0dddaf82ac1dc7148f9a97fe7919ad6"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "androidx.databinding",
+    "module": "viewbinding",
+    "version": "8.1.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "viewbinding-8.1.1.aar",
+          "url": "viewbinding-8.1.1.aar",
+          "size": 1834,
+          "sha512": "11dc5428c290e35f09bc40516924c34db564956308174f2f8bb50ebbc4f7da5f39a5a576cf2f43014fc8802dd7f698ebbf2e7f81647a504356a5d373394e4248",
+          "sha256": "a60e330bbe3a1108263da9af2cc4d7c9ec901ff1bfc6067d77626575dc864424",
+          "sha1": "b62043b74f29d77da0e68f2e167209b745f66d24",
+          "md5": "67556de288e0ed1f32e06a43a039d2eb"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "viewbinding-8.1.1.aar",
+          "url": "viewbinding-8.1.1.aar",
+          "size": 1834,
+          "sha512": "11dc5428c290e35f09bc40516924c34db564956308174f2f8bb50ebbc4f7da5f39a5a576cf2f43014fc8802dd7f698ebbf2e7f81647a504356a5d373394e4248",
+          "sha256": "a60e330bbe3a1108263da9af2cc4d7c9ec901ff1bfc6067d77626575dc864424",
+          "sha1": "b62043b74f29d77da0e68f2e167209b745f66d24",
+          "md5": "67556de288e0ed1f32e06a43a039d2eb"
+        }
+      ]
+    }
+  ]
+}

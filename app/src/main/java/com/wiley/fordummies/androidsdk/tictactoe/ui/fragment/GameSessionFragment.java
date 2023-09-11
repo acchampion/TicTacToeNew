@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,16 +23,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.rxjava3.RxDataStore;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.preference.PreferenceManager;
 
 import com.wiley.fordummies.androidsdk.tictactoe.Game;
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.Square;
 import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
-import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
+import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.Board;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.GameView;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.HelpActivity;
@@ -65,17 +66,27 @@ public class GameSessionFragment extends Fragment {
 	private ViewGroup mContainer;
 	private Bundle mSavedInstanceState;
 
+	private SettingsDataStoreSingleton mDataStoreSingleton;
+	private SettingsDataStoreHelper mDataStoreHelper;
+
 	private static final String SCOREPLAYERONEKEY = "ScorePlayerOne";
 	private static final String SCOREPLAYERTWOKEY = "ScorePlayerTwo";
 	private static final String GAMEKEY = "Game";
+	private static final String OPT_NAME = "name";
+	private static final String OPT_NAME_DEFAULT = "";
+	private final static String OPT_PLAY_FIRST = "human_starts";
+	private final static boolean OPT_PLAY_FIRST_DEF = true;
 	private final String TAG = getClass().getSimpleName();
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Context context = requireContext();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-		mIsTestMode = prefs.getBoolean("is_test_mode", false);
+
+		Activity activity = requireActivity();
+		mDataStoreSingleton = SettingsDataStoreSingleton.getInstance(requireContext().getApplicationContext());
+		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
+		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
+		mIsTestMode = mDataStoreHelper.getBoolean("is_test_mode", false);
 	}
 
 	@Override
@@ -94,7 +105,7 @@ public class GameSessionFragment extends Fragment {
 		mContainer = container;
 		setRetainInstance(true);
 
-		loadGameFromPrefs();
+		loadGameScores();
 
 		setupBoard(v);
 
@@ -178,13 +189,14 @@ public class GameSessionFragment extends Fragment {
 
 	private void setPlayers(Game theGame) {
 		Activity activity = requireActivity();
-		final Context appContext = activity.getApplicationContext();
-		if (Settings.doesHumanPlayFirst(appContext)) {
-			mFirstPlayerName = Settings.getName(appContext);
+		boolean humanPlaysFirst = mDataStoreHelper.getBoolean(OPT_PLAY_FIRST, OPT_PLAY_FIRST_DEF);
+
+		if (humanPlaysFirst) {
+			mFirstPlayerName = mDataStoreHelper.getString(OPT_NAME, OPT_NAME_DEFAULT);
 			mSecondPlayerName = "Android";
 		} else {
 			mFirstPlayerName = "Android";
-			mSecondPlayerName = Settings.getName(appContext);
+			mSecondPlayerName = mDataStoreHelper.getString(OPT_NAME, "");
 		}
 		theGame.setPlayerNames(mFirstPlayerName, mSecondPlayerName);
 	}
@@ -246,28 +258,37 @@ public class GameSessionFragment extends Fragment {
 		abandonGameDialogFragment.show(fm, "abandon_game");
 	}
 
-	private void loadGameFromPrefs() {
-		Context appCtx = requireContext().getApplicationContext();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appCtx);
-		mScorePlayerOne = prefs.getInt(SCOREPLAYERONEKEY, 0);
-		mScorePlayerTwo = prefs.getInt(SCOREPLAYERTWOKEY, 0);
+	private void loadGameScores() {
+		mScorePlayerOne = mDataStoreHelper.getInt(SCOREPLAYERONEKEY, 0);
+		mScorePlayerTwo = mDataStoreHelper.getInt(SCOREPLAYERTWOKEY, 0);
 	}
 
-	private void saveScoresToPrefs() {
-		Context appCtx = requireContext().getApplicationContext();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appCtx);
-		SharedPreferences.Editor editor = prefs.edit();
-		String gameStr;
-		if (mActiveGame == null) {
-			gameStr = "";
-		} else {
+	private void saveGameScores() {
+		String gameStr = "";
+		if (mActiveGame != null) {
 			gameStr = mActiveGame.toString();
 		}
 
-		editor.putInt(SCOREPLAYERONEKEY, mScorePlayerOne);
-		editor.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo);
-		editor.putString(GAMEKEY, gameStr);
-		editor.apply();
+		Timber.tag(TAG).d("Player 1 score: %d; player 2 score: %d", mScorePlayerOne, mScorePlayerTwo);
+		if (mDataStoreHelper.putInt(SCOREPLAYERONEKEY, mScorePlayerOne)) {
+			Timber.tag(TAG).i("Wrote Player 1 score %d successfully to DataStore", mScorePlayerOne);
+		} else {
+			Timber.tag(TAG).e("Error writing Player 1 score to DataStore");
+		}
+
+		if (mDataStoreHelper.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo)) {
+			Timber.tag(TAG).i("Wrote Player 2 score %d successfully to DataStore", mScorePlayerTwo);
+		} else {
+			Timber.tag(TAG).e("Error writing Player 2 score to DataStore");
+		}
+
+		Timber.tag(TAG).d("Game string: %s", gameStr);
+		if (mDataStoreHelper.putString(GAMEKEY, gameStr)) {
+			Timber.tag(TAG).i("Wrote game string %s to DataStore", gameStr);
+		} else {
+			Timber.tag(TAG).e("Error writing game string to DataStore");
+		}
+
 	}
 
 	private void proceedToFinish() {
@@ -278,7 +299,7 @@ public class GameSessionFragment extends Fragment {
 			alertMessage = winningPlayerName + " Wins!";
 			mGameView.setGameStatus(alertMessage);
 			accumulateScores(winningPlayerName);
-			saveScoresToPrefs();
+			saveGameScores();
 
 			mGameView.showScores(mFirstPlayerName, mScorePlayerOne, mSecondPlayerName, mScorePlayerTwo);
 
@@ -295,7 +316,8 @@ public class GameSessionFragment extends Fragment {
 				.setMessage("Play another game?")
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setPositiveButton("Yes", (dialog, which) -> {
-					saveScoresToPrefs();
+					Timber.tag(TAG + " PlayGameDialogYes ").d("Saving game scores");
+					saveGameScores();
 					LayoutInflater inflater = LayoutInflater.from(activity);
 					if (mContainer != null) {
 						Timber.tag(TAG).d("Calling setupBoard() again");
@@ -317,7 +339,8 @@ public class GameSessionFragment extends Fragment {
 					mScorePlayerOne = 0;
 					mScorePlayerTwo = 0;
 					mActiveGame = null;
-					saveScoresToPrefs();
+					Timber.tag(TAG + " PlayGameDialogNo ").d("Saving game scores: zeroes");
+					saveGameScores();
 					activity.finish();
 				})
 				.show();
@@ -325,6 +348,7 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	private void accumulateScores(String winningPlayerName) {
+		Timber.tag(TAG).d("Scores: Player 1: %d; Player 2: %d", mScorePlayerOne, mScorePlayerTwo);
 		if (winningPlayerName.equals(mFirstPlayerName))
 			mScorePlayerOne++;
 		else
@@ -342,7 +366,7 @@ public class GameSessionFragment extends Fragment {
 		startActivity(emailIntent);
 	}
 
-	private void sendScoresViaSMS() {
+	private void sendScoresViaSms() {
 		String smsText = String.format(Locale.US, "Look at my AWESOME Tic-Tac-Toe score! " +
 				"%s score is %d and %s score is %d", mFirstPlayerName, mScorePlayerOne,
 				mSecondPlayerName, mScorePlayerOne);
@@ -381,7 +405,7 @@ public class GameSessionFragment extends Fragment {
 			sendScoresViaEmail();
 			return true;
 		} else if (itemId == R.id.menu_sms) {
-			sendScoresViaSMS();
+			sendScoresViaSms();
 			return true;
 		} else if (itemId == R.id.menu_call) {
 			callTicTacToeHelp();
