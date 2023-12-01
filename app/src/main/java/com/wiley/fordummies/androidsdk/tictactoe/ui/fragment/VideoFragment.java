@@ -60,9 +60,11 @@ public class VideoFragment extends Fragment implements View.OnClickListener {
 			new ActivityResultCallback<Uri>() {
 				@Override
 				public void onActivityResult(Uri result) {
-					String uriString = result.toString();
-					mVideoFileUri = Uri.parse(uriString);
-					mVideoView.setVideoURI(mVideoFileUri);
+					if (result != null) {
+						String uriString = result.toString();
+						mVideoFileUri = Uri.parse(uriString);
+						mVideoView.setVideoURI(mVideoFileUri);
+					}
 				}
 			});
 

@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.StringUtils;
+import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.model.UserAccount;
@@ -51,7 +52,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 	private SettingsDataStoreHelper mDataStoreHelper;
 
 	private final String TAG = getClass().getSimpleName();
-	private final static String OPT_NAME = "name";
+
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -145,10 +146,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 			UserAccount userAccount = new UserAccount(username, sha256HashStr);
 
 			if (mUserAccountList.contains(userAccount)) {
-				String accountName = mDataStoreHelper.getString(OPT_NAME, "");
+				String accountName = mDataStoreHelper.getString(Settings.Keys.OPT_NAME, "");
 				if (accountName.equals("")) {
 					// Save username as the name of the player (if it's not there already)
-					if (mDataStoreHelper.putString(OPT_NAME, username)) {
+					if (mDataStoreHelper.putString(Settings.Keys.OPT_NAME, username)) {
 						Timber.tag(TAG).d("Wrote username successfully to DataStore");
 					} else {
 						Timber.tag(TAG).e("Error writing username to DataStore");

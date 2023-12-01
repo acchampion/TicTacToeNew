@@ -102,4 +102,5 @@ public class Game {
         return playCount;
     }
 
+	public void resetPlayCount() { playCount = 0;}
 }

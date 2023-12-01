@@ -175,7 +175,7 @@ public class SensorsFragment extends Fragment implements SensorEventListener  {
 		}
 
 		void bind(Sensor sensor) {
-			String name = String.format(Locale.getDefault(), "%-34s", sensor.getName().trim());
+			String name = String.format(Locale.getDefault(), "%-30s", sensor.getName().trim());
 			mSensorNameTv.setText(name);
 			final int version = sensor.getVersion();
 			mSensorVersionTv.setText(String.format(Locale.getDefault(), "%,d", version));

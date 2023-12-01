@@ -35,7 +35,7 @@ import com.bumptech.glide.Glide;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.VisibleFragment;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
-import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
+import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.model.viewmodel.PhotoGalleryViewModel;
@@ -148,7 +148,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 				searchView.setQuery(mPhotoGalleryViewModel.getSearchTerm(), false));
 
 		MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
-		boolean isPolling = mDataStoreHelper.getBoolean(QueryPreferences.PREF_IS_POLLING, false);
+		boolean isPolling = mDataStoreHelper.getBoolean(Settings.Keys.PREF_IS_POLLING, false);
 		int toggleItemTitle;
 
 		if (isPolling) {
@@ -166,10 +166,10 @@ public class PhotoGalleryFragment extends VisibleFragment {
 			mPhotoGalleryViewModel.fetchPhotos();
 			return true;
 		} else if (menuItemId == R.id.menu_item_toggle_polling) {
-			boolean isPolling = mDataStoreHelper.getBoolean(QueryPreferences.PREF_IS_POLLING, false);
+			boolean isPolling = mDataStoreHelper.getBoolean(Settings.Keys.PREF_IS_POLLING, false);
 			if (isPolling) {
 				WorkManager.getInstance(requireContext()).cancelUniqueWork(POLL_WORK);
-				if (mDataStoreHelper.putBoolean(QueryPreferences.PREF_IS_POLLING, false)) {
+				if (mDataStoreHelper.putBoolean(Settings.Keys.PREF_IS_POLLING, false)) {
 					Timber.tag(TAG).i("Set polling to false in DataStore");
 				} else {
 					Timber.tag(TAG).e("Error setting polling to false in DataStore");
@@ -185,7 +185,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 				WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(POLL_WORK,
 						ExistingPeriodicWorkPolicy.KEEP,
 						periodicRequest);
-				if (mDataStoreHelper.putBoolean(QueryPreferences.PREF_IS_POLLING, true)) {
+				if (mDataStoreHelper.putBoolean(Settings.Keys.PREF_IS_POLLING, true)) {
 					Timber.tag(TAG).i("Set polling to true in DataStore");
 				} else {
 					Timber.tag(TAG).e("Error setting polling to true in DataStore");

@@ -61,6 +61,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 					Bitmap bitmap = uriToBitmap(imageUri);
 					mBitmapLiveData.postValue(bitmap);
 					mImageView.setImageURI(imageUri);
+					mImageView.setContentDescription("Image was set");
 				};
 				runnable.run();
 			});

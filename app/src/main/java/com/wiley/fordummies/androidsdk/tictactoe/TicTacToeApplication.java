@@ -11,7 +11,8 @@ import androidx.work.Configuration;
 
 import com.mapbox.maps.loader.MapboxMapsInitializer;
 
-import rxdogtag2.RxDogTag;
+import leakcanary.AppWatcher;
+import leakcanary.LeakCanary;
 import timber.log.Timber;
 
 public class TicTacToeApplication extends Application implements Configuration.Provider {
@@ -23,6 +24,7 @@ public class TicTacToeApplication extends Application implements Configuration.P
 		if (BuildConfig.DEBUG) {
 			Timber.DebugTree debugTree = new Timber.DebugTree();
 			Timber.plant(debugTree);
+			LeakCanary.setConfig(LeakCanary.getConfig());
 		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -35,8 +37,6 @@ public class TicTacToeApplication extends Application implements Configuration.P
 
 		AppInitializer.getInstance(this)
 				.initializeComponent(MapboxMapsInitializer.class);
-
-		RxDogTag.install();
 	}
 
 	@NonNull

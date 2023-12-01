@@ -17,7 +17,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.TicTacToeApplication;
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrResponse;
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
-import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
+import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.activity.PhotoGalleryActivity;
@@ -53,8 +53,8 @@ public class PollWorker extends Worker {
 	@Override
 	public Result doWork() {
 		Timber.tag(TAG).i("Work request triggered");
-		String query = mDataStoreHelper.getString(QueryPreferences.PREF_SEARCH_QUERY, "");
-		String lastResultId = mDataStoreHelper.getString(QueryPreferences.PREF_LAST_RESULT_ID, "");
+		String query = mDataStoreHelper.getString(Settings.Keys.PREF_SEARCH_QUERY, "");
+		String lastResultId = mDataStoreHelper.getString(Settings.Keys.PREF_LAST_RESULT_ID, "");
 		FlickrFetchr mFlickrFetchr = new FlickrFetchr();
 		List<GalleryItem> itemList = Collections.emptyList();
 
@@ -81,7 +81,7 @@ public class PollWorker extends Worker {
 			Timber.tag(TAG).i("Got an old result: %s", resultId);
 		} else {
 			Timber.tag(TAG).i("Got a new result: %s", resultId);
-			if (mDataStoreHelper.putString(QueryPreferences.PREF_LAST_RESULT_ID, resultId)) {
+			if (mDataStoreHelper.putString(Settings.Keys.PREF_LAST_RESULT_ID, resultId)) {
 				Timber.tag(TAG).i("Set last result to %s", resultId);
 			} else {
 				Timber.tag(TAG).e("Error setting last result to %s", resultId);

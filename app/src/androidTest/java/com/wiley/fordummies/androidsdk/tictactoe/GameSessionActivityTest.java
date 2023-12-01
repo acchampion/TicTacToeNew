@@ -19,7 +19,7 @@ import org.junit.Test;
 /**
  * Test that Tic-Tac-Toe's Board UI works.
  * <p>
- * Source: https://stackoverflow.com/questions/30908969/android-writing-test-cases-for-fragments
+ * Source: <a href="https://stackoverflow.com/questions/30908969/android-writing-test-cases-for-fragments">...</a>
  * <p>
  * Created by adamcchampion on 2017/08/20.
  */
@@ -90,6 +90,14 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
 				e.printStackTrace();
 			}
 			assertEquals(mGameSessionFragment.getPlayCount(), 2);
+
+			try {
+				Thread.sleep(500L);
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
+
+			mGameSessionFragment.resetPlayCount();
 		});
     }
 
@@ -107,8 +115,17 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
                     0);
             mBoard.dispatchTouchEvent(newMotionEvent);
 			mGameSessionFragment.scheduleAndroidsTurn(true);
+
+			assertEquals(mGameSessionFragment.getPlayCount(), 2);
+
+			try {
+				Thread.sleep(500L);
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			}
+
+			mGameSessionFragment.resetPlayCount();
         }
-        assertEquals(mGameSessionFragment.getPlayCount(), 2);
     }
 
     protected void afterActivityFinished() {

@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.wiley.fordummies.androidsdk.tictactoe.model.GalleryItem;
-import com.wiley.fordummies.androidsdk.tictactoe.model.QueryPreferences;
+import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.network.FlickrFetchr;
@@ -39,7 +39,7 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
 		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
 
-		mMutableSearchTerm.setValue(mDataStoreHelper.getString(QueryPreferences.PREF_SEARCH_QUERY, ""));
+		mMutableSearchTerm.setValue(mDataStoreHelper.getString(Settings.Keys.PREF_SEARCH_QUERY, ""));
 
 		// mGalleryItemLiveData = flickrFetchr.fetchPhotosOld();
 		mGalleryItemLiveData = Transformations.switchMap(mMutableSearchTerm, (String searchTerm) ->
@@ -62,7 +62,7 @@ public class PhotoGalleryViewModel extends AndroidViewModel {
 	}
 
 	public void fetchPhotos(String query) {
-		if (mDataStoreHelper.putString(QueryPreferences.PREF_SEARCH_QUERY, query)) {
+		if (mDataStoreHelper.putString(Settings.Keys.PREF_SEARCH_QUERY, query)) {
 			Timber.tag(TAG).i("Stored query %s successfully", query);
 		} else {
 			Timber.tag(TAG).e("Error storing search query %s", query);

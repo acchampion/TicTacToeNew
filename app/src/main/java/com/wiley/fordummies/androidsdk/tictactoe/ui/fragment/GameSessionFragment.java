@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +32,7 @@ import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 import com.wiley.fordummies.androidsdk.tictactoe.Square;
 import com.wiley.fordummies.androidsdk.tictactoe.Symbol;
+import com.wiley.fordummies.androidsdk.tictactoe.model.Settings;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreHelper;
 import com.wiley.fordummies.androidsdk.tictactoe.model.SettingsDataStoreSingleton;
 import com.wiley.fordummies.androidsdk.tictactoe.ui.Board;
@@ -69,13 +69,6 @@ public class GameSessionFragment extends Fragment {
 	private SettingsDataStoreSingleton mDataStoreSingleton;
 	private SettingsDataStoreHelper mDataStoreHelper;
 
-	private static final String SCOREPLAYERONEKEY = "ScorePlayerOne";
-	private static final String SCOREPLAYERTWOKEY = "ScorePlayerTwo";
-	private static final String GAMEKEY = "Game";
-	private static final String OPT_NAME = "name";
-	private static final String OPT_NAME_DEFAULT = "";
-	private final static String OPT_PLAY_FIRST = "human_starts";
-	private final static boolean OPT_PLAY_FIRST_DEF = true;
 	private final String TAG = getClass().getSimpleName();
 
 	@Override
@@ -87,6 +80,10 @@ public class GameSessionFragment extends Fragment {
 		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
 		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
 		mIsTestMode = mDataStoreHelper.getBoolean("is_test_mode", false);
+	}
+
+	public void setTestMode(boolean testMode) {
+		mDataStoreHelper.putBoolean("is_test_mode", testMode);
 	}
 
 	@Override
@@ -151,9 +148,6 @@ public class GameSessionFragment extends Fragment {
 
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
 				activity.setShowWhenLocked(true);
-			} else {
-				activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-				activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 			}
 		} catch (NullPointerException npe) {
 			Timber.tag(TAG).e("Could not set subtitle");
@@ -188,15 +182,14 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	private void setPlayers(Game theGame) {
-		Activity activity = requireActivity();
-		boolean humanPlaysFirst = mDataStoreHelper.getBoolean(OPT_PLAY_FIRST, OPT_PLAY_FIRST_DEF);
+		boolean humanPlaysFirst = mDataStoreHelper.getBoolean(Settings.Keys.OPT_PLAY_FIRST, Settings.Keys.OPT_PLAY_FIRST_DEF);
 
 		if (humanPlaysFirst) {
-			mFirstPlayerName = mDataStoreHelper.getString(OPT_NAME, OPT_NAME_DEFAULT);
+			mFirstPlayerName = mDataStoreHelper.getString(Settings.Keys.OPT_NAME, Settings.Keys.OPT_NAME_DEFAULT);
 			mSecondPlayerName = "Android";
 		} else {
 			mFirstPlayerName = "Android";
-			mSecondPlayerName = mDataStoreHelper.getString(OPT_NAME, "");
+			mSecondPlayerName = mDataStoreHelper.getString(Settings.Keys.OPT_NAME, Settings.Keys.OPT_NAME_DEFAULT);
 		}
 		theGame.setPlayerNames(mFirstPlayerName, mSecondPlayerName);
 	}
@@ -259,8 +252,8 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	private void loadGameScores() {
-		mScorePlayerOne = mDataStoreHelper.getInt(SCOREPLAYERONEKEY, 0);
-		mScorePlayerTwo = mDataStoreHelper.getInt(SCOREPLAYERTWOKEY, 0);
+		mScorePlayerOne = mDataStoreHelper.getInt(Settings.Keys.SCOREPLAYERONEKEY, 0);
+		mScorePlayerTwo = mDataStoreHelper.getInt(Settings.Keys.SCOREPLAYERTWOKEY, 0);
 	}
 
 	private void saveGameScores() {
@@ -270,20 +263,20 @@ public class GameSessionFragment extends Fragment {
 		}
 
 		Timber.tag(TAG).d("Player 1 score: %d; player 2 score: %d", mScorePlayerOne, mScorePlayerTwo);
-		if (mDataStoreHelper.putInt(SCOREPLAYERONEKEY, mScorePlayerOne)) {
+		if (mDataStoreHelper.putInt(Settings.Keys.SCOREPLAYERONEKEY, mScorePlayerOne)) {
 			Timber.tag(TAG).i("Wrote Player 1 score %d successfully to DataStore", mScorePlayerOne);
 		} else {
 			Timber.tag(TAG).e("Error writing Player 1 score to DataStore");
 		}
 
-		if (mDataStoreHelper.putInt(SCOREPLAYERTWOKEY, mScorePlayerTwo)) {
+		if (mDataStoreHelper.putInt(Settings.Keys.SCOREPLAYERTWOKEY, mScorePlayerTwo)) {
 			Timber.tag(TAG).i("Wrote Player 2 score %d successfully to DataStore", mScorePlayerTwo);
 		} else {
 			Timber.tag(TAG).e("Error writing Player 2 score to DataStore");
 		}
 
 		Timber.tag(TAG).d("Game string: %s", gameStr);
-		if (mDataStoreHelper.putString(GAMEKEY, gameStr)) {
+		if (mDataStoreHelper.putString(Settings.Keys.GAMEKEY, gameStr)) {
 			Timber.tag(TAG).i("Wrote game string %s to DataStore", gameStr);
 		} else {
 			Timber.tag(TAG).e("Error writing game string to DataStore");
@@ -430,5 +423,11 @@ public class GameSessionFragment extends Fragment {
 		}
 
 		return playCount;
+	}
+
+	public void resetPlayCount() {
+		if (mActiveGame != null) {
+			mActiveGame.resetPlayCount();
+		}
 	}
 }
