@@ -3,7 +3,6 @@ package com.wiley.fordummies.androidsdk.tictactoe;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.startup.AppInitializer;
@@ -11,7 +10,6 @@ import androidx.work.Configuration;
 
 import com.mapbox.maps.loader.MapboxMapsInitializer;
 
-import leakcanary.AppWatcher;
 import leakcanary.LeakCanary;
 import timber.log.Timber;
 
@@ -27,13 +25,11 @@ public class TicTacToeApplication extends Application implements Configuration.P
 			LeakCanary.setConfig(LeakCanary.getConfig());
 		}
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			String name = getString(R.string.notification_channel_name);
-			int importance = NotificationManager.IMPORTANCE_DEFAULT;
-			NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
-			NotificationManager notificationManager = getSystemService(NotificationManager.class);
-			notificationManager.createNotificationChannel(channel);
-		}
+		String name = getString(R.string.notification_channel_name);
+		int importance = NotificationManager.IMPORTANCE_DEFAULT;
+		NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
+		NotificationManager notificationManager = getSystemService(NotificationManager.class);
+		notificationManager.createNotificationChannel(channel);
 
 		AppInitializer.getInstance(this)
 				.initializeComponent(MapboxMapsInitializer.class);

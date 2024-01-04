@@ -84,12 +84,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 
-		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
-			v = inflater.inflate(R.layout.fragment_login_land, container, false);
-		} else {
-			v = inflater.inflate(R.layout.fragment_login, container, false);
-		}
-
+		v = inflater.inflate(R.layout.fragment_login, container, false);
 		mUsernameEditText = v.findViewById(R.id.username_text);
 		mPasswordEditText = v.findViewById(R.id.password_text);
 

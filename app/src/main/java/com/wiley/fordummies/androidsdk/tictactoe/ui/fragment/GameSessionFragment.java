@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -75,7 +74,6 @@ public class GameSessionFragment extends Fragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Activity activity = requireActivity();
 		mDataStoreSingleton = SettingsDataStoreSingleton.getInstance(requireContext().getApplicationContext());
 		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
 		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
@@ -93,11 +91,7 @@ public class GameSessionFragment extends Fragment {
 
 		Activity activity = requireActivity();
 		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
-		if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
-			v = inflater.inflate(R.layout.fragment_gamesession_land, container, false);
-		} else {
-			v = inflater.inflate(R.layout.fragment_game_session, container, false);
-		}
+		v = inflater.inflate(R.layout.fragment_game_session, container, false);
 
 		mContainer = container;
 		setRetainInstance(true);

@@ -1,99 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:baselineAligned="false"
+	tools:ignore="MissingDefaultResource">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/login_title"
-            android:textAlignment="center"
-			android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
+            android:layout_margin="8dp">
 
-		<TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/login"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:labelFor="@+id/username_text"
+				android:text="@string/username"
+				android:textColor="#546E7A" />
+
+			<EditText
+				android:id="@+id/username_text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:inputType="text"
+				android:maxLines="1"
+				android:minHeight="48dp"
+				android:textColorHint="#546E7A"
+				android:autofillHints="username" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="start"
+				android:labelFor="@+id/password_text"
+				android:text="@string/password"
+				android:textColor="#546E7A" />
+
+			<EditText
+				android:id="@+id/password_text"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:inputType="textPassword"
+				android:maxLines="1"
+				android:minHeight="48dp"
+				android:textColorHint="#546E7A"
+				android:autofillHints="password" />
+
+            <Button
+                android:id="@+id/login_button"
+                android:text="@string/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/cancel_button"
+                android:text="@string/exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<androidx.fragment.app.FragmentContainerView
+			android:id="@+id/titles"
+			android:name="com.wiley.fordummies.androidsdk.tictactoe.ui.fragment.AccountFragment"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="start"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginBottom="8dp"
-			android:labelFor="@+id/username_text"
-			android:text="@string/username"
-			android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-		<EditText
-			android:id="@+id/username_text"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginBottom="8dp"
-			android:inputType="text"
-			android:minHeight="48dp"
-			android:singleLine="true"
-			android:autofillHints="username" />
-
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_gravity="start"
-			android:layout_marginLeft="16dp"
-			android:layout_marginTop="8dp"
-			android:layout_marginRight="16dp"
-			android:labelFor="@+id/password_text"
-			android:text="@string/password"
-			android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-		<EditText
-			android:id="@+id/password_text"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="16dp"
-			android:layout_marginRight="16dp"
-			android:layout_marginBottom="8dp"
-			android:inputType="textPassword"
-			android:minHeight="48dp"
-			android:singleLine="true"
-			android:autofillHints="password"/>
-
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/login"/>
-
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/exit"/>
-
-        <Button
-            android:id="@+id/new_user_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/new_user"/>
-
-    </LinearLayout>
-
-</ScrollView>
+			android:layout_margin="8dp"
+			tools:layout="@layout/fragment_account" />
+	</ScrollView>
+</LinearLayout>

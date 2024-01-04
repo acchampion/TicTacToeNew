@@ -1,6 +1,13 @@
 plugins {
-	id 'com.android.application' version '8.2.0'
+	id 'com.android.application' version '8.2.1'
 }
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
 
 android {
     defaultConfig {
@@ -27,7 +34,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildTypes {
+	buildTypes {
 		debug {
 			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
 			buildConfigField 'String', "FlickrAccessToken", FLICKR_ACCESS_TOKEN
@@ -40,6 +47,7 @@ android {
     }
 	buildFeatures {
 		viewBinding = true
+		buildConfig true
 	}
 	namespace("com.wiley.fordummies.androidsdk.tictactoe")
 }
@@ -48,7 +56,10 @@ dependencies {
     implementation(fileTree(include: ["*.jar"], dir: "libs"))
 
 	constraints {
-		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version") {
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0") {
+			because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+		}
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0") {
 			because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
 		}
 	}

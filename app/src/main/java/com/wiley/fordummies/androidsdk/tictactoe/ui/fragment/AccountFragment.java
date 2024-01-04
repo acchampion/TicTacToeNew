@@ -80,8 +80,10 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 			btnExit.setOnClickListener(this);
 		}
 		else {
-			btnExit.setVisibility(View.GONE);
-			btnExit.invalidate();
+			if (btnExit != null) {
+				btnExit.setVisibility(View.GONE);
+				btnExit.invalidate();
+			}
 		}
 
 		return v;
