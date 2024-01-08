@@ -10,7 +10,6 @@ import androidx.work.Configuration;
 
 import com.mapbox.maps.loader.MapboxMapsInitializer;
 
-import leakcanary.LeakCanary;
 import timber.log.Timber;
 
 public class TicTacToeApplication extends Application implements Configuration.Provider {
@@ -22,7 +21,7 @@ public class TicTacToeApplication extends Application implements Configuration.P
 		if (BuildConfig.DEBUG) {
 			Timber.DebugTree debugTree = new Timber.DebugTree();
 			Timber.plant(debugTree);
-			LeakCanary.setConfig(LeakCanary.getConfig());
+			// LeakCanary.setConfig(LeakCanary.getConfig());
 		}
 
 		String name = getString(R.string.notification_channel_name);

@@ -2,6 +2,7 @@ plugins {
 	id 'com.android.application' version '8.2.1'
 }
 
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
@@ -98,7 +99,7 @@ dependencies {
 
 	implementation("com.jakewharton.timber:timber:$rootProject.timber_version")
 	debugImplementation("com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version")
-	releaseImplementation("com.squareup.leakcanary:leakcanary-android-noop:$rootProject.leakcanary_version")
+	// releaseImplementation("com.squareup.leakcanary:leakcanary-android-noop:$rootProject.leakcanary_version")
 
 	implementation("com.squareup.retrofit2:retrofit:$rootProject.retrofit_version")
 	implementation("com.squareup.retrofit2:converter-scalars:$rootProject.retrofit_version")
