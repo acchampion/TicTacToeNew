@@ -20,7 +20,7 @@
 	<item 
 		android:title="@string/call_tictactoe_help"
 		android:id="@+id/menu_call"
-		android:icon="@android:drawable/ic_menu_close_clear_cancel" 
+		android:icon="@android:drawable/sym_call_outgoing"
 		/>
 	<item 
 		android:title="@string/end_game"

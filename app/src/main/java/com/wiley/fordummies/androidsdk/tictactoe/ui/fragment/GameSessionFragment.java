@@ -116,9 +116,6 @@ public class GameSessionFragment extends Fragment {
 		mGameView = new GameView();
 		mGameView.setGameViewComponents(mBoard, turnStatusView, scoreView);
 		setPlayers(mActiveGame);
-		mGameView.showScores(mActiveGame.getPlayerOneName(), mScorePlayerOne,
-				mActiveGame.getPlayerTwoName(), mScorePlayerTwo);
-		mGameView.setGameStatus(mActiveGame.getCurrentPlayerName() + " to play.");
 	}
 
 	@Override
@@ -186,6 +183,10 @@ public class GameSessionFragment extends Fragment {
 			mSecondPlayerName = mDataStoreHelper.getString(Settings.Keys.OPT_NAME, Settings.Keys.OPT_NAME_DEFAULT);
 		}
 		theGame.setPlayerNames(mFirstPlayerName, mSecondPlayerName);
+
+		mGameView.showScores(mActiveGame.getPlayerOneName(), mScorePlayerOne,
+				mActiveGame.getPlayerTwoName(), mScorePlayerTwo);
+		mGameView.setGameStatus(mActiveGame.getCurrentPlayerName() + " to play.");
 	}
 
 	public void scheduleAndroidsTurn(boolean isTestMode) {
