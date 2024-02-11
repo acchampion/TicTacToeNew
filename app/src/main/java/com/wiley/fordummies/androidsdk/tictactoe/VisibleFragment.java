@@ -36,7 +36,7 @@ public class VisibleFragment extends Fragment {
 		ContextCompat.registerReceiver(requireContext(),
 				mOnShowNotification,
 				filter,
-				0);
+				ContextCompat.RECEIVER_NOT_EXPORTED);
 	}
 
 	@Override
