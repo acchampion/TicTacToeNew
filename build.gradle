@@ -30,7 +30,7 @@ ext {
 	constraint_version = "2.1.4"
 	datastore_version = "1.0.0"
 	kotlin_version = "1.9.22"
-	lifecycle_version = "2.6.2"
+	lifecycle_version = '2.7.0'
 	recyclerview_version = "1.3.2"
 	preference_version = "1.2.1"
 	room_version = "2.6.1"
@@ -53,7 +53,7 @@ ext {
 	mapbox_telemetry_version = "7.0.0"
 
 	// Retrofit, Gson, Moshi, and Glide
-	moshi_version = '1.15.0'
+	moshi_version = '1.15.1'
 	retrofit_version = "2.9.0"
 	glide_version = "4.16.0"
 
