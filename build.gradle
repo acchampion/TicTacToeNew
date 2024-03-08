@@ -1,8 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-	id 'com.android.application' version '8.2.2' apply false
-	id 'com.android.library' version '8.2.2' apply false
+	id 'com.android.application' version '8.3.0' apply false
+	id 'com.android.library' version '8.3.0' apply false
 }
 
 allprojects {
@@ -45,8 +45,8 @@ ext {
 	rxdogtag_version = "2.0.2"
 
 	// Mapbox versions
-	mapbox_sdk_version = "10.16.2"
-	mapbox_nav_version = "2.14.1"
+	mapbox_sdk_version = "11.0.0"
+	mapbox_nav_version = "2.18.1"
 	mapbox_search_version = "1.0.0-rc.7"
 	mapbox_core_version = "4.0.0"
 	mapbox_java_version = "2.2.10"

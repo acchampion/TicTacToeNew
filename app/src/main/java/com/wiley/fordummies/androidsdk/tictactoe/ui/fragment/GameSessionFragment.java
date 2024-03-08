@@ -90,7 +90,6 @@ public class GameSessionFragment extends Fragment {
 		View v;
 
 		Activity activity = requireActivity();
-		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 		v = inflater.inflate(R.layout.fragment_game_session, container, false);
 
 		mContainer = container;

@@ -11,7 +11,7 @@
 		android:name="com.wiley.fordummies.androidsdk.tictactoe.PRIVATE"
 		android:description="@string/permission_show_notification"
 		android:label="New Photo Notification"
-		android:protectionLevel="signature" />
+		android:protectionLevel="normal" />
 
 	<uses-feature
 		android:name="android.hardware.telephony"
@@ -27,7 +27,6 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 	<uses-permission android:name="android.permission.CALL_PHONE" />
-	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 	<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
