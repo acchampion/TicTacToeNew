@@ -29,18 +29,13 @@ android {
     }
 	buildTypes {
 		debug {
-			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
-			buildConfigField 'String', "FlickrAccessToken", FLICKR_ACCESS_TOKEN
 		}
         release {
-			buildConfigField 'String', "MapboxAccessToken", MAPBOX_ACCESS_TOKEN
-			buildConfigField 'String', "FlickrAccessToken", FLICKR_ACCESS_TOKEN
             minifyEnabled = false
         }
     }
 	buildFeatures {
 		viewBinding = true
-		buildConfig true
 	}
 	namespace("com.wiley.fordummies.androidsdk.tictactoe")
 }

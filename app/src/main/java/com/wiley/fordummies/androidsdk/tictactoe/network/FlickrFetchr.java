@@ -8,6 +8,8 @@ import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+import com.wiley.fordummies.androidsdk.tictactoe.TicTacToeApplication;
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrApi;
 import com.wiley.fordummies.androidsdk.tictactoe.api.FlickrResponse;
 import com.wiley.fordummies.androidsdk.tictactoe.api.PhotoInterceptor;
@@ -35,6 +37,8 @@ public class FlickrFetchr {
 	private final FlickrApi mFlickrApi;
 	private final Retrofit mRetrofit;
 
+	private final String mFlickrAccessToken = TicTacToeApplication.getContext().getResources().getString(R.string.flickr_access_token);
+
 	private final String TAG = getClass().getSimpleName();
 
 	public FlickrFetchr() {
@@ -53,12 +57,12 @@ public class FlickrFetchr {
 	}
 
 	public Call<FlickrResponse> fetchPhotosRequest() {
-		return mFlickrApi.fetchPhotos();
+		return mFlickrApi.fetchPhotos(mFlickrAccessToken);
 	}
 
 	public LiveData<List<GalleryItem>> fetchPhotosOld() {
 		MutableLiveData<List<GalleryItem>> responseLiveData = new MutableLiveData<>();
-		Call<FlickrResponse> flickrRequest = mFlickrApi.fetchPhotos();
+		Call<FlickrResponse> flickrRequest = mFlickrApi.fetchPhotos(mFlickrAccessToken);
 
 		flickrRequest.enqueue(new Callback<FlickrResponse>() {
 			@Override
@@ -101,12 +105,14 @@ public class FlickrFetchr {
 				}
 			}
 		} catch (IOException ioe) {
+			Timber.tag(TAG).e("IOException when fetching Bitmap for %s", url);
 			ioe.printStackTrace();
 		} finally {
 			if (inputStream != null) {
 				try {
 					inputStream.close();
 				} catch (IOException e) {
+					Timber.tag(TAG).e("IOException when closing InputStream (fetchPhoto(%s))", url);
 					e.printStackTrace();
 				}
 			}

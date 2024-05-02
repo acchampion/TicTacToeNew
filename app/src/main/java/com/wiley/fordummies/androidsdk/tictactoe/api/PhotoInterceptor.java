@@ -2,7 +2,8 @@ package com.wiley.fordummies.androidsdk.tictactoe.api;
 
 import androidx.annotation.NonNull;
 
-import com.wiley.fordummies.androidsdk.tictactoe.BuildConfig;
+import com.wiley.fordummies.androidsdk.tictactoe.R;
+import com.wiley.fordummies.androidsdk.tictactoe.TicTacToeApplication;
 
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ import okhttp3.Response;
 import timber.log.Timber;
 
 public class PhotoInterceptor implements Interceptor {
-	private final String API_KEY = BuildConfig.FlickrAccessToken;
+	private final String API_KEY = TicTacToeApplication.getContext().getString(R.string.flickr_access_token);
 	private final String TAG = getClass().getSimpleName();
 
 	@NonNull
@@ -22,7 +23,6 @@ public class PhotoInterceptor implements Interceptor {
 		Request originalRequest = chain.request();
 
 		HttpUrl newUrl = originalRequest.url().newBuilder()
-				.addQueryParameter("api_key", API_KEY)
 				.addQueryParameter("format", "json")
 				.addQueryParameter("nojsoncallback", "1")
 				.addQueryParameter("extras", "url_s")

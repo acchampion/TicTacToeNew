@@ -1,7 +1,5 @@
 package com.wiley.fordummies.androidsdk.tictactoe.api;
 
-import com.wiley.fordummies.androidsdk.tictactoe.BuildConfig;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,11 +12,10 @@ public interface FlickrApi {
 	Call<String> fetchContents();
 
 	@GET("services/rest/?method=flickr.interestingness.getList" +
-		"&api_key=" + BuildConfig.FlickrAccessToken +
 	    "&format=json" +
 	    "&nojsoncallback=1" +
 	    "&extras=url_s")
-	Call<FlickrResponse> fetchPhotos();
+	Call<FlickrResponse> fetchPhotos(@Query("api_key") String query);
 
 	@GET()
 	Call<ResponseBody> fetchUrlBytes(@Url String url);

@@ -98,7 +98,6 @@
     <string name="maps_location">Maps (Location)</string>
 	<string name="maps_search">Maps (Search; Disabled)</string>
 
-	<string name="mapbox_access_token">pk.eyJ1IjoiYWNjaGFtcGlvbiIsImEiOiJjajZneDMwZDgwMGxjMnd0ZXFpeG1iZDVxIn0.yCuFPMo0P6hS8U9_OS5etQ</string>
 	<string name="address_autofill_query_hint">Enter the address here...</string>
 	<string name="address_autofill_address_city_hint">City</string>
 	<string name="address_autofill_address_zip_hint">Zip Code</string>
