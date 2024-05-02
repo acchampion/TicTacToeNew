@@ -33,7 +33,7 @@ public class Contact {
 
         Contact contact = (Contact) o;
 
-        return mName.equals(contact.mName);
+        return mUid == contact.mUid && mName.equals(contact.mName);
     }
 
     @Override

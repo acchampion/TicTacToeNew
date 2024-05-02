@@ -77,7 +77,7 @@ public class GalleryItem {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		GalleryItem that = (GalleryItem) o;
-		return mTitle.equals(that.mTitle) && mId.equals(that.mId) && Objects.equals(mUrl, that.mUrl);
+		return mTitle.equals(that.mTitle) && mId.equals(that.mId) && mUrl.equals(that.mUrl);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,9 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 
+import com.bumptech.glide.Glide;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
@@ -46,9 +49,12 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	ActivityResultLauncher<Void> mCapturePhotoLaunch = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(),
 			(Bitmap result) -> {
 				Runnable runnable = () -> {
+					Drawable placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder);
 					mBitmapLiveData.postValue(result);
-					Bitmap bitmap = mBitmapLiveData.getValue();
-					mImageView.setImageBitmap(bitmap);
+					Glide.with(requireActivity())
+									.load(result)
+							.into(mImageView);
+					//mImageView.setImageBitmap(bitmap);
 				};
 				runnable.run();
 			});

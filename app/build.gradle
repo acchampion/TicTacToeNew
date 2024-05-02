@@ -1,14 +1,6 @@
 plugins {
-	id 'com.android.application' version '8.3.0'
+	id 'com.android.application' version '8.4.0'
 }
-
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
-
 
 android {
     defaultConfig {
