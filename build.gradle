@@ -53,6 +53,8 @@ ext {
 	mapbox_telemetry_version = "7.0.0"
 
 	// Retrofit, Gson, Moshi, and Glide
+	okio_version = '3.9.0'
+	okhttp_version = '4.12.0'
 	moshi_version = '1.15.1'
 	retrofit_version = '2.11.0'
 	glide_version = "4.16.0"
