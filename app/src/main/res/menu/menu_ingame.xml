@@ -15,7 +15,6 @@
 	<item
 		 android:title="@string/send_sms"
 		 android:id="@+id/menu_sms"
-		 android:icon="@android:drawable/ic_menu_send"
 		 />	 
 	<item 
 		android:title="@string/call_tictactoe_help"

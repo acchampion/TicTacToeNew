@@ -3,7 +3,6 @@ package com.wiley.fordummies.androidsdk.tictactoe.ui.fragment;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,11 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 
-import com.bumptech.glide.Glide;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.io.File;
@@ -40,6 +37,7 @@ import timber.log.Timber;
  */
 
 public class ImagesFragment extends Fragment implements View.OnClickListener {
+	private Button mButtonShowImage, mButtonCaptureImage, mButtonSelectImage;
 	private ImageView mImageView = null;
 	private String mImageFilePath;
 	private final MutableLiveData<Bitmap> mBitmapLiveData = new MutableLiveData<>();
@@ -48,15 +46,19 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 
 	ActivityResultLauncher<Void> mCapturePhotoLaunch = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(),
 			(Bitmap result) -> {
+				final int dstWidth = mImageView.getWidth();
+				final int dstHeight = mImageView.getHeight();
 				Runnable runnable = () -> {
-					Drawable placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder);
-					mBitmapLiveData.postValue(result);
-					Glide.with(requireActivity())
-									.load(result)
-							.into(mImageView);
-					//mImageView.setImageBitmap(bitmap);
+					if (result != null) {
+						Bitmap placeholder = BitmapFactory.decodeResource(requireActivity().getResources(), R.drawable.image_placeholder);
+						mBitmapLiveData.postValue(placeholder);
+						mImageView.setImageBitmap(placeholder);
+						Bitmap scaledBitmap = Bitmap.createScaledBitmap(result, dstWidth, dstHeight, false);
+						mBitmapLiveData.postValue(scaledBitmap);
+						mImageView.setImageBitmap(scaledBitmap);
+					}
 				};
-				runnable.run();
+				requireActivity().runOnUiThread(runnable);
 			});
 
 	ActivityResultLauncher<String> mPickImageResult = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -64,9 +66,12 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 				final String uriString = result.toString();
 				final Uri imageUri = Uri.parse(uriString);
 				Runnable runnable = () -> {
+					Bitmap placeholder = BitmapFactory.decodeResource(requireActivity().getResources(), R.drawable.image_placeholder);
+					mBitmapLiveData.postValue(placeholder);
+					mImageView.setImageBitmap(placeholder);
 					Bitmap bitmap = uriToBitmap(imageUri);
 					mBitmapLiveData.postValue(bitmap);
-					mImageView.setImageURI(imageUri);
+					mImageView.setImageBitmap(bitmap);
 					mImageView.setContentDescription("Image was set");
 				};
 				runnable.run();
@@ -78,12 +83,11 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 
 		mImageView = v.findViewById(R.id.imageView);
 
-		Button buttonShow = v.findViewById(R.id.buttonImageShow);
-		buttonShow.setOnClickListener(this);
-		Button buttonCapture = v.findViewById(R.id.buttonImageCapture);
-		buttonCapture.setOnClickListener(this);
-		Button buttonSelect = v.findViewById(R.id.buttonImageSelect);
-		buttonSelect.setOnClickListener(this);
+		mButtonShowImage = v.findViewById(R.id.buttonImageShow);
+		mButtonCaptureImage = v.findViewById(R.id.buttonImageCapture);
+		mButtonCaptureImage.setOnClickListener(this);
+		mButtonSelectImage = v.findViewById(R.id.buttonImageSelect);
+		mButtonSelectImage.setOnClickListener(this);
 
 		return v;
 	}
@@ -92,8 +96,10 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		File imageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-		mImageFilePath = imageDir.getPath() + File.separator + "sample_image.jpg";
-	}
+        if (imageDir != null) {
+            mImageFilePath = imageDir.getPath() + File.separator + "sample_image.jpg";
+        }
+    }
 
 	@Override
 	public void onResume() {
@@ -107,6 +113,9 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		} catch (NullPointerException npe) {
 			Timber.tag(TAG).e("Could not set subtitle");
 		}
+
+		// Click listener registration
+		mButtonShowImage.setOnClickListener(this);
 	}
 
 	@Override
@@ -114,6 +123,9 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		super.onDestroyView();
 		mBitmapLiveData.setValue(null);
 		mImageView = null;
+		mButtonShowImage = null;
+		mButtonSelectImage = null;
+		mButtonCaptureImage = null;
 	}
 
 	@Override
@@ -140,19 +152,59 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		}
 	}
 
+	/**
+	 * Decodes the Bitmap captured by the Camera, and returns the Bitmap. Adapted from Chapter 16
+	 * in the "Big Nerd Ranch Guide to Android Development", fourth edition.
+	 *
+	 * @param selectedFileUri Uri corresponding to the Bitmap to decode
+	 * @return The scaled Bitmap for the ImageView
+	 */
 	private Bitmap uriToBitmap(Uri selectedFileUri) {
 		Bitmap image = null;
+		ParcelFileDescriptor parcelFileDescriptor = null;
+
 		try {
 			Activity activity = requireActivity();
-			ParcelFileDescriptor parcelFileDescriptor =
-					activity.getContentResolver().openFileDescriptor(selectedFileUri, "r");
-			FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-			image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+			parcelFileDescriptor = activity.getContentResolver().openFileDescriptor(selectedFileUri, "r");
+			if (parcelFileDescriptor != null) {
+				FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
 
-			parcelFileDescriptor.close();
+				// Get the bounds
+				BitmapFactory.Options optionsForBounds = new BitmapFactory.Options();
+				optionsForBounds.inJustDecodeBounds = true;
+
+				int dstWidth = mImageView.getWidth();
+				int dstHeight = mImageView.getHeight();
+				Timber.tag(TAG).d("dstWidth = %d; dstHeight = %d", dstWidth, dstHeight);
+
+				BitmapFactory.decodeFileDescriptor(fileDescriptor, mImageView.getDrawable().getBounds(), optionsForBounds);
+
+				float srcWidth = (float) optionsForBounds.outWidth;
+				float srcHeight = (float) optionsForBounds.outHeight;
+				Timber.tag(TAG).d("srcWidth = %f; srcHeight = %f", srcWidth, srcHeight);
+
+				int inSampleSize = 1;
+
+				if (srcWidth > dstWidth || srcHeight > dstHeight) {
+					float widthScale = srcWidth / dstWidth;
+					float heightScale = srcHeight / dstHeight;
+
+					float sampleScale = Math.max(widthScale, heightScale);
+					inSampleSize = Math.round(sampleScale);
+					Timber.tag(TAG).d("inSampleSize = %d", inSampleSize);
+                }
+
+				BitmapFactory.Options actualOptions = new BitmapFactory.Options();
+				actualOptions.inSampleSize = inSampleSize;
+
+				image = BitmapFactory.decodeFileDescriptor(fileDescriptor, mImageView.getDrawable().getBounds(), actualOptions);
+					// largeBitmap.recycle();
+				parcelFileDescriptor.close();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return image;
 	}
+
 }

@@ -16,7 +16,6 @@ import androidx.datastore.rxjava3.RxDataStore;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
@@ -46,6 +45,7 @@ import timber.log.Timber;
 public class LoginFragment extends Fragment implements View.OnClickListener {
 	private EditText mUsernameEditText;
 	private EditText mPasswordEditText;
+	private Button mLoginButton, mCancelButton, mNewUserButton;
 	private UserAccountViewModel mUserAccountViewModel;
 	private final List<UserAccount> mUserAccountList = new CopyOnWriteArrayList<>();
 
@@ -64,6 +64,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		mDataStoreSingleton = SettingsDataStoreSingleton.getInstance(requireContext().getApplicationContext());
 		mUserAccountViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(UserAccountViewModel.class);
 		// Here's a dummy observer object that indicates when the UserAccounts change in the database.
+
 		mUserAccountViewModel.getAllUserAccounts().observe((LifecycleOwner) activity, userAccounts -> {
 			Timber.tag(TAG).d("The list of UserAccounts just changed; it has %s elements", userAccounts.size());
 			mUserAccountList.clear();
@@ -81,30 +82,31 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v;
 		Timber.tag(TAG).d("onCreateView()");
-		Activity activity = requireActivity();
-
-		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
 
 		v = inflater.inflate(R.layout.fragment_login, container, false);
 		mUsernameEditText = v.findViewById(R.id.username_text);
 		mPasswordEditText = v.findViewById(R.id.password_text);
 
-		final Button loginButton = v.findViewById(R.id.login_button);
-		if (loginButton != null) {
-			loginButton.setOnClickListener(this);
-		}
-		final Button cancelButton = v.findViewById(R.id.cancel_button);
-		if (cancelButton != null) {
-			cancelButton.setOnClickListener(this);
-		}
+		mLoginButton = v.findViewById(R.id.login_button);
+		mCancelButton = v.findViewById(R.id.cancel_button);
+		mNewUserButton =  v.findViewById(R.id.new_user_button);
 
-		final Button newUserButton = v.findViewById(R.id.new_user_button);
-		if (newUserButton != null) {
+		Activity activity = requireActivity();
+		int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+
+		Timber.tag(TAG).d("Registering click listeners");
+		if (mLoginButton != null) {
+			mLoginButton.setOnClickListener(this);
+		}
+		if (mCancelButton != null) {
+			mCancelButton.setOnClickListener(this);
+		}
+		if (mNewUserButton != null) {
 			if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
-				newUserButton.setOnClickListener(this);
+				mNewUserButton.setOnClickListener(this);
 			} else {
-				newUserButton.setVisibility(View.GONE);
-				newUserButton.invalidate();
+				mNewUserButton.setVisibility(View.GONE);
+				mNewUserButton.invalidate();
 			}
 		}
 
@@ -115,8 +117,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 	public void onDestroyView() {
 		super.onDestroyView();
 		Timber.tag(TAG).d("onDestroyView()");
+		Timber.tag(TAG).d("Unregistering click listeners");
+		if (mLoginButton != null) {
+			mLoginButton.setOnClickListener(null);
+		}
+		if (mCancelButton != null) {
+			mCancelButton.setOnClickListener(null);
+		}
+		if (mNewUserButton != null) {
+			mNewUserButton.setOnClickListener(null);
+		}
+
 		mUsernameEditText = null;
 		mPasswordEditText = null;
+		mLoginButton = mCancelButton = mNewUserButton = null;
 	}
 
 	@Override
@@ -125,6 +139,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		Timber.tag(TAG).d("onDestroy()");
 		final Activity activity = requireActivity();
 		mUserAccountViewModel.getAllUserAccounts().removeObservers((LifecycleOwner) activity);
+		mDataStoreHelper = null;
+		mDataStoreSingleton = null;
 	}
 
 	private void checkLogin() {
@@ -143,7 +159,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 			if (mUserAccountList.contains(userAccount)) {
 				String accountName = mDataStoreHelper.getString(Settings.Keys.OPT_NAME, "");
-				if (accountName.equals("")) {
+				if (accountName.isEmpty()) {
 					// Save username as the name of the player (if it's not there already)
 					if (mDataStoreHelper.putString(Settings.Keys.OPT_NAME, username)) {
 						Timber.tag(TAG).d("Wrote username successfully to DataStore");
