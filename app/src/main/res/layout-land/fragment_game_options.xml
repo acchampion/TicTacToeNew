@@ -17,6 +17,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/new_game"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonAudio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,10 +26,11 @@
         android:id="@+id/buttonAudio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/audio"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonVideo"
         app:layout_constraintStart_toEndOf="@+id/buttonNewGame"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +42,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/video"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonAudio"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,6 +55,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/images"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonMapsLocation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonNewGame" />
@@ -63,6 +67,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/maps_location"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonMapsSearch"
         app:layout_constraintStart_toEndOf="@+id/buttonImages"
         app:layout_constraintTop_toBottomOf="@+id/buttonAudio" />
@@ -74,6 +79,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:text="@string/maps_search"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonMapsLocation"
         app:layout_constraintTop_toBottomOf="@+id/buttonVideo" />
@@ -86,6 +92,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/settings"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonHelp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonImages" />
@@ -97,6 +104,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/help"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonSensors"
         app:layout_constraintStart_toEndOf="@+id/buttonSettings"
         app:layout_constraintTop_toBottomOf="@+id/buttonMapsLocation" />
@@ -108,6 +116,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:text="@string/sensors"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonHelp"
         app:layout_constraintTop_toBottomOf="@+id/buttonMapsSearch" />
@@ -120,6 +129,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/photo_gallery"
+        app:layout_constraintWidth_max="300dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonExit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSettings" />
@@ -131,8 +141,20 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/exit"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_max="300dp"
+        app:layout_constraintEnd_toStartOf="@id/spacer"
         app:layout_constraintStart_toEndOf="@+id/buttonPhotoGallery"
         app:layout_constraintTop_toBottomOf="@+id/buttonHelp" />
+
+    <Space
+        android:id="@+id/spacer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintWidth_max="300dp"
+        app:layout_constraintStart_toEndOf="@id/buttonExit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSensors"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

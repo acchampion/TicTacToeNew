@@ -41,6 +41,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	private ImageView mImageView = null;
 	private String mImageFilePath;
 	private final MutableLiveData<Bitmap> mBitmapLiveData = new MutableLiveData<>();
+	private Bitmap mBitmap = null;
 
 	private final String TAG = getClass().getSimpleName();
 
@@ -53,9 +54,9 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 						Bitmap placeholder = BitmapFactory.decodeResource(requireActivity().getResources(), R.drawable.image_placeholder);
 						mBitmapLiveData.postValue(placeholder);
 						mImageView.setImageBitmap(placeholder);
-						Bitmap scaledBitmap = Bitmap.createScaledBitmap(result, dstWidth, dstHeight, false);
-						mBitmapLiveData.postValue(scaledBitmap);
-						mImageView.setImageBitmap(scaledBitmap);
+						mBitmap = Bitmap.createScaledBitmap(result, dstWidth, dstHeight, false);
+						mBitmapLiveData.postValue(mBitmap);
+						mImageView.setImageBitmap(mBitmap);
 					}
 				};
 				requireActivity().runOnUiThread(runnable);
@@ -69,9 +70,9 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 					Bitmap placeholder = BitmapFactory.decodeResource(requireActivity().getResources(), R.drawable.image_placeholder);
 					mBitmapLiveData.postValue(placeholder);
 					mImageView.setImageBitmap(placeholder);
-					Bitmap bitmap = uriToBitmap(imageUri);
-					mBitmapLiveData.postValue(bitmap);
-					mImageView.setImageBitmap(bitmap);
+					mBitmap = uriToBitmap(imageUri);
+					mBitmapLiveData.postValue(mBitmap);
+					mImageView.setImageBitmap(mBitmap);
 					mImageView.setContentDescription("Image was set");
 				};
 				runnable.run();
@@ -122,6 +123,11 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 	public void onDestroyView() {
 		super.onDestroyView();
 		mBitmapLiveData.setValue(null);
+
+		if (mBitmap != null) {
+			mBitmap.recycle();
+		}
+
 		mImageView = null;
 		mButtonShowImage = null;
 		mButtonSelectImage = null;

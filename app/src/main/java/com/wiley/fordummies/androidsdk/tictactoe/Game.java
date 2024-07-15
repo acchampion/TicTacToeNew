@@ -1,106 +1,112 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
+import java.util.Locale;
+
+import timber.log.Timber;
+
 public class Game {
     private enum STATE {Inactive, Active, Won, Draw}
-    private STATE gameState;
+    private STATE mGameState;
 
-    private Symbol currentSymbol;
+    private Symbol mCurrentSymbol;
 
     private enum PLAYER {Player1, Player2}
 
-    private PLAYER currentPlayer = PLAYER.Player1;
-    private PLAYER winningPlayer = PLAYER.Player1;
+    private PLAYER mCurrentPlayer = PLAYER.Player1;
+    private PLAYER mWinningPlayer = PLAYER.Player1;
 
-    private String PlayerOneName = null, PlayerTwoName = null;
+    private String mPlayerOneName = null, mPlayerTwoName = null;
 
-    private final GameGrid gameGrid;
+    private final GameGrid mGameGrid;
 
-    private int playCount = 0;
+    private int mPlayCount = 0;
 
     public Game() { // Constructor
-        gameGrid = new GameGrid();
-        gameState = STATE.Active;
-        currentSymbol = Symbol.SymbolXCreate();
+        mGameGrid = new GameGrid();
+        mGameState = STATE.Active;
+        mCurrentSymbol = Symbol.SymbolXCreate();
     }
 
     public GameGrid getGameGrid() {
-        return gameGrid;
+        return mGameGrid;
     }
 
     public void setPlayerNames(String FirstPlayer, String SecondPlayer) {
-        PlayerOneName = FirstPlayer;
-        PlayerTwoName = SecondPlayer;
+        mPlayerOneName = FirstPlayer;
+        mPlayerTwoName = SecondPlayer;
     }
 
     public String getPlayerOneName() {
-        return PlayerOneName;
+        return mPlayerOneName;
     }
 
     public String getPlayerTwoName() {
-        return PlayerTwoName;
+        return mPlayerTwoName;
     }
 
     public String getCurrentPlayerName() {
-        if (currentPlayer == PLAYER.Player1) return PlayerOneName;
-        else return PlayerTwoName;
+        if (mCurrentPlayer == PLAYER.Player1) return mPlayerOneName;
+        else return mPlayerTwoName;
     }
 
     public String getWinningPlayerName() {
-        if (winningPlayer == PLAYER.Player1) return PlayerOneName;
-        else return PlayerTwoName;
+        if (mWinningPlayer == PLAYER.Player1) return mPlayerOneName;
+        else return mPlayerTwoName;
     }
 
     public boolean play(int x, int y) {
         boolean successfulPlay = false;
-        if ((gameGrid.getValueAtLocation(x, y) == Symbol.SymbolBlankCreate())) {
+        if ((mGameGrid.getValueAtLocation(x, y) == Symbol.SymbolBlankCreate())) {
             successfulPlay = true;
-            playCount = playCount + 1;
-            gameGrid.setValueAtLocation(x, y, currentSymbol);
+            mPlayCount = mPlayCount + 1;
+            String infoLogStr = String.format(Locale.ENGLISH, "Player %s placed symbol %s at position (%d, %d)", mCurrentPlayer, mCurrentSymbol, x, y);
+            Timber.tag("Game").i(infoLogStr);
+            mGameGrid.setValueAtLocation(x, y, mCurrentSymbol);
             checkResultAndSetState();
-            if (gameState == STATE.Active) {// if the game is still active
+            if (mGameState == STATE.Active) {// if the game is still active
                 // Swap symbols and players
-                if (currentSymbol == Symbol.SymbolXCreate())
-                    currentSymbol = Symbol.SymbolOCreate();
+                if (mCurrentSymbol == Symbol.SymbolXCreate())
+                    mCurrentSymbol = Symbol.SymbolOCreate();
                 else
-                    currentSymbol = Symbol.SymbolXCreate();
-                if (currentPlayer == PLAYER.Player1) currentPlayer = PLAYER.Player2;
-                else currentPlayer = PLAYER.Player1;
+                    mCurrentSymbol = Symbol.SymbolXCreate();
+                if (mCurrentPlayer == PLAYER.Player1) mCurrentPlayer = PLAYER.Player2;
+                else mCurrentPlayer = PLAYER.Player1;
             }
         }
         return successfulPlay;
     }
 
     private void checkResultAndSetState() {
-        if (gameGrid.isRowFilled(0) ||
-                gameGrid.isRowFilled(1) ||
-                gameGrid.isRowFilled(2) ||
-                gameGrid.isColumnFilled(0) ||
-                gameGrid.isColumnFilled(1) ||
-                gameGrid.isColumnFilled(2) ||
-                gameGrid.isLeftToRightDiagonalFilled() ||
-                gameGrid.isRightToLeftDiagonalFilled()) {
-            winningPlayer = currentPlayer;
-            gameState = STATE.Won;
-        } else if (playCount == 9) {
-            gameState = STATE.Draw;
+        if (mGameGrid.isRowFilled(0) ||
+                mGameGrid.isRowFilled(1) ||
+                mGameGrid.isRowFilled(2) ||
+                mGameGrid.isColumnFilled(0) ||
+                mGameGrid.isColumnFilled(1) ||
+                mGameGrid.isColumnFilled(2) ||
+                mGameGrid.isLeftToRightDiagonalFilled() ||
+                mGameGrid.isRightToLeftDiagonalFilled()) {
+            mWinningPlayer = mCurrentPlayer;
+            mGameState = STATE.Won;
+        } else if (mPlayCount == 9) {
+            mGameState = STATE.Draw;
         } /* else, leave state as is */
     }
 
     public boolean isActive() {
-        return gameState == STATE.Active;
+        return mGameState == STATE.Active;
     }
 
     public boolean isWon() {
-        return gameState == STATE.Won;
+        return mGameState == STATE.Won;
     }
 
     public boolean isDrawn() {
-        return gameState == STATE.Draw;
+        return mGameState == STATE.Draw;
     }
 
     public int getPlayCount() {
-        return playCount;
+        return mPlayCount;
     }
 
-	public void resetPlayCount() { playCount = 0;}
+	public void resetPlayCount() { mPlayCount = 0;}
 }

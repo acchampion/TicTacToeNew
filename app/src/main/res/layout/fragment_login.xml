@@ -30,7 +30,7 @@
 			android:layout_marginBottom="8dp"
 			android:labelFor="@+id/username_text"
 			android:text="@string/username"
-			android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+			android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 		<EditText
 			android:id="@+id/username_text"
@@ -53,7 +53,7 @@
 			android:layout_marginRight="16dp"
 			android:labelFor="@+id/password_text"
 			android:text="@string/password"
-			android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+			android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 		<EditText
 			android:id="@+id/password_text"
@@ -67,32 +67,40 @@
 			android:singleLine="true"
 			android:autofillHints="password"/>
 
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/login"/>
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_margin="16dp">
+			<Button
+				android:id="@+id/login_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="8dp"
+				android:layout_marginLeft="16dp"
+				android:layout_marginRight="16dp"
+				android:text="@string/login"/>
 
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/exit"/>
+			<Button
+				android:id="@+id/cancel_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="8dp"
+				android:layout_marginLeft="16dp"
+				android:layout_marginRight="16dp"
+				android:text="@string/exit"/>
 
-        <Button
-            android:id="@+id/new_user_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/new_user"/>
+			<Button
+				android:id="@+id/new_user_button"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="16dp"
+				android:layout_marginLeft="16dp"
+				android:layout_marginRight="16dp"
+				android:text="@string/new_user"/>
+		</LinearLayout>
+
+
 
     </LinearLayout>
 

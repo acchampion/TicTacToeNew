@@ -96,7 +96,7 @@
     <string name="image_from_flickr">Image from Flickr</string>
     <string name="show_location">Show Current Location</string>
     <string name="maps_location">Maps (Location)</string>
-	<string name="maps_search">Maps (Search; Disabled)</string>
+	<string name="maps_search">Maps (Search)</string>
 
 	<string name="address_autofill_query_hint">Enter the address here...</string>
 	<string name="address_autofill_address_city_hint">City</string>

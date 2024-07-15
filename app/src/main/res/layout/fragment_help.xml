@@ -12,13 +12,13 @@
             android:id="@+id/help_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/about_tictactoe"
             android:textAlignment="center"
-            android:textSize="30sp"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
 
 		<TextView
 			android:id="@+id/help_content"
@@ -26,23 +26,21 @@
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="16dp"
 			android:layout_marginRight="16dp"
-			android:layout_marginBottom="8dp"
+			android:layout_marginBottom="16dp"
 			android:scrollbarAlwaysDrawVerticalTrack="true"
 			android:text="@string/help_text"
-			android:textColor="#546E7A"
-			android:textSize="15sp"/>
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
             android:id="@+id/sources_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:text="@string/sources_title"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-			android:textSize="15sp"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
 		<TextView
 			android:id="@+id/sources_content"
@@ -50,26 +48,26 @@
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="16dp"
 			android:layout_marginRight="16dp"
-			android:layout_marginBottom="8dp"
+			android:layout_marginBottom="24dp"
 			android:text="@string/sources_text"
-			android:textColor="#546E7A" />
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <Button
             android:id="@+id/button_wikipedia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:text="@string/tictactoe_wikipedia" />
 
         <Button
             android:id="@+id/button_wikipedia_webview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/tictactoe_wikipedia_webview" />
 
     </LinearLayout>

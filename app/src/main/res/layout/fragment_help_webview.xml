@@ -14,9 +14,9 @@
     <WebView
         android:id="@+id/helpwithwebview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1.0"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
         />
 
 </LinearLayout>
