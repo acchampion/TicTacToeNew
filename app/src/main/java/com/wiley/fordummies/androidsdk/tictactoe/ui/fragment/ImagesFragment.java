@@ -158,6 +158,7 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		}
 	}
 
+
 	/**
 	 * Decodes the Bitmap captured by the Camera, and returns the Bitmap. Adapted from Chapter 16
 	 * in the "Big Nerd Ranch Guide to Android Development", fourth edition.
@@ -198,13 +199,13 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 					float sampleScale = Math.max(widthScale, heightScale);
 					inSampleSize = Math.round(sampleScale);
 					Timber.tag(TAG).d("inSampleSize = %d", inSampleSize);
-                }
+				}
 
 				BitmapFactory.Options actualOptions = new BitmapFactory.Options();
 				actualOptions.inSampleSize = inSampleSize;
 
 				image = BitmapFactory.decodeFileDescriptor(fileDescriptor, mImageView.getDrawable().getBounds(), actualOptions);
-					// largeBitmap.recycle();
+				// largeBitmap.recycle();
 				parcelFileDescriptor.close();
 			}
 		} catch (IOException e) {
@@ -212,5 +213,4 @@ public class ImagesFragment extends Fragment implements View.OnClickListener {
 		}
 		return image;
 	}
-
 }

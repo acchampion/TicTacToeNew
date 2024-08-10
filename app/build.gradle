@@ -1,5 +1,5 @@
 plugins {
-	id 'com.android.application' version '8.5.0'
+	id 'com.android.application' version '8.5.2'
 }
 
 android {
@@ -24,8 +24,8 @@ android {
     }
     compileOptions {
 		coreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 	buildTypes {
 		debug {
