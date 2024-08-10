@@ -19,8 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.rxjava3.RxDataStore;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -46,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
-public class PhotoGalleryFragment extends VisibleFragment {
+public class PhotoGalleryFragment extends VisibleFragment implements MenuProvider {
 
 	private PhotoGalleryViewModel mPhotoGalleryViewModel;
 	private RecyclerView mPhotoRecyclerView;
@@ -65,7 +68,6 @@ public class PhotoGalleryFragment extends VisibleFragment {
 		RxDataStore<Preferences> mDataStore = mDataStoreSingleton.getDataStore();
 		mDataStoreHelper = new SettingsDataStoreHelper(mDataStore);
 		setRetainInstance(true);
-		setHasOptionsMenu(true);
 
 		Activity activity = requireActivity();
 		mPhotoGalleryViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(PhotoGalleryViewModel.class);
@@ -82,6 +84,8 @@ public class PhotoGalleryFragment extends VisibleFragment {
 
 		return view;
 	}
+
+
 
 	@Override
 	public void onResume() {
@@ -109,11 +113,16 @@ public class PhotoGalleryFragment extends VisibleFragment {
 					mPhotoRecyclerView.setAdapter(adapter);
 				});
 
+		final MenuHost menuHost = requireActivity();
+		menuHost.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
+
+		final MenuHost menuHost = requireActivity();
+		menuHost.removeMenuProvider(this);
 	}
 
 	@Override
@@ -121,31 +130,33 @@ public class PhotoGalleryFragment extends VisibleFragment {
 		super.onDestroy();
 	}
 
+
 	@Override
-	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_photo_gallery, menu);
+	public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+		menuInflater.inflate(R.menu.menu_photo_gallery, menu);
 
 		MenuItem searchItem = menu.findItem(R.id.menu_item_search);
 		final SearchView searchView = (SearchView) searchItem.getActionView();
 
-		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				Timber.tag(TAG).d("QueryTextSubmit: %s", query);
-				mPhotoGalleryViewModel.fetchPhotos(query);
-				return true;
-			}
+		if (searchView != null) {
+			searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+				@Override
+				public boolean onQueryTextSubmit(String query) {
+					Timber.tag(TAG).d("QueryTextSubmit: %s", query);
+					mPhotoGalleryViewModel.fetchPhotos(query);
+					return true;
+				}
 
-			@Override
-			public boolean onQueryTextChange(String newText) {
-				Timber.tag(TAG).d("QueryTextChange: %s", newText);
-				return false;
-			}
-		});
+				@Override
+				public boolean onQueryTextChange(String newText) {
+					Timber.tag(TAG).d("QueryTextChange: %s", newText);
+					return false;
+				}
+			});
 
-		searchView.setOnSearchClickListener(v ->
-				searchView.setQuery(mPhotoGalleryViewModel.getSearchTerm(), false));
+			searchView.setOnSearchClickListener(v ->
+					searchView.setQuery(mPhotoGalleryViewModel.getSearchTerm(), false));
+		}
 
 		MenuItem toggleItem = menu.findItem(R.id.menu_item_toggle_polling);
 		boolean isPolling = mDataStoreHelper.getBoolean(Settings.Keys.PREF_IS_POLLING, false);
@@ -157,11 +168,12 @@ public class PhotoGalleryFragment extends VisibleFragment {
 			toggleItemTitle = R.string.start_polling;
 		}
 		toggleItem.setTitle(toggleItemTitle);
+
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-		final int menuItemId = item.getItemId();
+	public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+		final int menuItemId = menuItem.getItemId();
 		if (menuItemId == R.id.menu_item_clear) {
 			mPhotoGalleryViewModel.fetchPhotos();
 			return true;
@@ -194,7 +206,8 @@ public class PhotoGalleryFragment extends VisibleFragment {
 			requireActivity().invalidateOptionsMenu();
 			return true;
 		} else {
-			return super.onOptionsItemSelected(item);
+			Timber.tag(TAG).e("Error: Invalid menu item selected");
+			return false;
 		}
 	}
 

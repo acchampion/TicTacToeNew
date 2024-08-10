@@ -21,10 +21,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.rxjava3.RxDataStore;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 
 import com.wiley.fordummies.androidsdk.tictactoe.Game;
 import com.wiley.fordummies.androidsdk.tictactoe.GameGrid;
@@ -49,7 +52,7 @@ import timber.log.Timber;
  * <p>
  * Created by adamcchampion on 2017/08/19.
  */
-public class GameSessionFragment extends Fragment {
+public class GameSessionFragment extends Fragment implements MenuProvider {
 	private static final int ANDROID_TIMEOUT_BASE = 500;
 	private static final int ANDROID_TIMEOUT_SEED = 2000;
 
@@ -99,8 +102,6 @@ public class GameSessionFragment extends Fragment {
 
 		setupBoard(v);
 
-		setHasOptionsMenu(true);
-
 		return v;
 	}
 
@@ -123,6 +124,9 @@ public class GameSessionFragment extends Fragment {
 		if (savedInstanceState != null) {
 			mSavedInstanceState = savedInstanceState;
 		}
+
+		final MenuHost menuHost = requireActivity();
+		menuHost.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 	}
 
 	@Override
@@ -156,6 +160,9 @@ public class GameSessionFragment extends Fragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 		Timber.tag(TAG).d("onDestroyView()");
+
+		final MenuHost menuHost = requireActivity();
+		menuHost.removeMenuProvider(this);
 	}
 
 	@Override
@@ -303,7 +310,7 @@ public class GameSessionFragment extends Fragment {
 				.setMessage("Play another game?")
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setPositiveButton("Yes", (dialog, which) -> {
-					Timber.tag(TAG + " PlayGameDialogYes ").d("Saving game scores");
+					Timber.tag(String.format("%s PlayGameDialogYes ", TAG)).d("Saving game scores");
 					saveGameScores();
 					LayoutInflater inflater = LayoutInflater.from(activity);
 					if (mContainer != null) {
@@ -326,7 +333,7 @@ public class GameSessionFragment extends Fragment {
 					mScorePlayerOne = 0;
 					mScorePlayerTwo = 0;
 					mActiveGame = null;
-					Timber.tag(TAG + " PlayGameDialogNo ").d("Saving game scores: zeroes");
+					Timber.tag(String.format("%s PlayGameDialogNo ", TAG)).d("Saving game scores: zeroes");
 					saveGameScores();
 					activity.finish();
 				})
@@ -372,13 +379,34 @@ public class GameSessionFragment extends Fragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_ingame, menu);
+	public void onSaveInstanceState(@NonNull Bundle outState) {
+		super.onSaveInstanceState(outState);
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item) {
-		final int itemId = item.getItemId();
+	public int getPlayCount() {
+		int playCount = 0;
+
+		if (mActiveGame != null) {
+			playCount = mActiveGame.getPlayCount();
+		}
+
+		return playCount;
+	}
+
+	public void resetPlayCount() {
+		if (mActiveGame != null) {
+			mActiveGame.resetPlayCount();
+		}
+	}
+
+	@Override
+	public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+		menuInflater.inflate(R.menu.menu_ingame, menu);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+		final int itemId = menuItem.getItemId();
 		final Activity activity = requireActivity();
 		final Context appContext = activity.getApplicationContext();
 
@@ -402,26 +430,5 @@ public class GameSessionFragment extends Fragment {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void onSaveInstanceState(@NonNull Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
-
-	public int getPlayCount() {
-		int playCount = 0;
-
-		if (mActiveGame != null) {
-			playCount = mActiveGame.getPlayCount();
-		}
-
-		return playCount;
-	}
-
-	public void resetPlayCount() {
-		if (mActiveGame != null) {
-			mActiveGame.resetPlayCount();
-		}
 	}
 }

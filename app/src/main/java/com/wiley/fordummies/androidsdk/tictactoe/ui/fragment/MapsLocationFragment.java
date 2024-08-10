@@ -14,7 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -49,7 +52,7 @@ import timber.log.Timber;
  *   Mapbox example app/a>.
  */
 public class MapsLocationFragment extends Fragment implements PermissionsListener, OnStyleDataLoadedListener,
-		OnIndicatorBearingChangedListener, OnIndicatorPositionChangedListener, OnMoveListener {
+		OnIndicatorBearingChangedListener, OnIndicatorPositionChangedListener, OnMoveListener, MenuProvider {
 
 	private final PermissionsManager mPermissionsManager = new PermissionsManager(this);
 	private MapView mMapView;
@@ -62,7 +65,6 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		setHasOptionsMenu(true);
 
 		View v = inflater.inflate(R.layout.fragment_maps_location, container, false);
 
@@ -74,24 +76,10 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 	}
 
 	@Override
-	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_maps, menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-		final int itemId = item.getItemId();
-		final Activity activity = requireActivity();
-		if (itemId == R.id.menu_showcurrentlocation) {
-			if (!PermissionsManager.areLocationPermissionsGranted(requireContext())) {
-				mPermissionsManager.requestLocationPermissions(activity);
-			} else {
-				MapboxMap map = mMapView.getMapboxMap();
-				setupMap(map);
-			}
-		}
-		return false;
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		final MenuHost menuHost = requireActivity();
+		menuHost.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 	}
 
 	@Override
@@ -105,6 +93,9 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 		MapboxMap map = mMapView.getMapboxMap();
 		map.removeOnStyleDataLoadedListener(this);
 		mMapView = null;
+
+		final MenuHost menuHost = requireActivity();
+		menuHost.removeMenuProvider(this);
 	}
 
 	@Override
@@ -211,5 +202,25 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 		if (mGesturesPlugin != null) {
 			mGesturesPlugin.removeOnMoveListener(this);
 		}
+	}
+
+	@Override
+	public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+		menuInflater.inflate(R.menu.menu_maps, menu);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+		final int itemId = menuItem.getItemId();
+		final Activity activity = requireActivity();
+		if (itemId == R.id.menu_showcurrentlocation) {
+			if (!PermissionsManager.areLocationPermissionsGranted(requireContext())) {
+				mPermissionsManager.requestLocationPermissions(activity);
+			} else {
+				MapboxMap map = mMapView.getMapboxMap();
+				setupMap(map);
+			}
+		}
+		return false;
 	}
 }

@@ -13,10 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 
 import com.wiley.fordummies.androidsdk.tictactoe.MediaPlaybackService;
 import com.wiley.fordummies.androidsdk.tictactoe.R;
@@ -39,7 +43,7 @@ import timber.log.Timber;
  * Created by adamcchampion on 2017/08/05.
  */
 
-public class GameOptionsFragment extends Fragment implements View.OnClickListener {
+public class GameOptionsFragment extends Fragment implements View.OnClickListener, MenuProvider {
 	private final String TAG = getClass().getSimpleName();
 
 	@Override
@@ -69,9 +73,15 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 		Button btnExit = v.findViewById(R.id.buttonExit);
 		btnExit.setOnClickListener(this);
 
-		setHasOptionsMenu(true);
-
 		return v;
+	}
+
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		final MenuHost menuHost = requireActivity();
+		menuHost.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 	}
 
 	@Override
@@ -87,35 +97,6 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 			Timber.tag(TAG).e("Could not set subtitle");
 		}
 	}
-
-	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu, menu);
-	}
-
-	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-		final Activity activity = requireActivity();
-		final Context appContext = activity.getApplicationContext();
-		final int itemId = item.getItemId();
-
-		if (itemId == R.id.menu_settings) {
-			startActivity(new Intent(appContext, SettingsActivity.class));
-			return true;
-		} else if (itemId == R.id.menu_help) {
-			startActivity(new Intent(appContext, HelpActivity.class));
-			return true;
-		} else if (itemId == R.id.menu_exit) {
-			showQuitAppDialog();
-			return true;
-		} else if (itemId == R.id.menu_contacts) {
-			startActivity(new Intent(appContext, ContactsActivity.class));
-			return true;
-		} else {
-			Timber.tag(TAG).e("Invalid menu item selection");
-			return false;
-		}
-	}
-
 
 	public void onClick(View v) {
 		final Activity activity = requireActivity();
@@ -157,6 +138,9 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 		Activity activity = requireActivity();
 		Context appContext = activity.getApplicationContext();
 		activity.stopService(new Intent(appContext, MediaPlaybackService.class));
+
+		final MenuHost menuHost = requireActivity();
+		menuHost.removeMenuProvider(this);
 	}
 
 	private void showQuitAppDialog() {
@@ -170,4 +154,32 @@ public class GameOptionsFragment extends Fragment implements View.OnClickListene
 		}
 	}
 
+	@Override
+	public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+		menuInflater.inflate(R.menu.menu, menu);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+		final Activity activity = requireActivity();
+		final Context appContext = activity.getApplicationContext();
+		final int itemId = menuItem.getItemId();
+
+		if (itemId == R.id.menu_settings) {
+			startActivity(new Intent(appContext, SettingsActivity.class));
+			return true;
+		} else if (itemId == R.id.menu_help) {
+			startActivity(new Intent(appContext, HelpActivity.class));
+			return true;
+		} else if (itemId == R.id.menu_exit) {
+			showQuitAppDialog();
+			return true;
+		} else if (itemId == R.id.menu_contacts) {
+			startActivity(new Intent(appContext, ContactsActivity.class));
+			return true;
+		} else {
+			Timber.tag(TAG).e("Invalid menu item selection");
+			return false;
+		}
+	}
 }
