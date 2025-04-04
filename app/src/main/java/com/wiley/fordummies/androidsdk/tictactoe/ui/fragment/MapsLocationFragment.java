@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
@@ -24,13 +23,12 @@ import com.mapbox.android.core.permissions.PermissionsManager;
 import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.geojson.Point;
 import com.mapbox.maps.CameraOptions;
+import com.mapbox.maps.ImageHolder;
 import com.mapbox.maps.MapView;
 import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.Style;
-import com.mapbox.maps.extension.observable.eventdata.StyleDataLoadedEventData;
 import com.mapbox.maps.plugin.LocationPuck2D;
 import com.mapbox.maps.plugin.Plugin;
-import com.mapbox.maps.plugin.delegates.listeners.OnStyleDataLoadedListener;
 import com.mapbox.maps.plugin.gestures.GesturesPlugin;
 import com.mapbox.maps.plugin.gestures.OnMoveListener;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
@@ -41,8 +39,6 @@ import com.wiley.fordummies.androidsdk.tictactoe.R;
 
 import java.util.List;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 import timber.log.Timber;
 
 /**
@@ -51,7 +47,7 @@ import timber.log.Timber;
  * I modified this example based on <a href="https://docs.mapbox.com/android/maps/examples/location-tracking/">a
  *   Mapbox example app/a>.
  */
-public class MapsLocationFragment extends Fragment implements PermissionsListener, OnStyleDataLoadedListener,
+public class MapsLocationFragment extends Fragment implements PermissionsListener,
 		OnIndicatorBearingChangedListener, OnIndicatorPositionChangedListener, OnMoveListener, MenuProvider {
 
 	private final PermissionsManager mPermissionsManager = new PermissionsManager(this);
@@ -91,7 +87,6 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 		mLocationPlugin.removeOnIndicatorPositionChangedListener(this);
 		mLocationPlugin = null;
 		MapboxMap map = mMapView.getMapboxMap();
-		map.removeOnStyleDataLoadedListener(this);
 		mMapView = null;
 
 		final MenuHost menuHost = requireActivity();
@@ -99,7 +94,7 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 	}
 
 	@Override
-	public void onExplanationNeeded(List<String> permissionsToExplain) {
+	public void onExplanationNeeded(@NonNull List<String> permissionsToExplain) {
 		final Context ctx = requireContext();
 		Toast.makeText(ctx, "You must enable location permissions", Toast.LENGTH_SHORT).show();
 	}
@@ -123,29 +118,24 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 				.zoom(14.0)
 				.build();
 		map.setCamera(cameraOptions);
-		map.loadStyleUri(Style.MAPBOX_STREETS);
-		map.addOnStyleDataLoadedListener(this);
+		map.loadStyle(Style.STANDARD);
+		initLocation();
+		setupGesturesListener();
 	}
 
 
 	private void initLocation() {
-		final Activity activity = requireActivity();
 		if (mLocationPuck == null) {
 			mLocationPuck = new LocationPuck2D();
-			mLocationPuck.setBearingImage(AppCompatResources.getDrawable(activity, com.mapbox.navigation.dropin.R.drawable.mapbox_navigation_puck_icon2));
-			mLocationPuck.setShadowImage(AppCompatResources.getDrawable(activity, com.mapbox.navigation.ui.base.R.drawable.mapbox_ic_navigation));
+			mLocationPuck.setBearingImage(ImageHolder.from(R.drawable.mapbox_user_puck_icon));
+			mLocationPuck.setShadowImage(ImageHolder.from(R.drawable.mapbox_user_icon_shadow));
 		}
 
 		mLocationPlugin = mMapView.getPlugin(Plugin.MAPBOX_LOCATION_COMPONENT_PLUGIN_ID);
 		if (mLocationPlugin != null) {
-			mLocationPlugin.updateSettings(new Function1<LocationComponentSettings, Unit>() {
-				@Override
-				public Unit invoke(LocationComponentSettings locationComponentSettings) {
-					locationComponentSettings.setEnabled(true);
-					locationComponentSettings.setLocationPuck(mLocationPuck);
-					return null;
-				}
-			});
+			final LocationComponentSettings.Builder builder = new LocationComponentSettings.Builder(mLocationPuck);
+			builder.setEnabled(true);
+			mLocationPlugin.updateSettings(theBuilder -> null);
 			mLocationPlugin.addOnIndicatorBearingChangedListener(this);
 			mLocationPlugin.addOnIndicatorPositionChangedListener(this);
 		}
@@ -186,11 +176,7 @@ public class MapsLocationFragment extends Fragment implements PermissionsListene
 		mGesturesPlugin.setFocalPoint(map.pixelForCoordinate(point));
 	}
 
-	@Override
-	public void onStyleDataLoaded(@NonNull StyleDataLoadedEventData styleDataLoadedEventData) {
-		initLocation();
-		setupGesturesListener();
-	}
+
 
 	private void onCameraTrackingDismissed() {
 		Timber.tag(TAG).d("onCameraTrackingDismissed()");

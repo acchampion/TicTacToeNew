@@ -55,8 +55,6 @@ public class GameSessionActivityTest extends ActivityTestRule<GameSessionActivit
     @Override
     protected void beforeActivityLaunched() {
         super.beforeActivityLaunched();
-
-
     }
 
     @Test

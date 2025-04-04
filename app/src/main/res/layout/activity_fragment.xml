@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-	android:theme="@style/AppTheme"
-    android:id="@+id/fragment_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</FrameLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/fragment_container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:paddingLeft="16dp"
+	android:layout_marginTop="?attr/actionBarSize"
+	android:paddingTop="?attr/actionBarSize"
+	android:paddingRight="16dp"
+	android:paddingBottom="16dp"
+	android:theme="@style/AppTheme"/>
