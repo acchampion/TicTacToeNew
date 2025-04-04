@@ -11,6 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.rxjava3.RxDataStore;
 import androidx.fragment.app.Fragment;
@@ -45,6 +50,7 @@ import timber.log.Timber;
 public class LoginFragment extends Fragment implements View.OnClickListener {
 	private EditText mUsernameEditText;
 	private EditText mPasswordEditText;
+	private View mHeaderTextView;
 	private Button mLoginButton, mCancelButton, mNewUserButton;
 	private UserAccountViewModel mUserAccountViewModel;
 	private final List<UserAccount> mUserAccountList = new CopyOnWriteArrayList<>();
@@ -84,6 +90,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 		Timber.tag(TAG).d("onCreateView()");
 
 		v = inflater.inflate(R.layout.fragment_login, container, false);
+
+		mHeaderTextView = v.findViewById(R.id.tictactoe_awaits);
 		mUsernameEditText = v.findViewById(R.id.username_text);
 		mPasswordEditText = v.findViewById(R.id.password_text);
 
@@ -112,6 +120,39 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 		return v;
 	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		ViewCompat.setOnApplyWindowInsetsListener(mHeaderTextView, new OnApplyWindowInsetsListener() {
+			@NonNull
+			@Override
+			public WindowInsetsCompat onApplyWindowInsets(@NonNull View v, @NonNull WindowInsetsCompat insets) {
+				ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+				var sysBarsCutoutGestures = insets.getInsets(WindowInsetsCompat.Type.systemBars() |
+						WindowInsetsCompat.Type.displayCutout());
+				v.setPadding(sysBarsCutoutGestures.left, sysBarsCutoutGestures.top,
+						sysBarsCutoutGestures.right, sysBarsCutoutGestures.bottom);
+				return WindowInsetsCompat.CONSUMED;
+			}
+		});
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		try {
+			AppCompatActivity activity = (AppCompatActivity) requireActivity();
+			ActionBar actionBar = activity.getSupportActionBar();
+			if (actionBar != null) {
+				actionBar.setSubtitle(getResources().getString(R.string.login));
+			}
+		} catch (NullPointerException npe) {
+			Timber.tag(TAG).e("Could not set subtitle");
+		}
+	}
+
 
 	@Override
 	public void onDestroyView() {
