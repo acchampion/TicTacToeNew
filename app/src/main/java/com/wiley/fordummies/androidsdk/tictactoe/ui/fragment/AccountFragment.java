@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,6 +42,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     private EditText mEtUsername;
     private EditText mEtPassword;
     private EditText mEtConfirm;
+    private Button mAddButton, mCancelButton;
 
     private UserAccountViewModel mUserAccountViewModel;
 
@@ -70,20 +70,10 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         mEtUsername = v.findViewById(R.id.username);
         mEtPassword = v.findViewById(R.id.password);
         mEtConfirm = v.findViewById(R.id.password_confirm);
-        Button btnAdd = v.findViewById(R.id.done_button);
-        btnAdd.setOnClickListener(this);
-        Button btnCancel = v.findViewById(R.id.cancel_button);
-        btnCancel.setOnClickListener(this);
-
-        Button btnExit = v.findViewById(R.id.exit_button);
-        if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) {
-            btnExit.setOnClickListener(this);
-        } else {
-            if (btnExit != null) {
-                btnExit.setVisibility(View.GONE);
-                btnExit.invalidate();
-            }
-        }
+        mAddButton = v.findViewById(R.id.done_button);
+        mAddButton.setOnClickListener(this);
+        mCancelButton = v.findViewById(R.id.cancel_button);
+        mCancelButton.setOnClickListener(this);
 
         return v;
     }
@@ -134,9 +124,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
             mEtUsername.setText("");
             mEtPassword.setText("");
             mEtConfirm.setText("");
-        } else if (viewId == R.id.exit_button) {
-            FragmentActivity activity = requireActivity();
-            activity.getSupportFragmentManager().popBackStack();
         } else {
             Timber.tag(TAG).e("Invalid button click");
         }

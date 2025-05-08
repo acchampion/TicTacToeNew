@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -140,10 +139,8 @@ public class GameSessionFragment extends Fragment implements MenuProvider {
 				actionBar.setSubtitle(getResources().getString(R.string.game));
 			}
 
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-				activity.setShowWhenLocked(true);
-			}
-		} catch (NullPointerException npe) {
+            activity.setShowWhenLocked(true);
+        } catch (NullPointerException npe) {
 			Timber.tag(TAG).e("Could not set subtitle");
 		}
 
