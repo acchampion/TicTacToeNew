@@ -81,7 +81,6 @@ dependencies {
 
 	// Mapbox dependencies for maps
 	implementation("com.mapbox.maps:android:$rootProject.mapbox_sdk_version")
-	implementation("com.mapbox.search:mapbox-search-android-ui:$rootProject.mapbox_search_version")
 
 	implementation("com.jakewharton.timber:timber:$rootProject.timber_version")
 	debugImplementation("com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version")
