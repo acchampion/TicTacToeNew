@@ -1,5 +1,5 @@
 plugins {
-	id 'com.android.application' version '8.10.0'
+	id 'com.android.application' version '8.10.1'
 }
 
 android {
@@ -86,8 +86,6 @@ dependencies {
 	debugImplementation("com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version")
 	// releaseImplementation("com.squareup.leakcanary:leakcanary-android-noop:$rootProject.leakcanary_version")
 
-	implementation("com.squareup.okio:okio:$rootProject.okio_version")
-	implementation("com.squareup.okhttp3:okhttp:$rootProject.okhttp_version")
 	implementation("com.squareup.retrofit2:retrofit:$rootProject.retrofit_version")
 	implementation("com.squareup.retrofit2:converter-scalars:$rootProject.retrofit_version")
 	implementation("com.squareup.moshi:moshi:$rootProject.moshi_version")

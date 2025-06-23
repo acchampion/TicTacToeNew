@@ -1,8 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-	id 'com.android.application' version '8.10.0' apply false
-	id 'com.android.library' version '8.10.0' apply false
+	id 'com.android.application' version '8.10.1' apply false
+	id 'com.android.library' version '8.10.1' apply false
 }
 
 allprojects {
@@ -24,18 +24,18 @@ tasks.register('clean', Delete) {
 ext {
 	// AndroidX Jetpack components
 	activity_version = '1.10.1'
-	appcompat_version = '1.7.0'
+	appcompat_version = '1.7.1'
 	browser_version = "1.8.0"
 	core_version = '1.16.0'
 	constraint_version = '2.2.1'
-	datastore_version = '1.1.4'
+	datastore_version = '1.1.7'
 	kotlin_version = "2.0.21"
-	lifecycle_version = '2.9.0'
+	lifecycle_version = '2.9.1'
 	recyclerview_version = '1.4.0'
 	preference_version = "1.2.1"
-	room_version = "2.7.1"
+	room_version = '2.7.2'
 	splash_version = "1.0.1"
-	work_version = '2.10.1'
+	work_version = '2.10.2'
 	test_version = "1.5.0"
 
 	// Kotlin, Desugar, Timber, LeakCanary, RxDogTag versions
@@ -53,10 +53,10 @@ ext {
 	mapbox_telemetry_version = "7.0.0"
 
 	// Retrofit, Gson, Moshi, and Glide
-	okio_version = '3.10.2'
+	okio_version = '3.13.0'
 	okhttp_version = "4.12.0"
 	moshi_version = '1.15.2'
-	retrofit_version = "2.11.0"
+	retrofit_version = "3.0.0"
 	glide_version = "4.16.0"
 
 	// Testing components (Espresso and JUnit)
