@@ -1,8 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-	id 'com.android.application' version '8.12.1' apply false
-	id 'com.android.library' version '8.12.1' apply false
+	id 'com.android.application' version '9.0.0' apply false
+	id 'com.android.library' version '9.0.0' apply false
 }
 
 allprojects {
@@ -23,19 +23,19 @@ tasks.register('clean', Delete) {
 
 ext {
 	// AndroidX Jetpack components
-	activity_version = '1.10.1'
+	activity_version = '1.12.3'
 	appcompat_version = '1.7.1'
 	browser_version = '1.9.0'
 	core_version = '1.17.0'
 	constraint_version = '2.2.1'
-	datastore_version = '1.1.7'
-	kotlin_version = "2.2.20"
-	lifecycle_version = '2.9.3'
+	datastore_version = '1.2.0'
+	kotlin_version = "2.3.0"
+	lifecycle_version = '2.10.0'
 	recyclerview_version = '1.4.0'
 	preference_version = "1.2.1"
-	room_version = '2.7.2'
-	splash_version = "1.0.1"
-	work_version = '2.10.3'
+	room_version = '2.8.4'
+	splash_version = '1.2.0'
+	work_version = '2.11.1'
 	test_version = "1.5.0"
 
 	// Kotlin, Desugar, Timber, LeakCanary, RxDogTag versions
@@ -45,19 +45,15 @@ ext {
 	rxdogtag_version = "2.0.2"
 
 	// Mapbox versions
-	mapbox_sdk_version = "11.9.0"
-	mapbox_nav_version = "2.18.1"
+	mapbox_sdk_version = "11.18.0"
 	mapbox_search_version = "2.7.1"
-	mapbox_core_version = "4.0.0"
-	mapbox_java_version = "2.2.10"
-	mapbox_telemetry_version = "7.0.0"
 
 	// Retrofit, Gson, Moshi, and Glide
 	okio_version = '3.13.0'
 	okhttp_version = "4.12.0"
 	moshi_version = '1.15.2'
 	retrofit_version = "3.0.0"
-	glide_version = '5.0.4'
+	glide_version = '5.0.5'
 
 	// Testing components (Espresso and JUnit)
 	espresso_version = '3.7.0'

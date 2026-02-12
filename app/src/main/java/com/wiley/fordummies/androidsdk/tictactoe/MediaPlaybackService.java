@@ -1,9 +1,11 @@
 package com.wiley.fordummies.androidsdk.tictactoe;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 
@@ -21,7 +23,9 @@ public class MediaPlaybackService extends Service {
 
     @Override
     public void onCreate() {
-        player = MediaPlayer.create(this, R.raw.sample_audio);
+        Context audioAttributionContext = (Build.VERSION.SDK_INT >= 30) ?
+            createAttributionContext("audioPlayback") : this;
+        player = MediaPlayer.create(audioAttributionContext, R.raw.sample_audio);
         player.setLooping(true);
     }
 

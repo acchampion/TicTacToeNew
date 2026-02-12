@@ -4,6 +4,8 @@
     <string name="help_text">"Tic-Tac-Toe is a two-player game. Each player claims one of two symbols – “O” or “X” – and attempts to alternately place their symbol in empty locations in a 3×3 grid, so as to get three of the same symbol adjacent to each other in a straight line – either in a row or column, or across a diagonal. "</string>
     <string name="permission_launch_activity">"This permission allows launching an activity in this application "</string>
 	<string name="permission_show_notification">This permission allows notifications about new photos.</string>
+    <string name="audio_playback_attribution">"This app plays audio"</string>
+    <string name="empty_string"></string>
 
     <!-- UI Text -->
     <string name="sources_title">Sources</string>

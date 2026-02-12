@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
-	<permission
+    <attribution android:tag="@string/empty_string" android:label="@string/audio_playback_attribution" />
+    <attribution android:tag="audioPlayback" android:label="@string/audio_playback_attribution" />
+
+    <permission
 		android:name="com.wiley.fordummies.androidsdk.tictactoe.LAUNCHACTIVITY"
 		android:description="@string/permission_launch_activity"
 		android:label="Launch Tic-Tac-Toe Activity"
