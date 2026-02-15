@@ -72,12 +72,7 @@ public class FlickrFetchr {
 				if (flickrResponse != null) {
 					PhotoResponse photoResponse = flickrResponse.getPhotos();
 					List<GalleryItem> galleryItems = photoResponse.getGalleryItems();
-					List<GalleryItem> validGalleryItems = new ArrayList<>();
-					for (GalleryItem item: galleryItems) {
-						if (item.getUrl() != null) {
-							validGalleryItems.add(item);
-						}
-					}
+                    List<GalleryItem> validGalleryItems = new ArrayList<>(galleryItems);
 					responseLiveData.setValue(validGalleryItems);
 				}
 			}
@@ -145,12 +140,7 @@ public class FlickrFetchr {
 				if (flickrResponse != null) {
 					PhotoResponse photoResponse = flickrResponse.getPhotos();
 					List<GalleryItem> galleryItems = photoResponse.getGalleryItems();
-					List<GalleryItem> validGalleryItems = new ArrayList<>();
-					for (GalleryItem item: galleryItems) {
-						if (item.getUrl() != null) {
-							validGalleryItems.add(item);
-						}
-					}
+                    List<GalleryItem> validGalleryItems = new ArrayList<>(galleryItems);
 					responseLiveData.setValue(validGalleryItems);
 				}
 			}

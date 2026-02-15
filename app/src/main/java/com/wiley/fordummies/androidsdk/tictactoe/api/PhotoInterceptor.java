@@ -19,10 +19,6 @@ public class PhotoInterceptor implements Interceptor {
 		Request originalRequest = chain.request();
 
 		HttpUrl newUrl = originalRequest.url().newBuilder()
-				.addQueryParameter("format", "json")
-				.addQueryParameter("nojsoncallback", "1")
-				.addQueryParameter("extras", "url_s")
-				.addQueryParameter("safesearch", "1")
 				.build();
 		Timber.tag(TAG).d("Generated new Url: %s", newUrl);
 

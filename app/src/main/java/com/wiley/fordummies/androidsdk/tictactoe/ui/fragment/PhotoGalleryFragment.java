@@ -265,7 +265,7 @@ public class PhotoGalleryFragment extends VisibleFragment implements MenuProvide
 			Drawable placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder);
 			// holder.bindDrawable(placeholder);
 			Glide.with(requireContext())
-					.load(galleryItem.getUrl())
+					.load(galleryItem.getPhotoUri())
 					.placeholder(placeholder)
 					.into(holder.getImageView());
 			//mThumbnailDownloader.queueThumbnail(holder, galleryItem.getUrl());
