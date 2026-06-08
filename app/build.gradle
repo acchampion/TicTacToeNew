@@ -1,14 +1,14 @@
 plugins {
-	id 'com.android.application' version '9.0.1'
+	id 'com.android.application' version '9.2.1'
 }
 
 android {
     defaultConfig {
-		compileSdk = 36
+		compileSdk = 37
 		buildToolsVersion = "36.0.0"
         applicationId("com.wiley.fordummies.androidsdk.tictactoe")
         minSdkVersion(27)
-        targetSdkVersion(36)
+        targetSdkVersion(37)
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -53,7 +53,7 @@ dependencies {
 	}
 
 	coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$rootProject.desugar_version")
-    implementation 'com.google.net.cronet:cronet-okhttp:0.1.0'
+    implementation 'com.google.net.cronet:cronet-okhttp:0.1.1'
 
     implementation("androidx.appcompat:appcompat:$rootProject.appcompat_version")
 
