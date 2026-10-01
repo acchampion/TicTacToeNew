@@ -1,5 +1,5 @@
 plugins {
-	id 'com.android.application' version '9.4.0'
+	id 'com.android.application' version '9.4.1'
 }
 
 android {
@@ -44,10 +44,10 @@ dependencies {
     implementation(fileTree(include: ["*.jar"], dir: "libs"))
 
 	constraints {
-		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.3.0") {
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin_version") {
 			because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
 		}
-		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.0") {
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version") {
 			because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
 		}
 	}
