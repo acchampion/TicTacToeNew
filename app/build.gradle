@@ -1,5 +1,5 @@
 plugins {
-	id 'com.android.application' version '9.4.1'
+	alias libs.plugins.android.application
 }
 
 android {
@@ -44,82 +44,85 @@ dependencies {
     implementation(fileTree(include: ["*.jar"], dir: "libs"))
 
 	constraints {
-		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin_version") {
+		implementation(libs.kotlin.stdlib) {
+			because("kotlin-stdlib version must match Kotlin compiler version")
+		}
+		/*implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlin_version") {
 			because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
 		}
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlin_version") {
 			because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
-		}
+		}*/
 	}
 
-	coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$rootProject.desugar_version")
-    implementation 'com.google.net.cronet:cronet-okhttp:0.1.1'
+	coreLibraryDesugaring(libs.desugar.jdk.libs)
+    implementation libs.cronet.okhttp
 
-    implementation("androidx.appcompat:appcompat:$rootProject.appcompat_version")
+    implementation(libs.androidx.appcompat)
 
 	// Lifecycle
-	implementation("androidx.lifecycle:lifecycle-viewmodel:$rootProject.lifecycle_version")
-	implementation("androidx.lifecycle:lifecycle-livedata:$rootProject.lifecycle_version")
-	implementation("androidx.lifecycle:lifecycle-common-java8:$rootProject.lifecycle_version")
-	implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_version")
+	implementation(libs.androidx.lifecycle.viewmodel)
+	implementation(libs.androidx.lifecycle.livedata)
+	implementation(libs.androidx.lifecycle.common.java8)
+	implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-	implementation("androidx.activity:activity:$rootProject.activity_version")
-    implementation("androidx.recyclerview:recyclerview:$rootProject.recyclerview_version")
-    implementation("androidx.preference:preference:$rootProject.preference_version")
-	implementation("androidx.datastore:datastore-preferences:$rootProject.datastore_version")
-	implementation("androidx.datastore:datastore-preferences-rxjava3:$rootProject.datastore_version")
+	implementation(libs.androidx.activity)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.preference)
+	implementation(libs.androidx.datastore.preferences)
+	implementation(libs.androidx.datastore.preferences.rxjava3)
 
-	implementation("androidx.browser:browser:$rootProject.browser_version")
+	implementation(libs.androidx.browser)
 
-	implementation("androidx.core:core:$rootProject.core_version")
-	implementation("androidx.core:core-splashscreen:$rootProject.splash_version")
+	implementation(libs.androidx.core)
+	implementation(libs.androidx.core.splashscreen)
 
-	implementation("androidx.room:room-runtime:$rootProject.room_version")
-	annotationProcessor("androidx.room:room-compiler:$rootProject.room_version")
+	implementation(libs.androidx.room.runtime)
+	annotationProcessor(libs.androidx.room.compiler)
 
-	implementation("androidx.constraintlayout:constraintlayout:$rootProject.constraint_version")
-	implementation("androidx.work:work-runtime:$rootProject.work_version")
+	implementation(libs.androidx.constraintlayout)
+	implementation(libs.androidx.work.runtime)
 
     // Mapbox dependencies for maps
-    implementation("com.mapbox.maps:android-ndk27:$rootProject.mapbox_sdk_version")
+    implementation(libs.android.ndk27)
 
     // If your app does NOT require support for 16-KB pages, UNCOMMENT the following line:
     // // implementation("com.mapbox.maps:android:$rootProject.mapbox_sdk_version")
 
-	implementation("com.jakewharton.timber:timber:$rootProject.timber_version")
-	debugImplementation("com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version")
+	implementation(libs.timber)
+	debugImplementation(libs.leakcanary.android)
 	// releaseImplementation("com.squareup.leakcanary:leakcanary-android-noop:$rootProject.leakcanary_version")
 
-	implementation("com.squareup.retrofit2:retrofit:$rootProject.retrofit_version")
-	implementation("com.squareup.retrofit2:converter-scalars:$rootProject.retrofit_version")
-	implementation("com.squareup.moshi:moshi:$rootProject.moshi_version")
-	implementation("com.squareup.retrofit2:converter-moshi:$rootProject.retrofit_version")
-	implementation("com.github.bumptech.glide:glide:$rootProject.glide_version")
-    implementation("com.github.bumptech.glide:cronet-integration:$rootProject.glide_version")
+	implementation(libs.retrofit)
+	implementation(libs.converter.scalars)
+	implementation(libs.moshi)
+	implementation(libs.converter.moshi)
+	implementation(libs.glide)
+    implementation(libs.cronet.integration)
 
 	// Skip this if you don't want to use integration libraries or configure Glide.
-	annotationProcessor("com.github.bumptech.glide:compiler:$rootProject.glide_version")
-	debugImplementation("com.squareup.leakcanary:leakcanary-android:$rootProject.leakcanary_version")
+	annotationProcessor(libs.compiler)
+	debugImplementation(libs.leakcanary.android)
 
 	// Testing - JUnit
-	testImplementation("junit:junit:$rootProject.junit_version")
-	androidTestImplementation("androidx.test.ext:junit:$rootProject.junit_ext_version")
+	testImplementation(libs.junit)
+	androidTestImplementation(libs.androidx.junit)
 
 	// Core library
-	androidTestImplementation("androidx.test:core:$rootProject.androidx_test_core_version")
+	androidTestImplementation(libs.core)
 
 	// AndroidJUnitRunner and JUnit Rules
-	androidTestImplementation("androidx.test:runner:$rootProject.runner_version")
-	androidTestImplementation("androidx.test:rules:$rootProject.rules_version")
+	androidTestImplementation(libs.androidx.runner)
+	androidTestImplementation(libs.androidx.rules)
 
 	// Espresso and dependencies
-    androidTestImplementation("androidx.test.espresso:espresso-core:$rootProject.espresso_version")
+    androidTestImplementation(libs.androidx.espresso.core)
 	// Espresso dependencies
-	androidTestImplementation("androidx.test.espresso:espresso-contrib:$rootProject.espresso_version")
-	androidTestImplementation("androidx.test.espresso:espresso-intents:$rootProject.espresso_version")
-	androidTestImplementation("androidx.test.espresso:espresso-accessibility:$rootProject.espresso_version")
-	androidTestImplementation("androidx.test.espresso:espresso-web:$rootProject.espresso_version")
-	androidTestImplementation("androidx.test.espresso.idling:idling-concurrent:$rootProject.espresso_version")
+	androidTestImplementation(libs.androidx.espresso.contrib)
+	androidTestImplementation(libs.androidx.espresso.intents)
+	androidTestImplementation(libs.androidx.espresso.accessibility)
+	androidTestImplementation(libs.androidx.espresso.web)
+	androidTestImplementation(libs.androidx.idling.concurrent)
 
 }
 
